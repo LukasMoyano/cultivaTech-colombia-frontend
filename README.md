@@ -6,18 +6,13 @@
 <h1 align="center">🌱🤖 CultivaTech ColombIA 🐝🇨🇴</h1>
 <p align="center"><i>Innovación Agro-IoT con Arte, Ciencia y Tecnología by <strong>_-IR-_</strong> Productions</i></p>
 <p align="center">
-   <a href="#español">Español</a> 
-   <a href="#english">English</a> 
-   <a href="#français">Français</a>
-
-
-<a href="#español">Español</a> | <a href="#english">English</a> | <a href="#français">Français</a>
-  
+  <a href="#español">Español</a>
+  <a href="#english">English</a> 
+  <a href="#français">Français</a>
 </p>
 
 ---
 
-## 📍 Español
 ## 📍 Español <a name="español"></a>
 
 
@@ -90,7 +85,6 @@ Necesitamos **infraestructura tecnológica, física y humana** para llevar Culti
 
 ---
 
-## 🇬🇧 English
 ## 🇬🇧 English <a name="english"></a>
 
 
@@ -165,8 +159,7 @@ We require **technological, physical, and human infrastructure** to take Cultiva
 ---
 ---
 
-## 🇫🇷 Français
-## 🇫🇷 Français <a name="français"></a>
+## 🇫🇷 Français <a name="français">## 🇫🇷 Français</a>
 
 
 ### 👤 Présentation de Lukas Moyano et ___-IR-___ Productions
