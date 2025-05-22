@@ -15,8 +15,7 @@
 
 ## 📍 Español
 
-### 👤 Presentación de Lukas Moyano y _-IR-_ Productions
-
+### 👤 Presentación de Lukas Moyano y _ _-IR-_ 
 **Lukas Moyano** es un artista visual, pedagogo y tecnólogo colombiano con formación en Artes Visuales (M.A.V. - Pontificia Universidad Javeriana), Pedagogía (Uniminuto) y Tecnologías de la Información (UNAL/MinTIC). Fundador de **_-IR-_ Productions**, una iniciativa que fusiona **Arte + Ciencia + Tecnología** para impulsar la transformación sostenible en sectores clave como la agricultura, la educación y la cultura.
 
 ### 🌾 ¿Qué es CultivaTech ColombIA?
@@ -79,7 +78,7 @@ Necesitamos **infraestructura tecnológica, física y humana** para llevar Culti
 
 ### 📬 Contacto
 
-- **Email**: [lukasmoyano@ir-productions.com](mailto:lukasmoyano@ir-productions.com)
+- **Email**: [lukasmoyano@ir-productions.com](mailto:lukasmoyanomorales@gmail.com)
 - **LinkedIn**: [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)
 - **GitHub**: [github.com/IR-Productions](https://github.com/IR-Productions)
 
@@ -87,9 +86,9 @@ Necesitamos **infraestructura tecnológica, física y humana** para llevar Culti
 
 ## 🇬🇧 English
 
-### 👤 About Lukas Moyano & _-IR-_ Productions
+### 👤 About Lukas Moyano & _ _-IR-_ _ Productions
 
-**Lukas Moyano** is a Colombian visual artist, educator, and technologist with a Master's in Visual Arts (Pontificia Universidad Javeriana), a degree in Pedagogy (Uniminuto), and training in Information Technologies (UNAL/MinTIC). He is the founder of **_-IR-_ Productions**, an initiative that merges **Art + Science + Technology** to drive sustainable transformation in key sectors such as agriculture, education, and culture.
+**Lukas Moyano** is a Colombian visual artist, educator, and technologist with a Master's in Visual Arts (Pontificia Universidad Javeriana), a degree in Pedagogy (Uniminuto), and training in Information Technologies (UNAL/MinTIC). He is the founder of **__-IR-__ Productions**, an initiative that merges **Art + Science + Technology** to drive sustainable transformation in key sectors such as agriculture, education, and culture.
 
 ### 🌾 What is CultivaTech ColombIA?
 
@@ -151,37 +150,81 @@ We require **technological, physical, and human infrastructure** to take Cultiva
 
 ### 📬 Get in Touch
 
-- **Email**: [lukasmoyano@ir-productions.com](mailto:lukasmoyano@ir-productions.com)
+- **Email**: [lukasmoyano@ir-productions.com](mailto:lukasmoyanomorales@gmail.com)
 - **LinkedIn**: [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)
 - **GitHub**: [github.com/IR-Productions](https://github.com/IR-Productions)
 
 ---
+---
 
 ## 🇫🇷 Français
 
-### 👤 À propos de Lukas Moyano & _-IR-_ Productions
+### 👤 Présentation de Lukas Moyano et ___-IR-___ Productions
 
-**Lukas Moyano** est un artiste visuel, pédagogue et technologue colombien titulaire d'une Maîtrise en Arts Visuels (Pontificia Universidad Javeriana), d'un diplôme en Pédagogie (Uniminuto) et d'une formation en Technologies de l'Information (UNAL/MinTIC). Il est le fondateur de **_-IR-_ Productions**, une initiative qui fusionne **Art + Science + Technologie** pour impulser une transformation durable dans des secteurs clés tels que l'agriculture, l'éducation et la culture.
+**Lukas Moyano** est un artiste visuel, pédagogue et technologue colombien, titulaire d’un Master en Arts Visuels (Pontificia Universidad Javeriana), d’une licence en Pédagogie (Uniminuto) et formé aux Technologies de l’Information (UNAL/MinTIC). Fondateur de **__-IR-__ Productions**, une initiative qui fusionne **Art + Science + Technologie** pour promouvoir la transformation durable dans des secteurs clés comme l’agriculture, l’éducation et la culture.
 
 ### 🌾 Qu'est-ce que CultivaTech ColombIA ?
 
-**CultivaTech ColombIA** est un système de surveillance **Agro-IoT** conçu pour les cultures agro-fruitières, mycologiques et apicoles. Il combine des capteurs intelligents (ESP32, Raspberry Pi, ARM), de l'intelligence artificielle pour la détection d'anomalies et une plateforme web/mobile propriétaire pour visualiser les données et les alertes en temps réel. Son objectif principal est d'**autonomiser les producteurs colombiens** avec des outils accessibles et précis pour optimiser leurs processus agricoles.
+**CultivaTech ColombIA** est un système de surveillance **Agro-IoT** conçu pour les cultures agrofructicoles, mycologiques et apicoles. Il combine des capteurs intelligents (ESP32, Raspberry Pi, ARM), l’intelligence artificielle pour la détection d’anomalies, et une plateforme web/mobile dédiée pour visualiser en temps réel les données et alertes. Son objectif principal est de **renforcer les capacités des producteurs colombiens** grâce à des outils accessibles et précis permettant d’optimiser leurs processus agricoles.
 
 ### ❗ Le Problème que Nous Résolvons
 
-Le manque d'outils précis et accessibles pour la surveillance en temps réel dans l'agriculture colombienne entraîne des inefficacités, des pertes économiques et des défis en matière de durabilité des cultures. De nombreux producteurs manquent d'informations opportunes sur l'état de leurs cultures, ce qui rend la prise de décisions éclairées difficile.
+L’absence d’outils de surveillance en temps réel, précis et accessibles, dans l’agriculture colombienne entraîne des inefficacités, des pertes économiques et des difficultés de durabilité pour les cultures. De nombreux producteurs n’ont pas accès à des informations fiables et actuelles sur leurs cultures, ce qui rend difficile la prise de décisions éclairées.
 
-### 🎨🔬💻 Notre Solution et Approche (Art+Science+Technologie)
+### 🎨🔬💻 Notre Solution : Art + Science + Technologie
 
-- **Art** : Interfaces intuitives et visuelles facilitant la compréhension de données complexes.
-- **Science** : Collecte et analyse de données précises grâce à des capteurs et des algorithmes d'IA.
-- **Technologie** : Utilisation de matériel open-source (ESP32, Raspberry Pi), développement avec React et NodeJS, et connectivité via LoRaWAN, WiFi et 4G.
+- **Art** : Interfaces visuelles et intuitives facilitant la compréhension des données complexes.
+- **Science** : Collecte et analyse de données précises via des capteurs et des algorithmes d’IA.
+- **Technologie** : Utilisation de matériel open source (ESP32, Raspberry Pi), développement avec React et NodeJS, connectivité via LoRaWAN, WiFi et 4G.
 
 ### 🛠️ Technologies Clés
 
-- **Frontend** : React
-- **Backend** : NodeJS
-- **IA** : Python (Vision par Ordinateur)
-- **Matériel** : ESP32, Raspberry Pi, ARM
+- **Frontend** : React  
+- **Backend** : NodeJS  
+- **IA** : Python (Vision par ordinateur)  
+- **Matériel** : ESP32, Raspberry Pi, ARM  
+- **Connectivité** : LoRaWAN, WiFi, 4G  
+- **Bases de données** : PostgreSQL, TimeSeries
 
-::contentReference[oaicite:0]{index=0}
+### 🚀 État Actuel du Projet (MVP) et Prochaines Étapes
+
+Nous disposons actuellement d’un **MVP fonctionnel** développé en React et NodeJS, avec les fonctionnalités suivantes :
+
+- Visualisation de données issues de capteurs réels et simulés.
+- Prototype de détection d’anomalies basé sur l’IA.
+
+**Prochaines étapes** :
+
+- Tests de terrain élargis.
+- Intégration de nouveaux capteurs et d’IA avancée.
+- Développement d’une application mobile native.
+- Recherche de partenariats stratégiques et de financements.
+
+### 🤝 Rejoignez la (R)Évolution Agro-Tech !
+
+**Comment collaborer** :
+
+Nous cherchons des collaborateurs dans les domaines suivants :
+
+- **Développeurs** : Frontend (React), Backend (NodeJS/Python), Firmware (C++), IA/ML.  
+- **Designers** : UX/UI.  
+- **Testeurs** : Tests d’utilisabilité et de fonctionnalité.  
+- **Experts** : Agronomie, apiculture, mycologie.
+
+**Opportunités d’investissement / de partenariat** :
+
+Nous sommes à la recherche **d’investissements et de partenariats stratégiques** pour :
+
+- Produire le matériel à grande échelle.
+- Renforcer la plateforme logicielle.
+- Étendre l’impact du projet.
+
+Nous avons besoin **d’infrastructures technologiques, physiques et humaines** pour faire passer CultivaTech ColombIA à la vitesse supérieure.
+
+### 📬 Contact
+
+- **Email** : [lukasmoyano@ir-productions.com](mailto:lukasmoyanomorales@gmail.com)  
+- **LinkedIn** : [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)  
+- **GitHub** : [github.com/IR-Productions](https://github.com/IR-Productions)
+
+---
