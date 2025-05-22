@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="ToPresent/cultivatech-colombia/Frontend/src/assets/logo_cultivaTechColombia.png" width="150" alt="CultivaTech ColombIA Logo"/>
+  <img src="src/assets/logo_cultivaTechColombia.png" width="150" alt="CultivaTech ColombIA Logo"/>
 </p>
 
 <h1 align="center">🌱🤖 CultivaTech ColombIA 🐝🇨🇴</h1>
