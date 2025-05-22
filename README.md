@@ -121,3 +121,4 @@ El contenido completo en formato Markdown para el archivo **README.md** **del re
 * **Inglés:** **Usar** **British English** **para la terminología y la redacción.**
 * **Francés:** **Usar** **Francés de Francia** **para la terminología y la redacción.**
 * **Asegurar que el** **tono y la intención** **se mantengan consistentes a través de las traducciones.**
+# cultivaTech-colombia-frontend
