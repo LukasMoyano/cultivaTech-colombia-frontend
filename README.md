@@ -6,14 +6,20 @@
 <h1 align="center">🌱🤖 CultivaTech ColombIA 🐝🇨🇴</h1>
 <p align="center"><i>Innovación Agro-IoT con Arte, Ciencia y Tecnología by <strong>_-IR-_</strong> Productions</i></p>
 <p align="center">
-   <a href="#español">Español</a> • 
-   <a href="#english">English</a> • 
+   <a href="#español">Español</a> 
+   <a href="#english">English</a> 
    <a href="#français">Français</a>
+
+
+<a href="#español">Español</a> | <a href="#english">English</a> | <a href="#français">Français</a>
+  
 </p>
 
 ---
 
 ## 📍 Español
+## 📍 Español <a name="español"></a>
+
 
 ### 👤 Presentación de Lukas Moyano y _ _-IR-_ 
 **Lukas Moyano** es un artista visual, pedagogo y tecnólogo colombiano con formación en Artes Visuales (M.A.V. - Pontificia Universidad Javeriana), Pedagogía (Uniminuto) y Tecnologías de la Información (UNAL/MinTIC). Fundador de **_-IR-_ Productions**, una iniciativa que fusiona **Arte + Ciencia + Tecnología** para impulsar la transformación sostenible en sectores clave como la agricultura, la educación y la cultura.
@@ -85,6 +91,8 @@ Necesitamos **infraestructura tecnológica, física y humana** para llevar Culti
 ---
 
 ## 🇬🇧 English
+## 🇬🇧 English <a name="english"></a>
+
 
 ### 👤 About Lukas Moyano & _ _-IR-_ _ Productions
 
@@ -158,6 +166,8 @@ We require **technological, physical, and human infrastructure** to take Cultiva
 ---
 
 ## 🇫🇷 Français
+## 🇫🇷 Français <a name="français"></a>
+
 
 ### 👤 Présentation de Lukas Moyano et ___-IR-___ Productions
 
