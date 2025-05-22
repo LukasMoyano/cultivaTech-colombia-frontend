@@ -1,124 +1,187 @@
-  **Actúa como un** **Redactor Técnico Creativo y Estratega de Comunicación para Proyectos Open Source de Impacto**. Tu especialidad es crear documentación **README.md** **que sea** **informativa, atractiva, profesional y que motive a la colaboración y al apoyo (técnico y financiero)**. Debes ser capaz de estructurar la información de forma clara, utilizar Markdown efectivamente (incluyendo emojis y formato de texto para impacto visual), y adaptar el mensaje a una audiencia global, manteniendo la identidad única de **-IR-** **Productions (Arte+Ciencia+Tecnología) y su fundador, Lukas Moyano.**
 
-    **Contexto Principal:**
-El **README.md** **es para el repositorio público en GitHub del proyecto** **"CultivaTech ColombIA"**, el producto MVP Agro-IoT de **-IR-** **Productions**. Este MVP, desarrollado en React y NodeJS, consiste en un sistema de monitoreo para agricultura (cultivos agrofrutales, micológicos, apicultura) que utiliza un nodo sensor (potencialmente un robot/dron móvil con ESP32/Raspberry Pi/ARM), IA para detección de anomalías, y una plataforma propia (web/móvil) para visualización de datos y alertas. El proyecto se fundamenta en los pilares Arte+Ciencia+Tecnología de **-IR-** **y busca transformar el agro colombiano. El** **README.md** **debe presentar al fundador (Lukas Moyano), a** **-IR-** **Productions, el proyecto "CultivaTech ColombIA", sus objetivos, y hacer un llamado a la colaboración y al apoyo. Será multilingüe: Español (Colombia), Inglés (Británico), Francés (Francia).**
+<p align="center">
+  <img src="https://raw.githubusercontent.com/IR-Productions/CultivaTech-ColombIA/main/assets/logo.png" width="150" alt="CultivaTech ColombIA Logo"/>
+</p>
 
-  **Producto Requerido:**
-El contenido completo en formato Markdown para el archivo **README.md** **del repositorio "CultivaTech ColombIA".**
+<h1 align="center">🌱🤖 CultivaTech ColombIA 🐝🇨🇴</h1>
+<p align="center"><i>Innovación Agro-IoT con Arte, Ciencia y Tecnología by <strong>-IR-</strong> Productions</i></p>
+<p align="center">
+   <a href="#español">Español</a> • 
+   <a href="#english">English</a> • 
+   <a href="#français">Français</a>
+</p>
 
-**Instrucciones Específicas (Generar Contenido por Bloques y Secciones):**
+---
 
-**I. Estructura General del README.md:**
+## 📍 Español
 
-* **Encabezado Principal / Logo (Emoji + Título)**
-* **Bloque 1: Presentación de Lukas Moyano y** **-IR-** **Productions (Español)**
-* **Bloque 2: Presentación del Proyecto "CultivaTech ColombIA" (Español)**
+### 👤 Presentación de Lukas Moyano y _-IR-_ Productions
 
-  * **¿Qué es CultivaTech ColombIA?**
-  * **El Problema que Resolvemos**
-  * **Nuestra Solución y Enfoque (Arte+Ciencia+Tecnología)**
-  * **Tecnologías Clave (React, NodeJS, ESP32/ARM, IA, etc.)**
-* **Bloque 3: Estado Actual del Proyecto (MVP) y Próximos Pasos (Español)**
-* **Bloque 4: ¡Únete a la (R)Evolución Agro-Tech! (Llamado a la Colaboración/Apoyo - Español)**
+**Lukas Moyano** es un artista visual, pedagogo y tecnólogo colombiano con formación en Artes Visuales (M.A.V. - Pontificia Universidad Javeriana), Pedagogía (Uniminuto) y Tecnologías de la Información (UNAL/MinTIC). Fundador de **_-IR-_ Productions**, una iniciativa que fusiona **Arte + Ciencia + Tecnología** para impulsar la transformación sostenible en sectores clave como la agricultura, la educación y la cultura.
 
-  * **Cómo Colaborar (Desarrolladores, Testers, Diseñadores)**
-  * **Oportunidades de Inversión/Alianza (Mencionar necesidad de infraestructura)**
-* **Bloque 5: Contacto (Español)**
-* **SEPARADOR VISUAL**
-* **Bloque 6: About Lukas Moyano &** **-IR-** **Productions (English - British English Phrasing)**
-* **Bloque 7: About The "CultivaTech ColombIA" Project (English - British English Phrasing)**
+### 🌾 ¿Qué es CultivaTech ColombIA?
 
-  * **What is CultivaTech ColombIA?**
-  * **The Problem We're Solving**
-  * **Our Solution & Approach (Art+Science+Technology)**
-  * **Key Technologies**
-* **Bloque 8: Current Project Status (MVP) & Next Steps (English)**
-* **Bloque 9: Join the Agro-Tech (R)Evolution! (Call to Collaboration/Support - English)**
+**CultivaTech ColombIA** es un sistema de monitoreo **Agro-IoT** diseñado para cultivos agrofrutales, micológicos y apícolas. Combina sensores inteligentes (ESP32, Raspberry Pi, ARM), inteligencia artificial para detección de anomalías y una plataforma web/móvil propia para visualizar datos y alertas en tiempo real. Su objetivo principal es **empoderar a los productores colombianos** con herramientas accesibles y precisas para optimizar sus procesos agrícolas.
 
-  * **How to Collaborate (Developers, Testers, Designers)**
-  * **Investment/Partnership Opportunities**
-* **Bloque 10: Get in Touch (English)**
-* **SEPARADOR VISUAL**
-* **Bloque 11: À propos de Lukas Moyano &** **-IR-** **Productions (Français - France)**
-* **Bloque 12: À propos du Projet "CultivaTech ColombIA" (Français - France)**
+### ❗ El Problema que Resolvemos
 
-  * **Qu'est-ce que CultivaTech ColombIA ?**
-  * **Le Problème que Nous Résolvons**
-  * **Notre Solution et Approche (Art+Science+Technologie)**
-  * **Technologies Clés**
-* **Bloque 13: État Actuel du Projet (MVP) & Prochaines Étapes (Français)**
-* **Bloque 14: Rejoignez la (R)Évolution Agro-Tech ! (Appel à la Collaboration/Soutien - Français)**
+La falta de herramientas precisas y accesibles para el monitoreo en tiempo real en el agro colombiano conduce a ineficiencias, pérdidas económicas y desafíos en la sostenibilidad de los cultivos. Muchos productores carecen de información oportuna sobre las condiciones de sus cultivos, lo que dificulta la toma de decisiones informadas.
 
-  * **Comment Collaborer (Développeurs, Testeurs, Designers)**
-  * **Opportunités d'Investissement/Partenariat**
-* **Bloque 15: Contactez-Nous (Français)**
+### 🎨🔬💻 Nuestra Solución y Enfoque (Arte+Ciencia+Tecnología)
 
-**II. Contenido Detallado (Generar texto y formato Markdown):**
+- **Arte**: Interfaces intuitivas y visuales que facilitan la comprensión de datos complejos.
+- **Ciencia**: Recolección y análisis de datos precisos mediante sensores y algoritmos de IA.
+- **Tecnología**: Uso de hardware de código abierto (ESP32, Raspberry Pi), desarrollo con React y NodeJS, y conectividad mediante LoRaWAN, WiFi y 4G.
 
-* **Encabezado Principal:**
+### 🛠️ Tecnologías Clave
 
-  * **Usar emojis grandes y un título llamativo.**
-  * **Prompt Texto:** **"Crea un encabezado con un emoji grande de planta/robot/abeja, el nombre 'CultivaTech ColombIA', y un subtítulo corto y potente como 'Innovación Agro-IoT con Arte, Ciencia y Tecnología by** **-IR-** **Productions'."**
-  * **Ejemplo Markdown:**
+- **Frontend**: React
+- **Backend**: NodeJS
+- **IA**: Python (Visión por Computador)
+- **Hardware**: ESP32, Raspberry Pi, ARM
+- **Conectividad**: LoRaWAN, WiFi, 4G
+- **Bases de Datos**: PostgreSQL, TimeSeries
 
-    ```
-    <p align="center">
-      <img src="[URL_A_UN_GIF_O_IMAGEN_REPRESENTATIVA_DEL_PROYECTO_SI_TIENES_O_UN_EMOJI_GRANDE_TEXTUAL]" width="150" alt="CultivaTech ColombIA Logo/Concept"/>
-    </p>
-    <h1 align="center">🌱🤖 CultivaTech ColombIA 🐝🇨🇴</h1>
-    <p align="center"><i>Innovación Agro-IoT con Arte, Ciencia y Tecnología by _-IR-_ Productions</i></p>
-    <p align="center">
-       <a href="#español">Español</a> • 
-       <a href="#english">English</a> • 
-       <a href="#français">Français</a>
-    </p>
-    ```
+### 🚀 Estado Actual del Proyecto (MVP) y Próximos Pasos
 
-    **content_copy**download
+Actualmente, contamos con un **MVP funcional** desarrollado en React y NodeJS, con capacidades de:
 
-    Use code [with caution](https://support.google.com/legal/answer/13505487).**Markdown**
-* **Para CADA Bloque Lingüístico (Español, Inglés, Francés):**
+- Visualización de datos de sensores simulados y reales.
+- Prototipo de detección de anomalías mediante IA.
 
-  * **Presentación Lukas Moyano &** **-IR-** **Productions:**
+**Próximos pasos**:
 
-    * **Prompt Texto:** **"Redacta un párrafo conciso (2-3 frases) presentando a Lukas Moyano (M.A.V. Javeriana, Pedagogo Uniminuto, Tecnólogo UNAL/MinTIC) y** **-IR-** **Productions, destacando la fusión Arte+Ciencia+Tecnología y la misión de transformación sostenible, especialmente en el agro."**
-  * **Presentación Proyecto "CultivaTech ColombIA":**
+- Pruebas de campo extendidas.
+- Integración de más sensores e IA avanzada.
+- Desarrollo de una aplicación móvil nativa.
+- Búsqueda de alianzas estratégicas y financiación.
 
-    * **Prompt Texto (¿Qué es?):** **"Describe brevemente qué es CultivaTech ColombIA (sistema de monitoreo Agro-IoT con robot/dron móvil, IA, plataforma propia) y su objetivo principal (empoderar productores)."**
-    * **Prompt Texto (Problema):** **"Resume el problema que resuelve (falta de herramientas precisas y accesibles para monitoreo en tiempo real, llevando a ineficiencias y pérdidas)."**
-    * **Prompt Texto (Solución/Enfoque):** **"Explica cómo CultivaTech lo soluciona, resaltando el enfoque Arte (UI/UX intuitiva, visual), Ciencia (datos precisos, IA, pedagogía en la plataforma) y Tecnología (hardware ESP32/ARM, React, NodeJS, Open Source)."**
-    * **Prompt Texto (Tecnologías Clave):** **"Lista brevemente las tecnologías principales usadas: React, NodeJS, Python (para IA), ESP32/Raspberry Pi/ARM, LoRaWAN/WiFi/4G, IA (Visión por Computador), Bases de Datos (PostgreSQL/TimeSeries)."**
-  * **Estado Actual y Próximos Pasos:**
+### 🤝 ¡Únete a la (R)Evolución Agro-Tech!
 
-    * **Prompt Texto:** **"Describe que es un MVP funcional (React/NodeJS) con capacidades de [mencionar 1-2 funciones clave ya implementadas, ej: 'visualización de datos de sensores simulados/reales', 'prototipo de detección de anomalías con IA']. Menciona los próximos pasos (ej: 'pruebas de campo extendidas', 'integración de más sensores/IA', 'desarrollo de app móvil nativa', 'búsqueda de alianzas/financiación')."**
-  * **Llamado a la Colaboración/Apoyo:**
+**Cómo Colaborar**:
 
-    * **Prompt Texto (Cómo Colaborar):** **"Invita a desarrolladores (Frontend/React, Backend/NodeJS/Python, Firmware/C++, IA/ML), diseñadores UX/UI, testers y expertos en agronomía/apicultura a contribuir al proyecto (mencionar que es Open Source o que se busca que partes lo sean)."**
-    * **Prompt Texto (Oportunidades Inversión/Alianza):** **"Menciona de forma profesional que el proyecto busca** **inversión/alianzas estratégicas** **para escalar la producción del hardware, robustecer la plataforma software y expandir el impacto. Enfatizar la necesidad de** **infraestructura tecnológica, física y humana**."
-  * **Contacto:**
+Buscamos colaboradores en las siguientes áreas:
 
-    * **Prompt Texto:** **"Proporciona los medios de contacto de Lukas Moyano: Email, LinkedIn, y el mismo GitHub."**
-* **Formato y Emojis:**
+- **Desarrolladores**: Frontend (React), Backend (NodeJS/Python), Firmware (C++), IA/ML.
+- **Diseñadores**: UX/UI.
+- **Testers**: Pruebas de usabilidad y funcionalidad.
+- **Expertos**: Agronomía, apicultura, micología.
 
-  * **Usar encabezados Markdown (**##**,** **###**).
-  * **Listas con viñetas (*** **o** **-**).
-  * **Negritas** **para resaltar.**
-  * **Cursivas** **para énfasis o subtítulos.**
-  * **Emojis relevantes y profesionales para cada sección (🌱, 🤖, 🐝, 🇨🇴, 🎨, 🔬, 💻, 💡, 🚀, 🤝, 📈, 🛠️, 📊, 🛰️, 🧠, 🌍, ✉️, 🔗).**
-  * **Usar líneas horizontales (**---**) para separar los bloques de idioma.**
-  * **Incluir anclas HTML para la navegación entre idiomas.**
+**Oportunidades de Inversión/Alianza**:
 
-**III. Estilo y Tono (Para todos los idiomas):**
+Estamos en busca de **inversión y alianzas estratégicas** para:
 
-* **Entusiasta y Positivo:** **Transmitir la pasión por el proyecto.**
-* **Profesional y Creíble:** **Aunque alegre, mantener un lenguaje que inspire confianza.**
-* **Claro y Conciso:** **Especialmente importante en un README.**
-* **Orientado a la Acción:** **Motivar a la gente a involucrarse.**
-* **Inclusivo:** **El lenguaje debe ser acogedor para una comunidad diversa.**
+- Escalar la producción de hardware.
+- Robustecer la plataforma de software.
+- Expandir el impacto del proyecto.
 
-**IV. Traducción (Instrucción para la IA si es multilingüe, o para ti si traduces manualmente):**
+Necesitamos **infraestructura tecnológica, física y humana** para llevar CultivaTech ColombIA al siguiente nivel.
 
-* **Inglés:** **Usar** **British English** **para la terminología y la redacción.**
-* **Francés:** **Usar** **Francés de Francia** **para la terminología y la redacción.**
-* **Asegurar que el** **tono y la intención** **se mantengan consistentes a través de las traducciones.**
-# cultivaTech-colombia-frontend
+### 📬 Contacto
+
+- **Email**: [lukasmoyano@ir-productions.com](mailto:lukasmoyano@ir-productions.com)
+- **LinkedIn**: [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)
+- **GitHub**: [github.com/IR-Productions](https://github.com/IR-Productions)
+
+---
+
+## 🇬🇧 English
+
+### 👤 About Lukas Moyano & _-IR-_ Productions
+
+**Lukas Moyano** is a Colombian visual artist, educator, and technologist with a Master's in Visual Arts (Pontificia Universidad Javeriana), a degree in Pedagogy (Uniminuto), and training in Information Technologies (UNAL/MinTIC). He is the founder of **_-IR-_ Productions**, an initiative that merges **Art + Science + Technology** to drive sustainable transformation in key sectors such as agriculture, education, and culture.
+
+### 🌾 What is CultivaTech ColombIA?
+
+**CultivaTech ColombIA** is an **Agro-IoT** monitoring system designed for agro-fruit, mycological, and beekeeping crops. It combines smart sensors (ESP32, Raspberry Pi, ARM), artificial intelligence for anomaly detection, and a proprietary web/mobile platform to visualize data and alerts in real-time. Its main goal is to **empower Colombian producers** with accessible and precise tools to optimize their agricultural processes.
+
+### ❗ The Problem We're Solving
+
+The lack of precise and accessible tools for real-time monitoring in Colombian agriculture leads to inefficiencies, economic losses, and challenges in crop sustainability. Many producers lack timely information about their crops' conditions, making informed decision-making difficult.
+
+### 🎨🔬💻 Our Solution & Approach (Art+Science+Technology)
+
+- **Art**: Intuitive and visual interfaces that facilitate the understanding of complex data.
+- **Science**: Collection and analysis of precise data through sensors and AI algorithms.
+- **Technology**: Use of open-source hardware (ESP32, Raspberry Pi), development with React and NodeJS, and connectivity via LoRaWAN, WiFi, and 4G.
+
+### 🛠️ Key Technologies
+
+- **Frontend**: React
+- **Backend**: NodeJS
+- **AI**: Python (Computer Vision)
+- **Hardware**: ESP32, Raspberry Pi, ARM
+- **Connectivity**: LoRaWAN, WiFi, 4G
+- **Databases**: PostgreSQL, TimeSeries
+
+### 🚀 Current Project Status (MVP) & Next Steps
+
+We currently have a **functional MVP** developed in React and NodeJS, with capabilities including:
+
+- Visualization of simulated and real sensor data.
+- Anomaly detection prototype using AI.
+
+**Next steps**:
+
+- Extended field testing.
+- Integration of additional sensors and advanced AI.
+- Development of a native mobile application.
+- Seeking strategic partnerships and funding.
+
+### 🤝 Join the Agro-Tech (R)Evolution!
+
+**How to Collaborate**:
+
+We are looking for collaborators in the following areas:
+
+- **Developers**: Frontend (React), Backend (NodeJS/Python), Firmware (C++), AI/ML.
+- **Designers**: UX/UI.
+- **Testers**: Usability and functionality testing.
+- **Experts**: Agronomy, beekeeping, mycology.
+
+**Investment/Partnership Opportunities**:
+
+We are seeking **investment and strategic partnerships** to:
+
+- Scale hardware production.
+- Strengthen the software platform.
+- Expand the project's impact.
+
+We require **technological, physical, and human infrastructure** to take CultivaTech ColombIA to the next level.
+
+### 📬 Get in Touch
+
+- **Email**: [lukasmoyano@ir-productions.com](mailto:lukasmoyano@ir-productions.com)
+- **LinkedIn**: [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)
+- **GitHub**: [github.com/IR-Productions](https://github.com/IR-Productions)
+
+---
+
+## 🇫🇷 Français
+
+### 👤 À propos de Lukas Moyano & _-IR-_ Productions
+
+**Lukas Moyano** est un artiste visuel, pédagogue et technologue colombien titulaire d'une Maîtrise en Arts Visuels (Pontificia Universidad Javeriana), d'un diplôme en Pédagogie (Uniminuto) et d'une formation en Technologies de l'Information (UNAL/MinTIC). Il est le fondateur de **_-IR-_ Productions**, une initiative qui fusionne **Art + Science + Technologie** pour impulser une transformation durable dans des secteurs clés tels que l'agriculture, l'éducation et la culture.
+
+### 🌾 Qu'est-ce que CultivaTech ColombIA ?
+
+**CultivaTech ColombIA** est un système de surveillance **Agro-IoT** conçu pour les cultures agro-fruitières, mycologiques et apicoles. Il combine des capteurs intelligents (ESP32, Raspberry Pi, ARM), de l'intelligence artificielle pour la détection d'anomalies et une plateforme web/mobile propriétaire pour visualiser les données et les alertes en temps réel. Son objectif principal est d'**autonomiser les producteurs colombiens** avec des outils accessibles et précis pour optimiser leurs processus agricoles.
+
+### ❗ Le Problème que Nous Résolvons
+
+Le manque d'outils précis et accessibles pour la surveillance en temps réel dans l'agriculture colombienne entraîne des inefficacités, des pertes économiques et des défis en matière de durabilité des cultures. De nombreux producteurs manquent d'informations opportunes sur l'état de leurs cultures, ce qui rend la prise de décisions éclairées difficile.
+
+### 🎨🔬💻 Notre Solution et Approche (Art+Science+Technologie)
+
+- **Art** : Interfaces intuitives et visuelles facilitant la compréhension de données complexes.
+- **Science** : Collecte et analyse de données précises grâce à des capteurs et des algorithmes d'IA.
+- **Technologie** : Utilisation de matériel open-source (ESP32, Raspberry Pi), développement avec React et NodeJS, et connectivité via LoRaWAN, WiFi et 4G.
+
+### 🛠️ Technologies Clés
+
+- **Frontend** : React
+- **Backend** : NodeJS
+- **IA** : Python (Vision par Ordinateur)
+- **Matériel** : ESP32, Raspberry Pi, ARM
+
+::contentReference[oaicite:0]{index=0}
