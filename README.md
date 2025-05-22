@@ -159,7 +159,7 @@ We require **technological, physical, and human infrastructure** to take Cultiva
 ---
 ---
 
-## 🇫🇷 Français <a name="français">## 🇫🇷 Français</a>
+## 🇫🇷 Français <a name="français"></a>
 
 
 ### 👤 Présentation de Lukas Moyano et ___-IR-___ Productions
