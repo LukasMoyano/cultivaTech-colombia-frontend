@@ -81,7 +81,7 @@ Necesitamos **infraestructura tecnológica, física y humana** para llevar Culti
 
 - **Email**: [lukasmoyano@ir-productions.com](mailto:lukasmoyanomorales@gmail.com)
 - **LinkedIn**: [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)
-- **GitHub**: [github.com/IR-Productions](https://github.com/IR-Productions)
+- **GitHub**: [github.com/IR-Productions](https://github.com/LukasMoyano)
 
 ---
 
@@ -154,7 +154,7 @@ We require **technological, physical, and human infrastructure** to take Cultiva
 
 - **Email**: [lukasmoyano@ir-productions.com](mailto:lukasmoyanomorales@gmail.com)
 - **LinkedIn**: [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)
-- **GitHub**: [github.com/IR-Productions](https://github.com/IR-Productions)
+- **GitHub**: [github.com/IR-Productions](https://github.com/LukasMoyano)
 
 ---
 ---
