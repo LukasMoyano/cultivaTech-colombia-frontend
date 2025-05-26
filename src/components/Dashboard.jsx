@@ -77,7 +77,12 @@ export default function Dashboard({ setCurrentPage }) {
               </div>
             </li>
           </ul>
-          <button className="btn btn-secondary w-full mt-4">Ver Todas</button>
+          <button
+            className="btn btn-secondary w-full mt-4"
+            onClick={() => setCurrentPage("alertas")}
+          >
+            Ver Todas
+          </button>
         </div>
         {/* Clima */}
         <div className="card">
