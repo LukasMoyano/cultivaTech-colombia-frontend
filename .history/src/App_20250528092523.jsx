@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import Footer from "./components/Footer";
-import ChatBot from "./components/ChatBot";
+import { Chart } from "chart.js";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("ingreso"); // "ingreso" o "dashboard"
@@ -26,14 +26,8 @@ function App() {
         />
         <MainContent currentPage={currentPage} setCurrentPage={handleNav} />
       </div>
-
-      <iframe src="https://chat.openai.com/chat" frameborder="0">
-        <div className="chatbot-container">
-      import { Chart } from "ChatBot.js";
-          <ChatBot />
-        </div>
-      </iframe>
-
+      <div className="chatbot-container"></div>
+      <
       <Footer />
     </div>
   );

@@ -26,10 +26,10 @@ function App() {
         />
         <MainContent currentPage={currentPage} setCurrentPage={handleNav} />
       </div>
+      import { Chart } from "chart.js";
 
       <iframe src="https://chat.openai.com/chat" frameborder="0">
         <div className="chatbot-container">
-      import { Chart } from "ChatBot.js";
           <ChatBot />
         </div>
       </iframe>

@@ -28,8 +28,8 @@ function App() {
       </div>
 
       <iframe src="https://chat.openai.com/chat" frameborder="0">
+      import { Chart } from "chart.js";
         <div className="chatbot-container">
-      import { Chart } from "ChatBot.js";
           <ChatBot />
         </div>
       </iframe>

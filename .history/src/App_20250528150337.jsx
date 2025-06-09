@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import Footer from "./components/Footer";
+import { Chart } from "chart.js";
 import ChatBot from "./components/ChatBot";
 
 function App() {
@@ -26,10 +27,8 @@ function App() {
         />
         <MainContent currentPage={currentPage} setCurrentPage={handleNav} />
       </div>
-
       <iframe src="https://chat.openai.com/chat" frameborder="0">
         <div className="chatbot-container">
-      import { Chart } from "ChatBot.js";
           <ChatBot />
         </div>
       </iframe>
