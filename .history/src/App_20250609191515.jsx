@@ -30,10 +30,12 @@ function App() {
         <MainContent currentPage={currentPage} setCurrentPage={handleNav} />
       </div>
 
-      {/* Aquí va tu chatbot, NO dentro de un iframe */}
-      <div className="chatbot-container">
-        <ChatBot />
-      </div>
+      <iframe src="https://chat.openai.com/chat" frameBorder="0" title="OpenAI Chat">
+        <div className="chatbot-container">
+      import { Chart } from "ChatBot.js";
+          <ChatBot />
+        </div>
+      </iframe>
 
       <Footer />
     </div>

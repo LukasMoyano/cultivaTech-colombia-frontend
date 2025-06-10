@@ -30,7 +30,7 @@ export default function Header({ onMobileMenuClick, isAuthenticated }) {
 
         {/* Menú para pantallas grandes */}
         {isAuthenticated && (
-          <nav className="hidden md:flex gap-6 items-center">
+          <nav className="hidden md:flex gap-6 items-center"></nav>
             {menuItems.map((item, idx) => (
               <div
                 key={idx}

@@ -7,6 +7,7 @@ import ChatBot from "./components/ChatBot";
 
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
+import { Bar } from 'react-chartjs-2';
 
 function App() {
   const [currentPage, setCurrentPage] = useState("ingreso"); // "ingreso" o "dashboard"
@@ -30,10 +31,12 @@ function App() {
         <MainContent currentPage={currentPage} setCurrentPage={handleNav} />
       </div>
 
-      {/* Aquí va tu chatbot, NO dentro de un iframe */}
-      <div className="chatbot-container">
-        <ChatBot />
-      </div>
+      <iframe src="https://chat.openai.com/chat" frameborder="0">
+        <div className="chatbot-container">
+      import { Chart } from "ChatBot.js";
+          <ChatBot />
+        </div>
+      </iframe>
 
       <Footer />
     </div>
