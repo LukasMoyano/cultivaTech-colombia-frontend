@@ -38,20 +38,16 @@ export default function Dashboard({ setCurrentPage }) {
                 </button>
               </div>
             </div>
-              </div>
-              <div className="h-48 chart-container flex items-center justify-center">
-                {/* Aquí puedes poner un gráfico en el futuro */}
-                <span className="text-gray-400">(Gráfico próximamente)</span>
-              </div>
-
-
-                         {/* Reemplazamos solo la sección del clima */}
-            <DashboardClima />
             {/* Alertas y recomendaciones */}
             <div className="card">
               <div className="card-header flex items-center">
                 <span className="icon-placeholder">💡</span> Alertas y
                 Recomendaciones (Hoy)
+              </div>
+              <div className="h-48 chart-container flex items-center justify-center">
+                {/* Aquí puedes poner un gráfico en el futuro */}
+                <span className="text-gray-400">(Gráfico próximamente)</span>
+              </div>
               <ul className="space-y-3">
                 <li className="flex items-start p-2 rounded-md hover:bg-yellow-50 border border-transparent hover:border-yellow-300">
                   <span className="icon-placeholder text-yellow-500">💧</span>

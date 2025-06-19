@@ -17,7 +17,10 @@ export default function Dashboard({ setCurrentPage }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Primera columna del dashboard */}
           <div className="space-y-4">
-             {/* Estado General */}
+            {/* Reemplazamos solo la sección del clima */}
+            <DashboardClima />
+
+            {/* Estado General */}
             <div className="card md:col-span-2 lg:col-span-1">
               <div className="card-header flex items-center">
                 <span className="icon-placeholder">⭐</span> Estado General:
@@ -37,21 +40,17 @@ export default function Dashboard({ setCurrentPage }) {
                   Cambiar Cultivo
                 </button>
               </div>
-            </div>
-              </div>
               <div className="h-48 chart-container flex items-center justify-center">
                 {/* Aquí puedes poner un gráfico en el futuro */}
                 <span className="text-gray-400">(Gráfico próximamente)</span>
               </div>
-
-
-                         {/* Reemplazamos solo la sección del clima */}
-            <DashboardClima />
+            </div>
             {/* Alertas y recomendaciones */}
             <div className="card">
               <div className="card-header flex items-center">
                 <span className="icon-placeholder">💡</span> Alertas y
                 Recomendaciones (Hoy)
+              </div>
               <ul className="space-y-3">
                 <li className="flex items-start p-2 rounded-md hover:bg-yellow-50 border border-transparent hover:border-yellow-300">
                   <span className="icon-placeholder text-yellow-500">💧</span>

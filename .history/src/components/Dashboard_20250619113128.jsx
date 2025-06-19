@@ -43,10 +43,6 @@ export default function Dashboard({ setCurrentPage }) {
                 {/* Aquí puedes poner un gráfico en el futuro */}
                 <span className="text-gray-400">(Gráfico próximamente)</span>
               </div>
-
-
-                         {/* Reemplazamos solo la sección del clima */}
-            <DashboardClima />
             {/* Alertas y recomendaciones */}
             <div className="card">
               <div className="card-header flex items-center">
