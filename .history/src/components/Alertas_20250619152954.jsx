@@ -190,9 +190,7 @@ function useAlertasConCultivos() {
   useEffect(() => {
     const cultivos = getCultivos();
     // Asigna aleatoriamente un cultivo a cada alerta
-    const alertasConCultivos = baseAlertas.map((a) =>
-      asignarCultivo(a, cultivos)
-    );
+    const alertasConCultivos = baseAlertas.map((a) => asignarCultivo(a, cultivos));
     setAlertas(alertasConCultivos);
   }, []);
 
@@ -211,7 +209,9 @@ export default function Alertas() {
   const alertas = useAlertasConCultivos();
 
   const alertasFiltradas =
-    filtro === "todas" ? alertas : alertas.filter((a) => a.tipo === filtro);
+    filtro === "todas"
+      ? alertas
+      : alertas.filter((a) => a.tipo === filtro);
 
   return (
     <div className="container mx-auto p-4">

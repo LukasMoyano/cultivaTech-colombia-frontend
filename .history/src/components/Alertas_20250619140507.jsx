@@ -1,66 +1,7 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 
-// Utilidad para obtener cultivos del localStorage o valores por defecto
-function getCultivos() {
-  const local = localStorage.getItem("cultivos");
-  if (local) {
-    try {
-      return JSON.parse(local);
-    } catch {
-      return [
-        { nombre: "Tomates - Lote Sol Naciente" },
-        { nombre: "Fresas - El Edén" },
-        { nombre: "Pimientos - Lote Primavera" },
-        { nombre: "Maíz - Lote Esperanza" },
-        { nombre: "Lechugas - Lote Verde" },
-        { nombre: "Invernadero 1" },
-        { nombre: "Invernadero 2" },
-        { nombre: "Zona: General" },
-        { nombre: "Sistema de Riego" },
-        { nombre: "Robot: R2Campo" },
-        { nombre: "Robot: AgroBot" },
-      ];
-    }
-  }
-  return [
-    { nombre: "Tomates - Lote Sol Naciente" },
-    { nombre: "Fresas - El Edén" },
-    { nombre: "Pimientos - Lote Primavera" },
-    { nombre: "Maíz - Lote Esperanza" },
-    { nombre: "Lechugas - Lote Verde" },
-    { nombre: "Invernadero 1" },
-    { nombre: "Invernadero 2" },
-    { nombre: "Zona: General" },
-    { nombre: "Sistema de Riego" },
-    { nombre: "Robot: R2Campo" },
-    { nombre: "Robot: AgroBot" },
-  ];
-}
-
-// Utilidad para asignar aleatoriamente un cultivo a una alerta
-function asignarCultivo(alerta, cultivos) {
-  const idx = Math.floor(Math.random() * cultivos.length);
-  const cultivo = cultivos[idx]?.nombre || "Cultivo Desconocido";
-  // Reemplaza el nombre del cultivo en desc si existe el patrón
-  let desc = alerta.desc;
-  if (desc.includes("Cultivo:")) {
-    desc = desc.replace(/Cultivo:.*?\|/, `Cultivo: ${cultivo} |`);
-  } else if (desc.includes("Invernadero")) {
-    desc = desc.replace(/Invernadero \d+/, cultivo);
-  } else if (desc.includes("Zona:")) {
-    desc = desc.replace(/Zona:.*?\|/, `Zona: ${cultivo} |`);
-  } else if (desc.includes("Sistema de Riego")) {
-    desc = desc.replace(/Sistema de Riego/, cultivo);
-  } else if (desc.includes("Robot:")) {
-    desc = desc.replace(/Robot:.*?\|/, `Robot: ${cultivo} |`);
-  }
-  return { ...alerta, desc };
-}
-
-const baseAlertas = [
-  // ... (todas las alertas originales aquí, igual que antes)
-  // (Pega aquí el array de alertas que ya tienes, sin cambios)
+const alertas = [
+  // Críticas
   {
     tipo: "critica",
     color: "border-red-500 text-red-500",
@@ -101,6 +42,8 @@ const baseAlertas = [
     btn: "Ver Plaga",
     btnClass: "btn btn-critical text-xs mt-2 py-1 px-2",
   },
+
+  // Advertencias
   {
     tipo: "advertencia",
     color: "border-yellow-500 text-yellow-500",
@@ -141,6 +84,8 @@ const baseAlertas = [
     btn: "Ver Detalles",
     btnClass: "btn btn-secondary text-xs mt-2 py-1 px-2",
   },
+
+  // Recomendaciones
   {
     tipo: "recomendacion",
     color: "border-green-500 text-green-500",
@@ -183,22 +128,6 @@ const baseAlertas = [
   },
 ];
 
-// Hook para generar alertas con cultivos aleatorios
-function useAlertasConCultivos() {
-  const [alertas, setAlertas] = useState([]);
-
-  useEffect(() => {
-    const cultivos = getCultivos();
-    // Asigna aleatoriamente un cultivo a cada alerta
-    const alertasConCultivos = baseAlertas.map((a) =>
-      asignarCultivo(a, cultivos)
-    );
-    setAlertas(alertasConCultivos);
-  }, []);
-
-  return alertas;
-}
-
 const filtros = [
   { key: "todas", label: "Todas" },
   { key: "critica", label: "Críticas" },
@@ -208,10 +137,11 @@ const filtros = [
 
 export default function Alertas() {
   const [filtro, setFiltro] = useState("todas");
-  const alertas = useAlertasConCultivos();
 
   const alertasFiltradas =
-    filtro === "todas" ? alertas : alertas.filter((a) => a.tipo === filtro);
+    filtro === "todas"
+      ? alertas
+      : alertas.filter((a) => a.tipo === filtro);
 
   return (
     <div className="container mx-auto p-4">
