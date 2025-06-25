@@ -125,3 +125,11 @@ Header.propTypes = {
   sidebarOpen: PropTypes.bool,
 };
 
+/*
+  Explicación:
+  - El header cambia de estilo si el usuario está autenticado (más moderno y transparente).
+  - En móviles, solo se muestra el botón de menú y, si se despliega, los íconos con textos pequeños.
+  - En pantallas grandes, el menú es horizontal, con íconos y textos pequeños y armoniosos.
+  - Puedes controlar la visibilidad del menú móvil con un estado externo (ejemplo: showMobileMenu).
+  - Personaliza los íconos y textos del menú según tu app.
+*/

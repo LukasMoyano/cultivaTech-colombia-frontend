@@ -72,13 +72,6 @@ export default function Robot({ setCurrentPage }) {
               <button className="btn btn-secondary w-full">
                 Regresar a Base
               </button>
-              {/* Botón para ver cultivos */}
-              <button
-                className="btn btn-outline w-full"
-                onClick={() => setCurrentPage?.("cultivos")}
-              >
-                Ver Mis Cultivos
-              </button>
             </div>
           </div>
         </div>
@@ -87,7 +80,10 @@ export default function Robot({ setCurrentPage }) {
   );
 }
 
-// Validación de props
-Robot.propTypes = {
-  setCurrentPage: PropTypes.func,
-};
+/**
+ * Resumen de integración:
+ * - Este componente debe ser mostrado en la sección de monitoreo/control de robots de la app.
+ * - El mapa es solo un placeholder visual; para producción, se recomienda integrar Mapbox o similar.
+ * - Los datos de estado y controles son estáticos; para una app real, deben venir de props, contexto o API.
+ * - Los botones no tienen funcionalidad; se deben conectar a handlers que interactúen con el backend/robot.
+ */

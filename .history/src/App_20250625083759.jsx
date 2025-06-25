@@ -25,21 +25,14 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header mejorado con navegación completa */}
-      <Header
-        onMobileMenuClick={() => setSidebarOpen(!sidebarOpen)}
-        isAuthenticated={currentPage !== "ingreso"}
-        currentPage={currentPage}
-        onNav={handleNav}
-        sidebarOpen={sidebarOpen}
-      />
-      <div className="flex flex-1 flex-col lg:flex-row">
+      {/* Header con botón para abrir el menú en móvil */}
+      <Header onMobileMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+      <div className="flex flex-1 flex-col md:flex-row">
         {/* Sidebar de navegación, recibe el estado y función de navegación */}
         <Sidebar
           currentPage={currentPage}
           onNav={handleNav}
           sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
         />
         {/* Contenido principal, cambia según la página actual */}
         <MainContent currentPage={currentPage} setCurrentPage={handleNav} />

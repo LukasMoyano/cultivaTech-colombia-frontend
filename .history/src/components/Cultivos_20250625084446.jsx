@@ -192,12 +192,7 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
         </div>
         <div className="mt-6 space-x-3">
           <button className="btn btn-secondary">Ver Historial Completo</button>
-          <button
-            className="btn btn-primary"
-            onClick={() => setCurrentPage && setCurrentPage("robot")}
-          >
-            Programar Tarea Robot
-          </button>
+          <button className="btn btn-primary">Programar Tarea Robot</button>
         </div>
       </div>
     );
@@ -295,10 +290,3 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
     </div>
   );
 }
-
-// Validación de props
-Cultivos.propTypes = {
-  modoResumen: PropTypes.bool,
-  onSeleccionar: PropTypes.func,
-  setCurrentPage: PropTypes.func,
-};

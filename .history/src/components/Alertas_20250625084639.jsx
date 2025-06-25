@@ -272,8 +272,3 @@ export default function Alertas({ setCurrentPage }) {
     </div>
   );
 }
-
-// Validación de props
-Alertas.propTypes = {
-  setCurrentPage: PropTypes.func,
-};

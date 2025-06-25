@@ -295,10 +295,3 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
     </div>
   );
 }
-
-// Validación de props
-Cultivos.propTypes = {
-  modoResumen: PropTypes.bool,
-  onSeleccionar: PropTypes.func,
-  setCurrentPage: PropTypes.func,
-};

@@ -206,7 +206,7 @@ const filtros = [
   { key: "recomendacion", label: "Recomendaciones" },
 ];
 
-export default function Alertas({ setCurrentPage }) {
+export default function Alertas() {
   const [filtro, setFiltro] = useState("todas");
   const alertas = useAlertasConCultivos();
 
@@ -253,18 +253,7 @@ export default function Alertas({ setCurrentPage }) {
               <h3 className="font-semibold cultiva-text-main">{a.titulo}</h3>
               <p className="text-sm cultiva-text-secondary">{a.desc}</p>
               <p className="text-sm cultiva-text-main mt-1">{a.info}</p>
-              <button
-                className={a.btnClass}
-                onClick={() => {
-                  if (a.btn.includes("Robot") && setCurrentPage) {
-                    setCurrentPage("robot");
-                  } else if (a.btn.includes("Cultivo") && setCurrentPage) {
-                    setCurrentPage("cultivos");
-                  }
-                }}
-              >
-                {a.btn}
-              </button>
+              <button className={a.btnClass}>{a.btn}</button>
             </div>
           </div>
         ))}
@@ -272,8 +261,3 @@ export default function Alertas({ setCurrentPage }) {
     </div>
   );
 }
-
-// Validación de props
-Alertas.propTypes = {
-  setCurrentPage: PropTypes.func,
-};

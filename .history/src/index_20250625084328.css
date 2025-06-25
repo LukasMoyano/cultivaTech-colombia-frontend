@@ -26,28 +26,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn {
-  @apply py-3 px-6 rounded-lg font-semibold transition-all duration-300 text-center cursor-pointer border-0;
+  @apply py-3 px-6 rounded-lg font-semibold transition-colors duration-300 text-center cursor-pointer border-0;
 }
 .btn-primary {
-  @apply bg-cultiva-green-secondary text-cultiva-text-white hover:bg-[#588041] active:scale-95 shadow-md hover:shadow-lg;
+  @apply bg-cultiva-green-secondary text-cultiva-text-white hover:bg-[#588041] active:scale-95;
 }
 .btn-secondary {
-  @apply bg-[#f3a261] text-cultiva-text-white hover:bg-[#e7c46c] active:scale-95 shadow-md hover:shadow-lg;
+  @apply bg-[#f3a261] text-cultiva-text-white hover:bg-[#e7c46c] active:scale-95;
 }
 .btn-critical {
-  @apply bg-[#bc4748] text-cultiva-text-white hover:bg-[#a32f3f] active:scale-95 shadow-md hover:shadow-lg;
+  @apply bg-[#bc4748] text-cultiva-text-white hover:bg-[#a32f3f] active:scale-95;
 }
 .btn-nav {
-  @apply bg-cultiva-earth-main text-cultiva-bg-light hover:bg-[#7e6949] transition-all duration-200;
+  @apply bg-cultiva-earth-main text-cultiva-bg-light hover:bg-[#7e6949];
 }
 .btn-nav.active {
-  @apply bg-cultiva-green-main text-cultiva-text-white shadow-lg transform scale-105;
+  @apply bg-cultiva-green-main text-cultiva-text-white;
 }
 .btn-outline {
-  @apply border border-[#a77b55] text-[#a76b55] bg-transparent hover:bg-[#a76b55] hover:text-cultiva-bg-light transition-all duration-200;
+  @apply border border-[#a77b55] text-[#a76b55] bg-transparent hover:bg-[#a76b55] hover:text-cultiva-bg-light;
 }
 .card {
-  @apply bg-white rounded-xl shadow-md p-4 mb-4 transition-all duration-200 hover:shadow-lg;
+  @apply bg-white rounded-xl shadow-md p-4 mb-4;
 }
 .card-header {
   font-family: "Montserrat", sans-serif;
@@ -57,14 +57,6 @@ h1, h2, h3, h4, h5, h6 {
   padding-bottom: 0.75rem;
   margin-bottom: 0.75rem;
   border-bottom: 1px solid #e5e7eb;
-}
-
-/* Mejoras para el chatbot */
-.chatbot-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: var(--z-fixed);
 }
 .page {
   display: none;
