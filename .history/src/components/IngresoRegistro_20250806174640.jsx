@@ -138,15 +138,9 @@ export default function IngresoRegistro({ setCurrentPage }) {
                     Celular
                   </label>
                   <input
-                    type="text"
+                    type="tel"
                     className="shadow appearance-none border rounded w-full py-3 px-4 cultiva-text-main leading-tight focus:outline-none focus:shadow-outline focus:border-green-500"
                     placeholder="3001234567"
-                    onKeyPress={(e) => {
-                      const charCode = e.charCode;
-                      if (charCode < 48 || charCode > 57) {
-                        e.preventDefault();
-                      }
-                    }}
                     required
                   />
                 </div>

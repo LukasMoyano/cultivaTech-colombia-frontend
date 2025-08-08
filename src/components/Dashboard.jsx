@@ -19,7 +19,9 @@ const Dashboard = ({ setCurrentPage }) => {
     // Contenedor principal centrado y con padding
     <div className="container mx-auto p-4">
       {/* Título del panel */}
-      <h2 className="text-3xl font-bold cultiva-text-main mb-6"></h2>
+      <h2 className="text-3xl font-bold cultiva-text-main mb-6">
+        aqui que es esto 
+      </h2>
         Panel Principal
       {/* Descripción introductoria */}
       <p className="mb-6 cultiva-text-secondary">
