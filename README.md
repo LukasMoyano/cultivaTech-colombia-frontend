@@ -4,7 +4,7 @@
 </p>
 
 <h1 align="center">🌱🤖 CultivaTech ColombIA 🐝🇨🇴</h1>
-<p align="center"><i>Innovación Agro-IoT con Arte, Ciencia y Tecnología by <strong>_-IR-_</strong> Productions</i></p>
+<p align="center"><i>Innovación Agro-IoT con Arte, Ciencia y Tecnología by <strong> _-IR-_ </strong> Productions</i></p>
 <p align="center">
   <a href="#español">Español</a>
   <a href="#english">English</a> 
