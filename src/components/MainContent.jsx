@@ -7,6 +7,8 @@ import Dashboard from "./Dashboard";
 import Cultivos from "./Cultivos";
 import Alertas from "./Alertas";
 import Robot from "./Robot";
+import LandingPage from "./LandingPage";
+import JuegosIA from "./JuegosIA";
 
 // Componente principal que renderiza el contenido central de la aplicación.
 // Recibe dos props:
@@ -16,6 +18,11 @@ export default function MainContent({ currentPage, setCurrentPage }) {
   return (
     // El main ocupa el espacio principal y aplica un fondo personalizado.
     <main className="flex-1 cultiva-bg-light">
+      {/* Página de presentación inicial */}
+      {currentPage === "landing" && (
+        <LandingPage setCurrentPage={setCurrentPage} />
+      )}
+
       {/* Si la página actual es "ingreso", muestra el componente de ingreso/registro.
           Le pasa la función setCurrentPage para poder cambiar de página desde ese componente. */}
 
@@ -45,6 +52,11 @@ export default function MainContent({ currentPage, setCurrentPage }) {
       {/* Si la página actual es "robot", muestra el componente del robot.
           Recibe setCurrentPage para navegación desde el control del robot. */}
       {currentPage === "robot" && <Robot setCurrentPage={setCurrentPage} />}
+
+      {/* Página de juegos IA colaborativa */}
+      {currentPage === "juegos" && (
+        <JuegosIA setCurrentPage={setCurrentPage} />
+      )}
     </main>
   );
 }

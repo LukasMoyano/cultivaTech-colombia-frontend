@@ -146,63 +146,71 @@ export default function DashboardClima() {
     if (!weather || !userLocation) return null;
 
     return (
-        <div className="card">
-            <div className="card-header flex items-center justify-between">
+        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
+            <div className="flex items-center justify-between mb-6">
                 <span className="flex items-center gap-2">
-                    <span className="icon-placeholder">📍</span> 
-                    <span className="text-sm font-medium truncate max-w-[200px]" title={locationName}>
+                    <span className="text-2xl">📍</span> 
+                    <span className="text-lg font-bold text-gray-800 truncate max-w-[200px]" title={locationName}>
                         {locationName}
                     </span>
                 </span>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
                     Alt: {userLocation.alt !== 'No disponible' 
                         ? `${Math.round(userLocation.alt)}m` 
                         : 'No disponible'}
                 </span>
             </div>
             
-            <div className="text-center mt-4">
-                <p className="text-5xl cultiva-text-main">
+            <div className="text-center mb-6">
+                <p className="text-6xl font-bold bg-gradient-to-br from-blue-500 to-purple-500 bg-clip-text text-transparent mb-2">
                     {Math.round(weather.main.temp)}°C
                 </p>
-                <p className="cultiva-text-secondary capitalize">
+                <p className="text-gray-600 capitalize text-lg mb-4">
                     {weather.weather[0].description}
                 </p>
                 <img 
                     src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                     alt={weather.weather[0].description}
-                    className="mx-auto w-16 h-16"
+                    className="mx-auto w-20 h-20 drop-shadow-lg"
                 />
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-4">
-                <div className="text-center p-2 bg-gray-50 rounded">
-                    <p className="text-sm text-gray-500">Humedad</p>
-                    <p className="font-semibold">{weather.main.humidity}%</p>
+            <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="text-center p-4 bg-blue-50 rounded-xl border border-blue-200">
+                    <div className="text-2xl mb-2">💧</div>
+                    <p className="text-sm text-blue-600 font-medium">Humedad</p>
+                    <p className="font-bold text-blue-800 text-lg">{weather.main.humidity}%</p>
                 </div>
-                <div className="text-center p-2 bg-gray-50 rounded">
-                    <p className="text-sm text-gray-500">Viento</p>
-                    <p className="font-semibold">{Math.round(weather.wind.speed * 3.6)} km/h</p>
+                <div className="text-center p-4 bg-green-50 rounded-xl border border-green-200">
+                    <div className="text-2xl mb-2">💨</div>
+                    <p className="text-sm text-green-600 font-medium">Viento</p>
+                    <p className="font-bold text-green-800 text-lg">{Math.round(weather.wind.speed * 3.6)} km/h</p>
                 </div>
             </div>
 
-            <div className="mt-4 flex justify-around cultiva-text-secondary">
-                <p>Máx: {Math.round(weather.main.temp_max)}°C</p>
-                <p>Mín: {Math.round(weather.main.temp_min)}°C</p>
+            <div className="flex justify-around mb-6 p-4 bg-gray-50 rounded-xl">
+                <div className="text-center">
+                    <p className="text-sm text-gray-500">Máxima</p>
+                    <p className="font-bold text-red-600">{Math.round(weather.main.temp_max)}°C</p>
+                </div>
+                <div className="text-center">
+                    <p className="text-sm text-gray-500">Mínima</p>
+                    <p className="font-bold text-blue-600">{Math.round(weather.main.temp_min)}°C</p>
+                </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                <p className="text-center text-gray-500">
+            <div className="grid grid-cols-2 gap-2 text-xs mb-4">
+                <p className="text-center text-gray-500 bg-gray-50 py-2 rounded">
                     Lat: {userLocation.lat.toFixed(4)}
                 </p>
-                <p className="text-center text-gray-500">
+                <p className="text-center text-gray-500 bg-gray-50 py-2 rounded">
                     Lon: {userLocation.lon.toFixed(4)}
                 </p>
             </div>
 
             <button 
                 onClick={getUserLocation}
-                className="mt-4 w-full px-4 py-2 text-sm text-green-600 hover:text-green-700 transition"
+                className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-2 px-4 rounded-lg hover:from-green-600 hover:to-blue-600 transition-all text-sm font-medium"
             >
                 🔄 Actualizar ubicación
             </button>

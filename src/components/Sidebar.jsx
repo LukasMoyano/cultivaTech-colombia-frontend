@@ -10,11 +10,13 @@ import PropTypes from "prop-types";
  */
 export default function Sidebar({ currentPage, onNav, sidebarOpen, setSidebarOpen }) {
   const navItems = [
+    { key: "landing", icon: "🏠", label: "Inicio" },
     { key: "ingreso", icon: "🚪", label: "Ingreso/Registro" },
     { key: "dashboard", icon: "📊", label: "Panel Principal" },
     { key: "cultivos", icon: "🌱", label: "Mis Cultivos" },
     { key: "alertas", icon: "⚠️", label: "Alertas" },
     { key: "robot", icon: "🤖", label: "Control Robot" },
+    { key: "juegos", icon: "🎮", label: "Juegos IA" },
   ];
 
   // Función para manejar navegación y cerrar sidebar en móvil

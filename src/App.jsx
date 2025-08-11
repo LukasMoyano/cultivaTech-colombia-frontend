@@ -12,7 +12,7 @@ Chart.register(...registerables);
 
 function App() {
   // Estado para la página actual ("ingreso" o "dashboard")
-  const [currentPage, setCurrentPage] = useState("ingreso");
+  const [currentPage, setCurrentPage] = useState("landing");
   // Estado para controlar si el sidebar está abierto (en móvil)
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -28,28 +28,32 @@ function App() {
       {/* Header mejorado con navegación completa */}
       <Header
         onMobileMenuClick={() => setSidebarOpen(!sidebarOpen)}
-        isAuthenticated={currentPage !== "ingreso"}
+        isAuthenticated={currentPage !== "ingreso" && currentPage !== "landing"}
         currentPage={currentPage}
         onNav={handleNav}
         sidebarOpen={sidebarOpen}
       />
       <div className="flex flex-1 flex-col lg:flex-row">
         {/* Sidebar de navegación, recibe el estado y función de navegación */}
-        <Sidebar
-          currentPage={currentPage}
-          onNav={handleNav}
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-        />
+        {currentPage !== "landing" && (
+          <Sidebar
+            currentPage={currentPage}
+            onNav={handleNav}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
+        )}
         {/* Contenido principal, cambia según la página actual */}
         <MainContent currentPage={currentPage} setCurrentPage={handleNav} />
       </div>
       {/* Chatbot fijo en la interfaz */}
-      <div className="chatbot-container">
-        <ChatBot />
-      </div>
+      {currentPage !== "landing" && (
+        <div className="chatbot-container">
+          <ChatBot />
+        </div>
+      )}
       {/* Footer fijo abajo */}
-      <Footer />
+      {currentPage !== "landing" && <Footer />}
     </div>
   );
 }

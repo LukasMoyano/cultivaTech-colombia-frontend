@@ -17,14 +17,16 @@ import DashboardAlertasYRecomendaciones from "./Dashboardd_2panels/_dashboard_al
 const Dashboard = ({ setCurrentPage }) => {
   return (
     // Contenedor principal centrado y con padding
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-6">
       {/* Título del panel */}
-      <h2 className="text-3xl font-bold cultiva-text-main mb-6">
-        aqui que es esto 
-      </h2>
-        Panel Principal
+      <div className="mb-8">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
+          Panel Principal
+        </h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 rounded-full"></div>
+      </div>
       {/* Descripción introductoria */}
-      <p className="mb-6 cultiva-text-secondary">
+      <p className="mb-8 text-gray-600 text-lg leading-relaxed">
         Bienvenido a tu panel de control CultivaTech. Aquí encontrarás un
         resumen del estado de tus cultivos, alertas importantes y otra
         información relevante para ayudarte a tomar las mejores decisiones para
@@ -32,41 +34,46 @@ const Dashboard = ({ setCurrentPage }) => {
       </p>
 
       {/* Sección principal con grid para paneles */}
-      <div className="flex-1 p-4 min-h-0 overflow-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="flex-1 min-h-0 overflow-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* =========================
               Estado General del Cultivo
               ========================= */}
-          <div className="card md:col-span-2 lg:col-span-1">
-            <div className="card-header flex items-center">
+          <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
+            <div className="flex items-center justify-between mb-6">
               <span className="icon-placeholder">⭐</span> Estado General:
               Tomates - Lote Sol Naciente
-            </div>
-            <div className="text-center py-4">
-
-              {/* Indicador visual del estado */}
-              <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-green-500 cultiva-text-white text-3xl font-bold mb-2">
-                OK
-              </div>
-              <p className="cultiva-text-main text-lg font-semibold">
-                Riego óptimo. Sin alertas.
-              </p>
-              <p className="cultiva-text-secondary text-sm">
-                Temperatura promedio: 22°C
-              </p>
-              {/* Botón para cambiar de cultivo */}
-              <button className="mt-3 text-sm btn btn-outline">
+              <button
+                onClick={() => setCurrentPage("cultivos")}
+                className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full hover:bg-green-200 transition-colors"
+              >
                 Cambiar Cultivo
               </button>
+            </div>
+            <div className="text-center py-6">
+
+              {/* Indicador visual del estado */}
+              <div className="inline-flex items-center justify-center w-28 h-28 rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white text-3xl font-bold mb-4 shadow-lg">
+                OK
+              </div>
+              <p className="text-gray-800 text-xl font-semibold mb-2">
+                Riego óptimo. Sin alertas.
+              </p>
+              <p className="text-gray-600">
+                Temperatura promedio: 22°C
+              </p>
             </div>
           </div>
 
           {/* =========================
               Gráfico (placeholder)
               ========================= */}
-          <div className="h-48 chart-container flex items-center justify-center">
+          <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 flex items-center justify-center">
             {/* Aquí puedes poner un gráfico en el futuro */}
-            <span className="text-gray-400">(Gráfico próximamente)</span>
+            <div className="text-center">
+              <div className="text-4xl mb-4">📈</div>
+              <span className="text-gray-500 text-lg">(Gráfico próximamente)</span>
+            </div>
           </div>
 
           {/* =========================
@@ -86,12 +93,12 @@ const Dashboard = ({ setCurrentPage }) => {
       {/* =========================
           Paneles Secundarios (abajo)
           ========================= */}
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         {/* =========================
             Estado del Robot
             ========================= */}
-        <div className="card">
-          <div className="card-header flex items-center">
+        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
+          <div className="flex items-center mb-4">
             <span className="icon-placeholder">🤖</span> Robot CultivaTech
             "R2Campo"
           </div>
@@ -108,11 +115,11 @@ const Dashboard = ({ setCurrentPage }) => {
           </p>
           {/* Botones de acción para el robot */}
           <div className="mt-4 space-y-2">
-            <button className="btn btn-primary w-full">
+            <button className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-2 px-4 rounded-lg hover:from-green-600 hover:to-green-700 transition-all">
               Iniciar Monitoreo Programado
             </button>
             <button
-              className="btn btn-outline w-full"
+              className="w-full border border-green-500 text-green-600 py-2 px-4 rounded-lg hover:bg-green-50 transition-all"
               onClick={() => setCurrentPage("robot")}
             >
               Ver Mapa Robot
@@ -123,27 +130,27 @@ const Dashboard = ({ setCurrentPage }) => {
         {/* =========================
             Acceso Rápido a Cultivos
             ========================= */}
-        <div className="card">
-          <div className="card-header flex items-center">
+        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
+          <div className="flex items-center mb-4">
             <span className="icon-placeholder">🌾</span> Acceso Rápido
             Cultivos
           </div>
           {/* Botones para acceder rápidamente a diferentes cultivos */}
           <div className="space-y-2">
             <button
-              className="w-full text-left p-2 rounded hover:bg-gray-100 cultiva-text-main"
+              className="w-full text-left p-3 rounded-lg hover:bg-green-50 text-gray-700 border border-transparent hover:border-green-200 transition-all"
               onClick={() => setCurrentPage("cultivos")}
             >
               🍅 Tomates - Lote Sol Naciente
             </button>
             <button
-              className="w-full text-left p-2 rounded hover:bg-gray-100 cultiva-text-main"
+              className="w-full text-left p-3 rounded-lg hover:bg-green-50 text-gray-700 border border-transparent hover:border-green-200 transition-all"
               onClick={() => setCurrentPage("cultivos")}
             >
               🍓 Fresas - El Edén
             </button>
             <button
-              className="w-full text-left p-2 rounded hover:bg-gray-100 cultiva-text-main"
+              className="w-full text-left p-3 rounded-lg hover:bg-green-50 text-gray-700 border border-transparent hover:border-green-200 transition-all"
               onClick={() => setCurrentPage("cultivos")}
             >
               🌽 Maíz - La Esperanza
@@ -154,19 +161,25 @@ const Dashboard = ({ setCurrentPage }) => {
         {/* =========================
             Comunidad y Ayuda
             ========================= */}
-        <div className="card">
-          <div className="card-header flex items-center">
+        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
+          <div className="flex items-center mb-4">
             <span className="icon-placeholder">👥</span> Comunidad y Ayuda
           </div>
-          <p className="cultiva-text-secondary mb-3">
+          <p className="text-gray-600 mb-4">
             Conéctate con otros agricultores, comparte experiencias y
             resuelve dudas.
           </p>
           {/* Botones para acceder a la comunidad y FAQ */}
-          <button className="btn btn-nav w-full mb-2">
+          <button 
+            onClick={() => setCurrentPage("juegos")}
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all mb-2"
+          >
+            🎮 Juegos IA Colaborativa
+          </button>
+          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all mb-2">
             Foro de Agricultores
           </button>
-          <button className="btn btn-outline w-full">
+          <button className="w-full border border-gray-300 text-gray-600 py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
             Preguntas Frecuentes (FAQ)
           </button>
         </div>
