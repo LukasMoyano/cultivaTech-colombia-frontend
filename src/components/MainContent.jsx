@@ -17,7 +17,7 @@ import JuegosIA from "./JuegosIA";
 export default function MainContent({ currentPage, setCurrentPage }) {
   return (
     // El main ocupa el espacio principal y aplica un fondo personalizado.
-    <main className="flex-1 cultiva-bg-light">
+    <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-background">
       {/* Página de presentación inicial */}
       {currentPage === "landing" && (
         <LandingPage setCurrentPage={setCurrentPage} />

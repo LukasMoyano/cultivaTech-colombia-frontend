@@ -1,104 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Variables CSS para z-index consistente */
+/* 
+ * Theme - Default Day Mode
+ */
 :root {
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal-backdrop: 1040;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
-  --z-toast: 1080;
+  --color-primary: #E62A10; /* Red */
+  --color-secondary: #FDB813; /* Yellow/Orange */
+  --color-accent: #FDB813;
+  --color-background: #F0F0F0; /* Light Grey */
+  --color-text-main: #212121; /* Dark Grey */
+  --color-text-accent: #E62A10;
+  --color-border: #DDDDDD;
+  --color-background-card: #FFFFFF;
 }
 
-body {
-  font-family: "Nunito Sans", sans-serif;
-  background-color: #f1e8cf;
-  color: #212528;
-  overflow-x: hidden; /* Previene scroll horizontal */
+/* 
+ * Theme - Night Mode
+ */
+[data-theme='night'] {
+  --color-primary: #7B2C84; /* Purple */
+  --color-secondary: #99FF00; /* Neon Green */
+  --color-accent: #99FF00;
+  --color-background: #1A1A1A; /* Near Black */
+  --color-text-main: #EAEAEA; /* Light Grey */
+  --color-text-accent: #99FF00;
+  --color-border: #444444;
+  --color-background-card: #2A2A2A;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Montserrat", sans-serif;
-}
+@layer base {
+  html {
+    font-size: 16px;
+  }
 
-.btn {
-  @apply py-3 px-6 rounded-lg font-semibold transition-all duration-300 text-center cursor-pointer border-0;
-}
-.btn-primary {
-  @apply bg-cultiva-green-secondary text-cultiva-text-white hover:bg-[#588041] active:scale-95 shadow-md hover:shadow-lg;
-}
-.btn-secondary {
-  @apply bg-[#f3a261] text-cultiva-text-white hover:bg-[#e7c46c] active:scale-95 shadow-md hover:shadow-lg;
-}
-.btn-critical {
-  @apply bg-[#bc4748] text-cultiva-text-white hover:bg-[#a32f3f] active:scale-95 shadow-md hover:shadow-lg;
-}
-.btn-nav {
-  @apply bg-cultiva-earth-main text-cultiva-bg-light hover:bg-[#7e6949] transition-all duration-200;
-}
-.btn-nav.active {
-  @apply bg-cultiva-green-main text-cultiva-text-white shadow-lg transform scale-105;
-}
-.btn-outline {
-  @apply border border-[#a77b55] text-[#a76b55] bg-transparent hover:bg-[#a76b55] hover:text-cultiva-bg-light transition-all duration-200;
-}
-.card {
-  @apply bg-white rounded-xl shadow-md p-4 mb-4 transition-all duration-200 hover:shadow-lg;
-}
-.card-header {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: #386640;
-  padding-bottom: 0.75rem;
-  margin-bottom: 0.75rem;
-  border-bottom: 1px solid #e5e7eb;
-}
+  body {
+    @apply bg-background text-text-main font-sans;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 
-/* Mejoras para el chatbot */
-.chatbot-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: var(--z-fixed);
-}
-.page {
-  display: none;
-  padding: 1rem;
-  animation: fadeIn 1.5s;
-}
-.page.active {
-  display: block;
-}
-.icon-placeholder {
-  display: inline-block;
-  font-size: 1.5em;
-  margin-right: 1.5rem;
-  vertical-align: middle;
-}
-.chart-container {
-  position: relative;
-  width: 99%;
-  max-width: 599px;
-  margin-left: auto;
-  margin-right: auto;
-  height: 299px;
-  max-height: 349px;
-}
-@media (min-width: 767px) {
-  .chart-container {
-    height: 349px;
-    max-height: 399px;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading text-text-accent;
   }
 }
-.precolumbian-border-subtle {
-  border: 1px solid #a77b55;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+
+/* You can add component-level overrides here if needed */
+.btn-primary {
+    @apply bg-primary text-white; /* Assuming you want high contrast text on buttons */
 }

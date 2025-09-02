@@ -16,173 +16,145 @@ import DashboardAlertasYRecomendaciones from "./Dashboardd_2panels/_dashboard_al
  */
 const Dashboard = ({ setCurrentPage }) => {
   return (
-    // Contenedor principal centrado y con padding
+    // Contenedor principal con padding
     <div className="container mx-auto p-6">
       {/* Título del panel */}
-      <div className="mb-8">
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
-          Panel Principal
-        </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 rounded-full"></div>
-      </div>
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold text-text-accent mb-2 font-heading">
+          PANEL PRINCIPAL
+        </h1>
+        <div className="w-24 h-1 bg-primary rounded-full"></div>
+      </header>
       {/* Descripción introductoria */}
-      <p className="mb-8 text-gray-600 text-lg leading-relaxed">
-        Bienvenido a tu panel de control CultivaTech. Aquí encontrarás un
-        resumen del estado de tus cultivos, alertas importantes y otra
-        información relevante para ayudarte a tomar las mejores decisiones para
-        tu campo.
+      <p className="mb-8 text-text-main text-lg leading-relaxed">
+        Bienvenido a tu panel de control de CultivaTech ColombIA. Aquí encontrarás un resumen del estado de tus cultivos, alertas importantes y otra información relevante para ayudarte a tomar las mejores decisiones para tu campo.
       </p>
 
       {/* Sección principal con grid para paneles */}
-      <div className="flex-1 min-h-0 overflow-auto">
+      <main className="flex-1 min-h-0 overflow-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* =========================
-              Estado General del Cultivo
-              ========================= */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
-            <div className="flex items-center justify-between mb-6">
-              <span className="icon-placeholder">⭐</span> Estado General:
-              Tomates - Lote Sol Naciente
+          
+          <section aria-labelledby="estado-general-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
+            <h2 id="estado-general-titulo" className="flex items-center justify-between mb-6 font-heading text-xl">
+              <span className="text-accent">⭐ ESTADO GENERAL</span>
               <button
                 onClick={() => setCurrentPage("cultivos")}
-                className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full hover:bg-green-200 transition-colors"
+                className="text-sm bg-secondary/20 text-text-accent px-3 py-1 hover:bg-secondary/40 transition-colors"
               >
                 Cambiar Cultivo
               </button>
-            </div>
+            </h2>
             <div className="text-center py-6">
-
-              {/* Indicador visual del estado */}
-              <div className="inline-flex items-center justify-center w-28 h-28 rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white text-3xl font-bold mb-4 shadow-lg">
+              <div className="inline-flex items-center justify-center w-28 h-28 border-4 border-secondary text-accent text-3xl font-bold mb-4">
                 OK
               </div>
-              <p className="text-gray-800 text-xl font-semibold mb-2">
+              <p className="text-text-main text-xl font-semibold mb-2">
                 Riego óptimo. Sin alertas.
               </p>
-              <p className="text-gray-600">
+              <p className="text-text-main/80">
                 Temperatura promedio: 22°C
               </p>
             </div>
-          </div>
+          </section>
 
-          {/* =========================
-              Gráfico (placeholder)
-              ========================= */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 flex items-center justify-center">
-            {/* Aquí puedes poner un gráfico en el futuro */}
+          <section aria-labelledby="grafico-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300 flex items-center justify-center">
+            <h2 id="grafico-titulo" className="sr-only">Gráfico</h2>
             <div className="text-center">
               <div className="text-4xl mb-4">📈</div>
-              <span className="text-gray-500 text-lg">(Gráfico próximamente)</span>
+              <span className="text-text-main/70 text-lg">(Gráfico próximamente)</span>
             </div>
-          </div>
+          </section>
 
-          {/* =========================
-              Panel de Clima
-              ========================= */}
-          {/* Componente que muestra información climática */}
-          <DashboardClima />
+          <section aria-label="Panel de Clima">
+            <DashboardClima />
+          </section>
+          
+          <section aria-label="Panel de Alertas y Recomendaciones">
+            <DashboardAlertasYRecomendaciones setCurrentPage={setCurrentPage} />
+          </section>
 
-          {/* =========================
-              Alertas y Recomendaciones
-              ========================= */}
-          {/* Componente que muestra alertas y recomendaciones, recibe setCurrentPage como prop */}
-          <DashboardAlertasYRecomendaciones setCurrentPage={setCurrentPage} />
         </div>
-      </div>
+      </main>
 
-      {/* =========================
-          Paneles Secundarios (abajo)
-          ========================= */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        {/* =========================
-            Estado del Robot
-            ========================= */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
-          <div className="flex items-center mb-4">
-            <span className="icon-placeholder">🤖</span> Robot CultivaTech
-            "R2Campo"
-          </div>
-          <p>
+        
+        <section aria-labelledby="robot-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
+          <h2 id="robot-titulo" className="flex items-center mb-4 font-heading text-accent text-xl">
+            <span className="mr-2">🤖</span> ROBOT CULTIVATECH
+          </h2>
+          <p className="text-text-main">
             <span className="font-semibold">Estado:</span> En base, cargando
           </p>
-          <p>
-            <span className="font-semibold">Batería:</span>{" "}
-            <span className="icon-placeholder">🔋</span> 75%
+          <p className="text-text-main">
+            <span className="font-semibold">Batería:</span>
+            <span className="text-accent ml-2">🔋 75%</span>
           </p>
-          <p>
-            <span className="font-semibold">Conexión:</span>{" "}
-            <span className="icon-placeholder">📶</span> Fuerte
+          <p className="text-text-main">
+            <span className="font-semibold">Conexión:</span>
+            <span className="text-accent ml-2">📶 Fuerte</span>
           </p>
-          {/* Botones de acción para el robot */}
           <div className="mt-4 space-y-2">
-            <button className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-2 px-4 rounded-lg hover:from-green-600 hover:to-green-700 transition-all">
-              Iniciar Monitoreo Programado
+            <button className="w-full bg-primary text-white py-2 px-4 hover:bg-primary/80 transition-all font-heading">
+              INICIAR MONITOREO
             </button>
             <button
-              className="w-full border border-green-500 text-green-600 py-2 px-4 rounded-lg hover:bg-green-50 transition-all"
+              className="w-full border border-secondary text-secondary py-2 px-4 hover:bg-secondary/20 transition-all font-heading"
               onClick={() => setCurrentPage("robot")}
             >
-              Ver Mapa Robot
+              VER MAPA ROBOT
             </button>
           </div>
-        </div>
+        </section>
 
-        {/* =========================
-            Acceso Rápido a Cultivos
-            ========================= */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
-          <div className="flex items-center mb-4">
-            <span className="icon-placeholder">🌾</span> Acceso Rápido
-            Cultivos
-          </div>
-          {/* Botones para acceder rápidamente a diferentes cultivos */}
+        <section aria-labelledby="cultivos-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
+          <h2 id="cultivos-titulo" className="flex items-center mb-4 font-heading text-accent text-xl">
+            <span className="mr-2">🌾</span> ACCESO RÁPIDO
+          </h2>
           <div className="space-y-2">
             <button
-              className="w-full text-left p-3 rounded-lg hover:bg-green-50 text-gray-700 border border-transparent hover:border-green-200 transition-all"
+              className="w-full text-left p-3 hover:bg-secondary/10 text-text-main border border-transparent hover:border-secondary/30 transition-all"
               onClick={() => setCurrentPage("cultivos")}
             >
               🍅 Tomates - Lote Sol Naciente
             </button>
             <button
-              className="w-full text-left p-3 rounded-lg hover:bg-green-50 text-gray-700 border border-transparent hover:border-green-200 transition-all"
+              className="w-full text-left p-3 hover:bg-secondary/10 text-text-main border border-transparent hover:border-secondary/30 transition-all"
               onClick={() => setCurrentPage("cultivos")}
             >
               🍓 Fresas - El Edén
             </button>
             <button
-              className="w-full text-left p-3 rounded-lg hover:bg-green-50 text-gray-700 border border-transparent hover:border-green-200 transition-all"
+              className="w-full text-left p-3 hover:bg-secondary/10 text-text-main border border-transparent hover:border-secondary/30 transition-all"
               onClick={() => setCurrentPage("cultivos")}
             >
               🌽 Maíz - La Esperanza
             </button>
           </div>
-        </div>
+        </section>
 
-        {/* =========================
-            Comunidad y Ayuda
-            ========================= */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
-          <div className="flex items-center mb-4">
-            <span className="icon-placeholder">👥</span> Comunidad y Ayuda
-          </div>
-          <p className="text-gray-600 mb-4">
-            Conéctate con otros agricultores, comparte experiencias y
-            resuelve dudas.
+        <section aria-labelledby="comunidad-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
+          <h2 id="comunidad-titulo" className="flex items-center mb-4 font-heading text-accent text-xl">
+            <span className="mr-2">👥</span> COMUNIDAD Y AYUDA
+          </h2>
+          <p className="text-text-main/90 mb-4">
+            Conéctate con otros agricultores, comparte experiencias y resuelve dudas.
           </p>
-          {/* Botones para acceder a la comunidad y FAQ */}
-          <button 
-            onClick={() => setCurrentPage("juegos")}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all mb-2"
-          >
-            🎮 Juegos IA Colaborativa
-          </button>
-          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all mb-2">
-            Foro de Agricultores
-          </button>
-          <button className="w-full border border-gray-300 text-gray-600 py-2 px-4 rounded-lg hover:bg-gray-50 transition-all">
-            Preguntas Frecuentes (FAQ)
-          </button>
-        </div>
+          <div className="space-y-2">
+            <button 
+              onClick={() => setCurrentPage("juegos")}
+              className="w-full bg-primary text-white py-2 px-4 hover:bg-primary/80 transition-all font-heading"
+            >
+              🎮 JUEGOS IA COLABORATIVA
+            </button>
+            <button className="w-full bg-secondary text-black py-2 px-4 hover:bg-secondary/80 transition-all font-heading">
+              FORO DE AGRICULTORES
+            </button>
+            <button className="w-full border border-border text-text-main py-2 px-4 hover:bg-background transition-all">
+              Preguntas Frecuentes (FAQ)
+            </button>
+          </div>
+        </section>
+
       </div>
     </div>
   );

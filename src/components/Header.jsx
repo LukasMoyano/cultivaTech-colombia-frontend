@@ -1,14 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-/**
- * Header component - Barra de navegación principal
- * @param {function} onMobileMenuClick - Callback para abrir/cerrar menú móvil
- * @param {boolean} isAuthenticated - Si el usuario está autenticado
- * @param {string} currentPage - Página actual para resaltar en navegación
- * @param {function} onNav - Función de navegación
- * @param {boolean} sidebarOpen - Estado del sidebar móvil
- */
+import { ThemeToggleButton } from "./ui/ThemeToggleButton";
 export default function Header({
   onMobileMenuClick,
   isAuthenticated,
@@ -16,121 +8,86 @@ export default function Header({
   onNav,
   sidebarOpen
 }) {
-  // Elementos de navegación principales - conectados con el sidebar
+  // Base nav items
   const navItems = [
     { key: "dashboard", icon: "📊", label: "Panel" },
     { key: "cultivos", icon: "🌱", label: "Cultivos" },
     { key: "alertas", icon: "⚠️", label: "Alertas" },
     { key: "robot", icon: "🤖", label: "Robot" },
   ];
-
-  // Estilos condicionales mejorados
-  const headerClass = isAuthenticated
-    ? "backdrop-blur-md bg-white/90 shadow-lg sticky top-0 z-50 transition-all duration-300 border-b border-gray-200"
-    : "cultiva-green-main shadow-md sticky top-0 z-50 transition-all duration-300";
-
-  const textColorClass = isAuthenticated
-    ? "text-cultiva-text-main"
-    : "text-cultiva-text-light";
+  
+  // Add "Presentation" link if authenticated
+  if (isAuthenticated) {
+    navItems.unshift({ key: "landing", icon: "🏠", label: "Presentación" });
+  }
 
   return (
-    <header className={headerClass}>
+    <header className="bg-background text-text-main shadow-md sticky top-0 z-50 border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-3">
-          {/* Logo/Título - clickeable para ir al dashboard */}
           <button
-            onClick={() => isAuthenticated ? onNav("dashboard") : onNav("ingreso")}
-            className={`text-xl md:text-2xl font-bold flex items-center gap-2 hover:opacity-80 transition-opacity ${textColorClass}`}
+            onClick={() => isAuthenticated ? onNav("dashboard") : onNav("landing")}
+            className="text-xl md:text-2xl flex items-center gap-2 hover:opacity-80 transition-opacity font-heading text-text-accent"
           >
             <span role="img" aria-label="logo">🌿</span>
             <span className="hidden sm:inline">CultivaTech ColombIA</span>
             <span className="sm:hidden">CultivaTech</span>
           </button>
 
-          {/* Navegación para pantallas grandes - solo si está autenticado */}
           {isAuthenticated && (
             <nav className="hidden lg:flex gap-1 items-center">
               {navItems.map((item) => (
                 <button
                   key={item.key}
                   onClick={() => onNav(item.key)}
-                  className={`flex flex-col items-center px-3 py-2 rounded-lg text-sm transition-all duration-200 hover:bg-white/20 ${
+                  className={`flex flex-col items-center px-3 py-2 text-sm transition-all duration-200 hover:bg-secondary/20 font-heading ${ 
                     currentPage === item.key
-                      ? 'bg-cultiva-green-main text-white shadow-md'
-                      : textColorClass
+                      ? 'text-primary'
+                      : 'text-text-main'
                   }`}
                 >
                   <span className="text-lg mb-1">{item.icon}</span>
-                  <span className="text-xs font-medium">{item.label}</span>
+                  <span className="text-xs">{item.label.toUpperCase()}</span>
                 </button>
               ))}
             </nav>
           )}
 
-          {/* Botón menú móvil - mejorado */}
-          <button
-            onClick={onMobileMenuClick}
-            className={`lg:hidden p-2 rounded-lg transition-all duration-200 hover:bg-white/20 ${textColorClass}`}
-            aria-label={sidebarOpen ? "Cerrar menú" : "Abrir menú"}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              className={`w-6 h-6 transition-transform duration-200 ${sidebarOpen ? 'rotate-90' : ''}`}
-            >
-              {sidebarOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              )}
-            </svg>
-          </button>
-        </div>
-
-        {/* Navegación móvil horizontal - solo en tablets */}
-        {isAuthenticated && (
-          <nav className="hidden md:flex lg:hidden border-t border-white/20 pt-2 pb-1 -mx-4 px-4">
-            <div className="flex justify-around w-full">
-              {navItems.map((item) => (
-                <button
-                  key={item.key}
-                  onClick={() => onNav(item.key)}
-                  className={`flex flex-col items-center px-2 py-1 rounded text-xs transition-all duration-200 ${
-                    currentPage === item.key
-                      ? 'bg-white/20 text-white'
-                      : `${textColorClass} hover:bg-white/10`
-                  }`}
+          <div className="flex items-center gap-4">
+            <ThemeToggleButton />
+            {isAuthenticated && (
+              <button
+                onClick={onMobileMenuClick}
+                className="lg:hidden p-2 transition-all duration-200 hover:bg-secondary/20 text-text-main"
+                aria-label={sidebarOpen ? "Cerrar menú" : "Abrir menú"}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  className={`w-6 h-6 transition-transform duration-200 ${sidebarOpen ? 'rotate-90' : ''}`}
                 >
-                  <span className="text-base mb-1">{item.icon}</span>
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              ))}
-            </div>
-          </nav>
-        )}
+                  {sidebarOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  )}
+                </svg>
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </header>
   );
 }
 
-// Validación de props con PropTypes
 Header.propTypes = {
-  // onMobileMenuClick es obligatorio y debe ser una función.
   onMobileMenuClick: PropTypes.func.isRequired,
-
-  // isAuthenticated es opcional y debe ser un booleano.
   isAuthenticated: PropTypes.bool,
-
-  // currentPage es opcional y debe ser una cadena de texto.
   currentPage: PropTypes.string,
-
-  // onNav es opcional y debe ser una función.
   onNav: PropTypes.func,
-
-  // sidebarOpen es opcional y debe ser un booleano.
   sidebarOpen: PropTypes.bool,
 };
-

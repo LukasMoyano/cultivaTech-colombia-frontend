@@ -1,0 +1,71 @@
+/* Importar fuentes de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;500;700&display=swap');
+
+/* Variables globales de color */
+:root {
+  --primary-yellow: #FCD116;
+  --primary-blue: #003893;
+  --primary-red: #CE1126;
+  --emerald-green: #50C878;
+  --orchid-purple: #DA70D6;
+  --coffee-brown: #6F4E37;
+  --ocean-blue: #1E90FF;
+}
+
+/* Estilos base */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #FFF8E7; /* Beige claro */
+  color: #5D4037; /* Marrón oscuro */
+}
+
+h1, h2, h3 {
+  font-family: 'Lobster', cursive;
+  color: var(--primary-blue);
+}
+
+/* Ejemplo de botón colombiano */
+.colombian-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.colombian-btn-primary {
+  background-color: var(--primary-yellow);
+  color: var(--primary-blue);
+  border: 2px solid var(--primary-blue);
+}
+
+.colombian-btn-primary:hover {
+  background-color: var(--primary-blue);
+  color: var(--primary-yellow);
+}
+
+/* Tarjeta cultural */
+.colombian-card {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1), 0 0 0 1px rgba(252,209,22,0.5);
+  background-color: white;
+  min-height: 280px;
+  position: relative;
+}
+
+.colombian-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url('/colombian-assets/patterns/geometric-pattern.svg');
+  background-size: 200px;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.colombian-card-content {
+  position: relative;
+  z-index: 1;
+}
