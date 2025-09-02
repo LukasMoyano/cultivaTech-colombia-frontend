@@ -14,7 +14,7 @@ const CtaSlide = ({ setCurrentPage }) => {
       <div>
         <div className="text-6xl mb-4">🌾✨</div>
         <p className="text-xl text-text-main mb-6">
-          Más de <strong className="text-accent">1000+ agricultores</strong> ya confían en CultivaTech ColombIA
+          Los<strong className="text-accent"> Agricultores </strong>en Colombia ya confían en CultivaTech ColombIA
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">

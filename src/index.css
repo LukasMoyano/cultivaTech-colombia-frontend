@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -10,12 +10,12 @@
 :root {
   --color-primary: #E62A10; /* Red */
   --color-secondary: #FDB813; /* Yellow/Orange */
-  --color-accent: #FDB813;
-  --color-background: #F0F0F0; /* Light Grey */
-  --color-text-main: #212121; /* Dark Grey */
-  --color-text-accent: #E62A10;
-  --color-border: #DDDDDD;
-  --color-background-card: #FFFFFF;
+  --color-accent: #1a8a40a2; /* Using primary red for main accents */
+  --color-background: #F3EFE0; /* Warm Beige */
+  --color-text-main: #433A3F; /* Dark Warm Brown */
+  --color-text-accent: #433A3F; /* Dark Warm Brown for titles */
+  --color-border: #DCD5C9; /* Darker Beige */
+  --color-background-card: #FCFCFC; /* Off-White */
 }
 
 /* 
