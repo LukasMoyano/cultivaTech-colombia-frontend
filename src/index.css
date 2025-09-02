@@ -6,23 +6,19 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
- * EVA-02 (Asuka) Theme - Default Day Mode
- */
+
 :root {
   --color-primary: #E62A10; /* Red */
   --color-secondary: #FDB813; /* Yellow/Orange */
-  --color-accent: #1a8a40a2; /* Using primary red for main accents */
-  --color-background: #F3EFE0; /* Warm Beige */
-  --color-text-main: #433A3F; /* Dark Warm Brown */
-  --color-text-accent: #433A3F; /* Dark Warm Brown for titles */
-  --color-border: #DCD5C9; /* Darker Beige */
-  --color-background-card: #FCFCFC; /* Off-White */
+  --color-accent: #1a8a40; /* Green */
+  --color-background: #FFF8E1; /* Lighter Cream for better contrast */
+  --color-text-main: #212121; /* Nearly Black for better readability */
+  --color-text-accent: #1A1A1A; /* Darker for titles */
+  --color-border: #BDBDBD; /* Medium Gray for better visibility */
+  --color-background-card: #FFFFFF; /* Pure White for cards */
 }
 
-/* 
- * Theme - Night Mode
- */
+
 [data-theme='night'] {
   --color-primary: #7B2C84; /* Purple */
   --color-secondary: #99FF00; /* Neon Green */

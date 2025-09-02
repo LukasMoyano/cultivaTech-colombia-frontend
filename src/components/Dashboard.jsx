@@ -79,7 +79,7 @@ const Dashboard = ({ setCurrentPage }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         
         <section aria-labelledby="robot-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
-          <h2 id="robot-titulo" className="flex items-center mb-4 font-heading text-accent text-xl">
+          <h2 id="robot-titulo" className="flex items-center mb-4 font-heading text-text-accent text-xl">
             <span className="mr-2">🤖</span> ROBOT CULTIVATECH
           </h2>
           <p className="text-text-main">
@@ -94,65 +94,43 @@ const Dashboard = ({ setCurrentPage }) => {
             <span className="text-accent ml-2">📶 Fuerte</span>
           </p>
           <div className="mt-4 space-y-2">
-            <button className="w-full bg-primary text-white py-2 px-4 hover:bg-primary/80 transition-all font-heading">
-              INICIAR MONITOREO
-            </button>
-            <button
-              className="w-full border border-secondary text-secondary py-2 px-4 hover:bg-secondary/20 transition-all font-heading"
+            <button 
+              className="w-full bg-primary text-white py-2 px-4 hover:bg-primary/80 transition-all font-heading"
               onClick={() => setCurrentPage("robot")}
             >
-              VER MAPA ROBOT
+              VER DETALLES ROBOT
             </button>
           </div>
         </section>
 
         <section aria-labelledby="cultivos-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
-          <h2 id="cultivos-titulo" className="flex items-center mb-4 font-heading text-accent text-xl">
-            <span className="mr-2">🌾</span> ACCESO RÁPIDO
+          <h2 id="cultivos-titulo" className="flex items-center mb-4 font-heading text-text-accent text-xl">
+            <span className="mr-2">🌾</span> CULTIVOS
           </h2>
-          <div className="space-y-2">
-            <button
-              className="w-full text-left p-3 hover:bg-secondary/10 text-text-main border border-transparent hover:border-secondary/30 transition-all"
-              onClick={() => setCurrentPage("cultivos")}
-            >
-              🍅 Tomates - Lote Sol Naciente
-            </button>
-            <button
-              className="w-full text-left p-3 hover:bg-secondary/10 text-text-main border border-transparent hover:border-secondary/30 transition-all"
-              onClick={() => setCurrentPage("cultivos")}
-            >
-              🍓 Fresas - El Edén
-            </button>
-            <button
-              className="w-full text-left p-3 hover:bg-secondary/10 text-text-main border border-transparent hover:border-secondary/30 transition-all"
-              onClick={() => setCurrentPage("cultivos")}
-            >
-              🌽 Maíz - La Esperanza
-            </button>
-          </div>
+          <p className="text-text-main mb-4">
+            Gestiona tus cultivos y monitorea su estado en tiempo real.
+          </p>
+          <button
+            className="w-full bg-secondary text-black py-2 px-4 hover:bg-secondary/80 transition-all font-heading"
+            onClick={() => setCurrentPage("cultivos")}
+          >
+            VER CULTIVOS
+          </button>
         </section>
 
-        <section aria-labelledby="comunidad-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
-          <h2 id="comunidad-titulo" className="flex items-center mb-4 font-heading text-accent text-xl">
-            <span className="mr-2">👥</span> COMUNIDAD Y AYUDA
+        <section aria-labelledby="alertas-titulo" className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
+          <h2 id="alertas-titulo" className="flex items-center mb-4 font-heading text-text-accent text-xl">
+            <span className="mr-2">⚠️</span> ALERTAS
           </h2>
-          <p className="text-text-main/90 mb-4">
-            Conéctate con otros agricultores, comparte experiencias y resuelve dudas.
+          <p className="text-text-main mb-4">
+            Revisa alertas importantes y recomendaciones para tus cultivos.
           </p>
-          <div className="space-y-2">
-            <button 
-              onClick={() => setCurrentPage("juegos")}
-              className="w-full bg-primary text-white py-2 px-4 hover:bg-primary/80 transition-all font-heading"
-            >
-              🎮 JUEGOS IA COLABORATIVA
-            </button>
-            <button className="w-full bg-secondary text-black py-2 px-4 hover:bg-secondary/80 transition-all font-heading">
-              FORO DE AGRICULTORES
-            </button>
-            <button className="w-full border border-border text-text-main py-2 px-4 hover:bg-background transition-all">
-              Preguntas Frecuentes (FAQ)
-            </button>
-          </div>
+          <button
+            className="w-full bg-accent text-white py-2 px-4 hover:bg-accent/80 transition-all font-heading"
+            onClick={() => setCurrentPage("alertas")}
+          >
+            VER ALERTAS
+          </button>
         </section>
 
       </div>

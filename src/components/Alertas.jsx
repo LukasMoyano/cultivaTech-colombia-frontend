@@ -214,11 +214,11 @@ export default function Alertas({ setCurrentPage }) {
     filtro === "todas" ? alertas : alertas.filter((a) => a.tipo === filtro);
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold cultiva-text-main mb-2">
+    <div className="container mx-auto p-4 sm:p-6">
+      <h2 className="text-3xl font-heading text-text-accent mb-2">
         Alertas y Recomendaciones
       </h2>
-      <p className="mb-6 cultiva-text-secondary">
+      <p className="mb-6 text-text-main">
         Revisa todas las alertas y recomendaciones generadas por el sistema y la
         IA para mantener tus cultivos en óptimas condiciones.
       </p>
@@ -226,15 +226,17 @@ export default function Alertas({ setCurrentPage }) {
         {filtros.map((f) => (
           <button
             key={f.key}
-            className={`btn btn-outline filter-btn ${
-              filtro === f.key ? "active" : ""
+            className={`btn filter-btn px-3 py-1.5 text-sm font-heading ${
+              filtro === f.key 
+                ? "bg-primary text-white" 
+                : "bg-background-card border border-border text-text-main hover:bg-secondary/20"
             }`}
             onClick={() => setFiltro(f.key)}
           >
             {f.label}
           </button>
         ))}
-        <select className="p-2 border rounded cultiva-earth-main cultiva-text-light focus:outline-none focus:border-green-500">
+        <select className="p-2 border border-border rounded bg-background-card text-text-main focus:outline-none focus:ring-2 focus:ring-primary">
           <option>Filtrar por Cultivo</option>
           <option>Tomates - Lote Sol Naciente</option>
           <option>Fresas - El Edén</option>
@@ -244,17 +246,23 @@ export default function Alertas({ setCurrentPage }) {
         {alertasFiltradas.map((a) => (
           <div
             key={a.titulo}
-            className={`card flex items-start p-3 border-l-4 ${a.color}`}
+            className={`flex items-start p-4 border-l-4 bg-background-card border-border shadow-md ${a.color}`}
           >
-            <span className={`icon-placeholder text-2xl ${a.color} mr-3`}>
+            <span className={`text-2xl mr-3`}>
               {a.icon}
             </span>
             <div>
-              <h3 className="font-semibold cultiva-text-main">{a.titulo}</h3>
-              <p className="text-sm cultiva-text-secondary">{a.desc}</p>
-              <p className="text-sm cultiva-text-main mt-1">{a.info}</p>
+              <h3 className="font-heading text-text-accent text-lg">{a.titulo}</h3>
+              <p className="text-sm text-text-main/80">{a.desc}</p>
+              <p className="text-sm text-text-main mt-1">{a.info}</p>
               <button
-                className={a.btnClass}
+                className={`mt-2 px-3 py-1 text-xs font-heading ${
+                  a.tipo === "critica" 
+                    ? "bg-red-500 text-white" 
+                    : a.tipo === "advertencia" 
+                    ? "bg-yellow-500 text-black" 
+                    : "bg-green-500 text-white"
+                }`}
                 onClick={() => {
                   if (a.btn.includes("Robot") && setCurrentPage) {
                     setCurrentPage("robot");

@@ -56,7 +56,7 @@ export default function Sidebar({ currentPage, onNav, sidebarOpen, setSidebarOpe
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-heading text-text-accent flex items-center gap-2">
               <span>🌿</span>
-              CULTIVATECH
+              Cultiva Tech ColombIA
             </h2>
             <button
               onClick={handleOverlayClick}
