@@ -31,7 +31,7 @@ export default function Header({
           >
             <span role="img" aria-label="logo">🌿</span>
             <span className="hidden sm:inline">CultivaTech ColombIA</span>
-            <span className="sm:hidden">CultivaTech</span>
+            <span className="sm:hidden">Cultiva Tech ColombIA</span>
           </button>
 
           {isAuthenticated && (

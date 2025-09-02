@@ -49,7 +49,7 @@ export default function DashboardClima() {
         const fetchWeather = async () => {
             if (!userLocation) return;
             try {
-                const response = await axios.get(`http://localhost:3001/api/clima?lat=${userLocation.lat}&lon=${userLocation.lon}`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001'}/api/clima?lat=${userLocation.lat}&lon=${userLocation.lon}`);
                 setWeather(response.data);
                 setError(null);
             } catch (err) {
