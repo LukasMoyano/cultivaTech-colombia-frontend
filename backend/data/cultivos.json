@@ -1,1 +1,48 @@
-[]
+[
+  {
+    "nombre": "asdasd",
+    "siembra": "2025-09-02",
+    "estado": "Saludable",
+    "humedad": "",
+    "humedad4h": "34",
+    "temperatura4h": "43",
+    "color": "bg-primary",
+    "imagen": "",
+    "fenologico": "",
+    "ia": [
+      "4sdfgse4tg5gdrtt7jh7qygumgymy8i89u890nt7e5b5wc4"
+    ]
+  },
+  {
+    "nombre": "Test",
+    "siembra": "2025-09-02"
+  },
+  {
+    "nombre": "5645tet",
+    "siembra": "2025-09-03",
+    "estado": "Saludable",
+    "humedad": "",
+    "humedad4h": "54",
+    "temperatura4h": "45",
+    "color": "bg-primary",
+    "imagen": "",
+    "fenologico": "",
+    "ia": [
+      "et5stse546se6se t5 sy5u75b78 6i6 ijfbxcxvx 32"
+    ]
+  },
+  {
+    "nombre": "rtyrtyy",
+    "siembra": "2025-09-03",
+    "estado": "Saludable",
+    "humedad": "",
+    "humedad4h": "654",
+    "temperatura4h": "456",
+    "color": "bg-primary",
+    "imagen": "",
+    "fenologico": "",
+    "ia": [
+      "rtyxdfdrsyn67dr6uy udcc"
+    ]
+  }
+]

@@ -24,7 +24,7 @@ const CultivoSummaryCard = ({ cultivo, onSeleccionar }) => {
       <div className="flex items-center mb-2">
         {/* Crop image */}
         <img
-          src={cultivo.imagen}
+          src={cultivo.imagen || "https://placehold.co/600x400/A77B55/F2E8CF?text=🌱"}
           alt={cultivo.nombre}
           className="w-10 h-10 rounded-none mr-3" // Sharp corners for image
         />

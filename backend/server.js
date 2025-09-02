@@ -40,7 +40,7 @@ app.get('/api/clima', async (req, res) => {
 });
 
 // API endpoint for Cultivos
-const CULTIVOS_FILE_PATH = './backend/data/cultivos.json';
+const CULTIVOS_FILE_PATH = './data/cultivos.json';
 
 // GET all cultivos
 app.get('/api/cultivos', async (req, res) => {

@@ -28,7 +28,7 @@ const CultivoList = ({ cultivos, setDetalle }) => {
           onClick={() => setDetalle(cultivo.nombre)} // Sets the detail view for the clicked crop
         >
           {/* Crop image */}
-          <img src={cultivo.imagen} alt={cultivo.nombre} className="rounded-none w-full h-40 object-cover mb-3" />
+          <img src={cultivo.imagen || "https://placehold.co/600x400/A77B55/F2E8CF?text=🌱"} alt={cultivo.nombre} className="rounded-none w-full h-40 object-cover mb-3" />
           {/* Crop name: large heading, bold, themed text, heading font. */}
           <h3 className="text-xl font-semibold text-text-main font-heading mb-1">{cultivo.nombre.toUpperCase()}</h3>
           {/* Planting date */}
@@ -38,7 +38,7 @@ const CultivoList = ({ cultivos, setDetalle }) => {
             {/* Small colored square based on cultivo.color (e.g., bg-primary, bg-secondary). */}
             <span className={`inline-block w-3 h-3 rounded-none ${cultivo.color} mr-2`}></span>
             {/* Crop status: uppercase for emphasis. */}
-            <span className="text-text-main/80 text-sm">ESTADO: {cultivo.estado.toUpperCase()}</span>
+            <span className="text-text-main/80 text-sm">ESTADO: {(cultivo.estado || 'N/D').toUpperCase()}</span>
           </div>
           {/* Humidity metric */}
           <p className="text-text-main/80 text-sm mt-1">
