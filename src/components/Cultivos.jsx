@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from "react"; // Import useEffect for API calls
+import React, { useState, useEffect } from "react"; // Importa useEffect para llamadas API
 import PropTypes from "prop-types";
-import axios from "axios"; // Import axios for making HTTP requests to the backend
+import axios from "axios"; // Importa axios para hacer solicitudes HTTP al backend
 
-// Import extracted sub-components for better code organization and readability
+// Importa los subcomponentes extraídos para mejor organización y legibilidad del código
 import CultivoSummaryCard from "./cultivos/CultivoSummaryCard";
 import CultivoDetailView from "./cultivos/CultivoDetailView";
 import CultivoForm from "./cultivos/CultivoForm";
 import CultivoList from "./cultivos/CultivoList";
 
-// The 'cultivosIniciales' constant is now commented out as data will be fetched from the backend.
+// La constante 'cultivosIniciales' está comentada ahora ya que los datos se obtendrán del backend.
 // const cultivosIniciales = [...];
 
 /**
  * @file Cultivos.jsx
- * @description Main component for managing and displaying crop information.
- *              It acts as an orchestrator, managing the state of crops and
- *              conditionally rendering different views (summary, detail, list/form)
- *              based on props and internal state.
- *              It now integrates with a backend API for fetching and adding crop data.
+ * @description Componente principal para gestionar y mostrar información de cultivos.
+ *              Actúa como un orquestador, gestionando el estado de los cultivos y
+ *              renderizando vistas condicionales (resumen, detalle, lista/formulario)
+ *              basadas en props y estado interno.
+ *              Ahora se integra con una API backend para obtener y añadir datos de cultivos.
  *
- * @param {object} props - The component props.
- * @param {boolean} [props.modoResumen=false] - If true, renders a summarized view for use in the Dashboard.
- * @param {function} [props.onSeleccionar] - Callback function for selecting a crop in summary mode.
- * @param {function} [props.setCurrentPage] - Callback function to navigate to other pages.
- * @returns {JSX.Element} The Cultivos management interface.
+ * @param {object} props - Las props del componente.
+ * @param {boolean} [props.modoResumen=false] - Si es true, renderiza una vista resumida para usar en el Dashboard.
+ * @param {function} [props.onSeleccionar] - Función de callback para seleccionar un cultivo en modo resumen.
+ * @param {function} [props.setCurrentPage] - Función de callback para navegar a otras páginas.
+ * @returns {JSX.Element} La interfaz de gestión de Cultivos.
  */
 export default function Cultivos({ modoResumen = false, onSeleccionar, setCurrentPage }) {
-  // State to control the display of a detailed crop view. Null means no detail view.
+  // Estado para controlar la visualización de una vista detallada del cultivo. Null significa sin vista detallada.
   const [detalle, setDetalle] = useState(null);
-  // State to store the list of crops. Initialized as an empty array, data will be fetched from backend.
+  // Estado para almacenar la lista de cultivos. Inicializado como un array vacío, los datos se obtendrán del backend.
   const [cultivos, setCultivos] = useState([]); 
 
-  // State to manage the data of a new crop being added via the form.
+  // Estado para gestionar los datos de un nuevo cultivo que se añade mediante el formulario.
   const [nuevoCultivo, setNuevoCultivo] = useState({
     nombre: "",
     siembra: "",
@@ -39,54 +39,54 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
     humedad: "",
     humedad4h: "",
     temperatura4h: "",
-    color: "bg-primary", // Default color for new crops, using theme primary
+    color: "bg-primary", // Color por defecto para nuevos cultivos, usando el primario del tema
     imagen: "",
     fenologico: "",
     ia: [],
   });
 
   /**
-   * useEffect hook to fetch the list of crops from the backend when the component mounts.
-   * This ensures the UI is populated with persistent data.
+   * Hook useEffect para obtener la lista de cultivos del backend cuando el componente se monta.
+   * Esto asegura que la UI se llene con datos persistentes.
    */
   useEffect(() => {
     const fetchCultivos = async () => {
       try {
-        // Make a GET request to the backend API to retrieve all crops.
+        // Hace una solicitud GET a la API del backend para obtener todos los cultivos.
         const response = await axios.get('http://localhost:3001/api/cultivos');
         setCultivos(response.data);
       } catch (error) {
-        console.error("Error fetching cultivos:", error);
-        // TODO: Implement user-friendly error display (e.g., an alert message on screen).
+        console.error("Error al obtener cultivos:", error);
+        // TODO: Implementar visualización de errores amigables (ej. un mensaje de alerta en pantalla).
       }
     };
-    fetchCultivos(); // Call the fetch function
-  }, []); // Empty dependency array ensures this effect runs only once on mount.
+    fetchCultivos(); // Llama a la función de obtención
+  }, []); // Array de dependencias vacío asegura que este efecto se ejecute solo una vez al montar.
 
   /**
-   * Event handler for adding a new crop.
-   * It prevents default form submission, sends data to the backend, and updates the UI.
-   * @param {Event} e - The form submission event.
+   * Manejador de eventos para añadir un nuevo cultivo.
+   * Previene el envío por defecto del formulario, envía datos al backend y actualiza la UI.
+   * @param {Event} e - El evento de envío del formulario.
    */
-  const handleAgregarCultivo = async (e) => { // Make function async
-    e.preventDefault(); // Prevent default browser form submission
-    // Basic validation: ensure name and planting date are provided.
+  const handleAgregarCultivo = async (e) => { // Hace la función asíncrona
+    e.preventDefault(); // Previene el envío por defecto del formulario del navegador
+    // Validación básica: asegura que se proporcionen el nombre y la fecha de siembra.
     if (!nuevoCultivo.nombre || !nuevoCultivo.siembra) {
       alert("Por favor, ingresa el nombre y la fecha de siembra del cultivo.");
       return;
     }
 
     try {
-      // Send the new crop data to the backend using a POST request.
+      // Envía los datos del nuevo cultivo al backend usando una solicitud POST.
       const response = await axios.post('http://localhost:3001/api/cultivos', nuevoCultivo);
-      console.log("Cultivo added successfully:", response.data);
+      console.log("Cultivo añadido exitosamente:", response.data);
       
-      // After successful addition, re-fetch the entire list of crops from the backend
-      // to ensure the UI is synchronized with the latest persistent data.
+      // Después de la adición exitosa, vuelve a obtener toda la lista de cultivos del backend
+      // para asegurar que la UI esté sincronizada con los últimos datos persistentes.
       const updatedCultivosResponse = await axios.get('http://localhost:3001/api/cultivos');
       setCultivos(updatedCultivosResponse.data);
 
-      // Reset form
+      // Reinicia el formulario
       setNuevoCultivo({
         nombre: "",
         siembra: "",
@@ -99,18 +99,18 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
         fenologico: "",
         ia: [],
       });
-      // Optionally hide the form after adding
+      // Opcionalmente oculta el formulario después de añadir
       document.getElementById("form-nuevo-cultivo").classList.add("hidden");
 
     } catch (error) {
-      console.error("Error adding cultivo:", error);
+      console.error("Error al añadir cultivo:", error);
       alert("Error al añadir el cultivo. Por favor, intenta de nuevo.");
     }
   };
 
-  // --- Conditional Rendering based on view mode ---
+  // --- Renderizado condicional basado en el modo de vista ---
 
-  // Renders a summarized list of crops, typically for display within the Dashboard.
+  // Renderiza una lista resumida de cultivos, típicamente para mostrar en el Dashboard.
   if (modoResumen) {
     return (
       <div className="space-y-4">
@@ -125,9 +125,9 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
     );
   }
 
-  // Renders the detailed view of a single selected crop.
+  // Renderiza la vista detallada de un cultivo seleccionado.
   if (detalle) {
-    // Find the specific crop object from the 'cultivos' array based on the 'detalle' state.
+    // Encuentra el objeto de cultivo específico del array 'cultivos' basado en el estado 'detalle'.
     const cultivo = cultivos.find((c) => c.nombre === detalle);
     return (
       <CultivoDetailView 
@@ -138,13 +138,13 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
     );
   }
 
-  // Default view: Renders the main list of all crops and the form to add new ones.
+  // Vista por defecto: Renderiza la lista principal de todos los cultivos y el formulario para añadir nuevos.
   return (
     <div className="container mx-auto p-4">
-      {/* Header section for the main Cultivos page, with title and "Add Crop" button. */}
+      {/* Sección de encabezado para la página principal de Cultivos, con título y botón "Añadir Cultivo". */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-text-accent font-heading">MIS CULTIVOS</h2>
-        {/* Button to toggle the visibility of the add crop form. */}
+        {/* Botón para alternar la visibilidad del formulario de añadir cultivo. */}
         <button
           className="bg-primary text-white py-2 px-4 font-heading flex items-center"
           onClick={() => document.getElementById("form-nuevo-cultivo").classList.toggle("hidden")}
@@ -159,7 +159,7 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
         handleAgregarCultivo={handleAgregarCultivo} 
       />
 
-      {/* Descriptive text for the crop list. */}
+      {/* Texto descriptivo para la lista de cultivos. */}
       <p className="mb-6 text-text-main/80">
         Gestiona y monitorea todos tus cultivos registrados. Selecciona un cultivo para ver su estado detallado, historial de sensores y alertas específicas.
       </p>
@@ -172,9 +172,9 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
   );
 }
 
-// PropTypes for type checking and documentation of component props.
+// PropTypes para verificación de tipos y documentación de las props del componente.
 Cultivos.propTypes = {
-  modoResumen: PropTypes.bool, // Optional boolean to activate summary mode.
-  onSeleccionar: PropTypes.func, // Optional function for selecting a crop in summary mode.
-  setCurrentPage: PropTypes.func, // Optional function for navigating between pages.
+  modoResumen: PropTypes.bool, // Booleano opcional para activar el modo resumen.
+  onSeleccionar: PropTypes.func, // Función opcional para seleccionar un cultivo en modo resumen.
+  setCurrentPage: PropTypes.func, // Función opcional para navegar entre páginas.
 };

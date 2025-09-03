@@ -2,42 +2,42 @@ import { useState, useEffect } from 'react';
 
 /**
  * @file useScrollPosition.js
- * @description Custom React Hook to track the vertical scroll position of the window.
- *              It provides the current scroll position in pixels from the top of the document.
- *              Useful for implementing scroll-dependent UI effects (e.g., sticky headers, animations).
+ * @description Hook personalizado de React para rastrear la posición de desplazamiento vertical de la ventana.
+ *              Proporciona la posición actual de desplazamiento en píxeles desde la parte superior del documento.
+ *              Útil para implementar efectos de UI dependientes del desplazamiento (ej. encabezados fijos, animaciones).
  */
 const useScrollPosition = () => {
-  // State to store the current scroll position. Initialized to 0 (top of the page).
+  // Estado para almacenar la posición actual de desplazamiento. Inicializado a 0 (parte superior de la página).
   const [scrollPosition, setScrollPosition] = useState(0);
 
   /**
-   * useEffect hook to add and remove the scroll event listener.
-   * This ensures the listener is active only when the component using the hook is mounted
-   * and cleaned up when it unmounts to prevent memory leaks.
+   * Hook useEffect para añadir y eliminar el escuchador de eventos de desplazamiento.
+   * Esto asegura que el escuchador esté activo solo cuando el componente que usa el hook está montado
+   * y se limpie cuando se desmonte para prevenir fugas de memoria.
    */
   useEffect(() => {
     /**
-     * Event handler function that updates the scrollPosition state
-     * with the current vertical scroll offset of the document.
+     * Función manejadora de eventos que actualiza el estado scrollPosition
+     * con el desplazamiento vertical actual del documento.
      */
     const handleScroll = () => {
-      setScrollPosition(window.pageYOffset); // window.pageYOffset is a read-only property that returns the number of pixels the document is currently scrolled vertically.
+      setScrollPosition(window.pageYOffset); // window.pageYOffset es una propiedad de solo lectura que devuelve el número de píxeles que el documento está actualmente desplazado verticalmente.
     };
 
-    // Add the scroll event listener to the window.
+    // Añade el escuchador de eventos de desplazamiento a la ventana.
     window.addEventListener('scroll', handleScroll);
 
     /**
-     * Cleanup function: This is returned by useEffect and runs when the component unmounts
-     * or before the effect runs again (if dependencies change, though here the dependency array is empty).
-     * It removes the event listener to prevent memory leaks.
+     * Función de limpieza: Esto es devuelto por useEffect y se ejecuta cuando el componente se desmonta
+     * o antes de que el efecto se ejecute de nuevo (si las dependencias cambian, aunque aquí el array de dependencias está vacío).
+     * Elimina el escuchador de eventos para prevenir fugas de memoria.
      */
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []); // Empty dependency array ensures this effect runs only once on mount and cleans up on unmount.
+  }, []); // Array de dependencias vacío asegura que este efecto se ejecute solo una vez al montar y se limpie al desmontar.
 
-  // Returns the current scroll position to the component using this hook.
+  // Devuelve la posición actual de desplazamiento al componente que usa este hook.
   return scrollPosition;
 };
 

@@ -2,25 +2,25 @@ import React from 'react';
 
 /**
  * @file TechStackSlide.jsx
- * @description Represents a reusable card component for displaying technology information (e.g., hardware/software features).
- *              It takes an icon, title, and subtitle as props and applies consistent styling.
+ * @description Representa un componente de tarjeta reutilizable para mostrar información de tecnología (ej. características de hardware/software).
+ *              Toma un ícono, título y subtítulo como props y aplica un estilo consistente.
  *
- * @param {object} props - The component props.
- * @param {string} props.icon - The emoji or icon representing the technology.
- * @param {string} props.title - The main title of the technology feature.
- * @param {string} props.subtitle - A brief description or subtitle for the technology.
- * @returns {JSX.Element} A styled card displaying technology information.
+ * @param {object} props - Las props del componente.
+ * @param {string} props.icon - El emoji o ícono que representa la tecnología.
+ * @param {string} props.title - El título principal de la característica de tecnología.
+ * @param {string} props.subtitle - Una breve descripción o subtítulo para la tecnología.
+ * @returns {JSX.Element} Una tarjeta estilizada que muestra información de tecnología.
  */
 const TechInfoCard = ({ icon, title, subtitle }) => (
-  // Card container: flex layout, themed padding, border, and background.
+  // Contenedor de tarjeta: diseño flexible, relleno temático, borde y fondo.
   <div className="flex items-center gap-4 p-4 bg-background border border-border">
-    {/* Icon: large text, themed accent color. */}
+    {/* Ícono: texto grande, color de énfasis temático. */}
     <span className="text-3xl text-accent">{icon}</span>
-    {/* Text content: title and subtitle. */}
+    {/* Contenido de texto: título y subtítulo. */}
     <div>
-      {/* Title: uses sans font, semibold weight, and main text color. */}
+      {/* Título: usa fuente sans, peso seminegrita y color de texto principal. */}
       <p className="font-sans font-semibold text-text-main">{title}</p>
-      {/* Subtitle: smaller text, slightly muted main text color. */}
+      {/* Subtítulo: texto más pequeño, color de texto principal ligeramente atenuado. */}
       <p className="text-xs text-text-main/70">{subtitle}</p>
     </div>
   </div>
@@ -28,35 +28,35 @@ const TechInfoCard = ({ icon, title, subtitle }) => (
 
 /**
  * @file TechStackSlide.jsx
- * @description Represents the third slide of the Landing Page, showcasing the technologies and features
- *              of CultivaTech ColombIA, divided into Hardware and Software categories.
- *              It utilizes the `TechInfoCard` component for consistent display of each technology item.
- *              Styling is applied using the application's theming system.
+ * @description Representa la tercera diapositiva de la página de inicio, mostrando las tecnologías y características
+ *              de CultivaTech ColombIA, divididas en categorías de Hardware y Software.
+ *              Utiliza el componente `TechInfoCard` para mostrar consistentemente cada elemento de tecnología.
+ *              El estilo se aplica usando el sistema de temas de la aplicación.
  *
- * @returns {JSX.Element} The JSX for the technology stack slide.
+ * @returns {JSX.Element} El JSX para la diapositiva de pila tecnológica.
  */
 const TechStackSlide = () => {
   return (
-    // Main container for the slide content, using a grid for a two-column layout on medium screens and up.
+    // Contenedor principal para el contenido de la diapositiva, usando una cuadrícula para un diseño de dos columnas en pantallas medianas y superiores.
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {/* Section for Hardware technologies */}
+      {/* Sección para tecnologías de Hardware */}
       <div className="space-y-4">
-        {/* Section title: uses heading font, large text, and accent color. */}
+        {/* Título de sección: usa fuente de encabezado, texto grande y color de énfasis. */}
         <h3 className="font-heading text-2xl text-text-accent">🔧 HARDWARE</h3>
-        {/* Container for hardware info cards. */}
+        {/* Contenedor para tarjetas de información de hardware. */}
         <div className="space-y-4">
-          {/* Individual TechInfoCard components for hardware features. */}
+          {/* Componentes TechInfoCard individuales para características de hardware. */}
           <TechInfoCard icon="📡" title="Sensores ESP32" subtitle="Temperatura, humedad, pH" />
           <TechInfoCard icon="🤖" title="Robots Autónomos" subtitle="Monitoreo y análisis" />
         </div>
       </div>
-      {/* Section for Software technologies */}
+      {/* Sección para tecnologías de Software */}
       <div className="space-y-4">
-        {/* Section title: uses heading font, large text, and accent color. */}
+        {/* Título de sección: usa fuente de encabezado, texto grande y color de énfasis. */}
         <h3 className="font-heading text-2xl text-text-accent">💻 SOFTWARE</h3>
-        {/* Container for software info cards. */}
+        {/* Contenedor para tarjetas de información de software. */}
         <div className="space-y-4">
-          {/* Individual TechInfoCard components for software features. */}
+          {/* Componentes TechInfoCard individuales para características de software. */}
           <TechInfoCard icon="🧠" title="IA Predictiva" subtitle="Detección de anomalías" />
           <TechInfoCard icon="📱" title="App Multiplataforma" subtitle="Web y móvil" />
         </div>

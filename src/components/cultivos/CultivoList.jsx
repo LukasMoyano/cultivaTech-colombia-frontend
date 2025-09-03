@@ -3,52 +3,52 @@ import PropTypes from 'prop-types';
 
 /**
  * @file CultivoList.jsx
- * @description React component that displays a list of crop cards.
- *              Each card provides a summary of a crop and is clickable to show more details.
- *              This component is used in the main "Cultivos" page.
- *              Styling is applied using the application's theme (Evangelion/Cyber).
+ * @description Componente de React que muestra una lista de tarjetas de cultivos.
+ *              Cada tarjeta proporciona un resumen de un cultivo y se puede hacer clic para mostrar más detalles.
+ *              Este componente se usa en la página principal "Cultivos".
+ *              El estilo se aplica usando el tema de la aplicación (Evangelion/Cyber).
  *
- * @param {object} props - The component props.
- * @param {Array<object>} props.cultivos - An array of crop objects to display.
- * @param {function} props.setDetalle - Callback function to set the detailed view for a selected crop.
- * @returns {JSX.Element} A styled grid displaying a list of crop cards.
+ * @param {object} props - Las props del componente.
+ * @param {Array<object>} props.cultivos - Un array de objetos de cultivos para mostrar.
+ * @param {function} props.setDetalle - Función de callback para establecer la vista detallada de un cultivo seleccionado.
+ * @returns {JSX.Element} Una cuadrícula estilizada que muestra una lista de tarjetas de cultivos.
  */
 const CultivoList = ({ cultivos, setDetalle }) => {
   return (
-    // Grid container for the list of crop cards. Responsive layout for different screen sizes.
+    // Contenedor de cuadrícula para la lista de tarjetas de cultivos. Diseño responsivo para diferentes tamaños de pantalla.
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* Map through the 'cultivos' array to render each crop as a card. */}
+      {/* Itera a través del array 'cultivos' para renderizar cada cultivo como una tarjeta. */}
       {cultivos.map((cultivo) => (
-        // Individual crop card container.
-        // Uses themed background, border, shadow, and hover effects.
-        // Clickable to show crop details.
+        // Contenedor de tarjeta de cultivo individual.
+        // Usa fondo temático, borde, sombra y efectos de desplazamiento.
+        // Se puede hacer clic para mostrar detalles del cultivo.
         <div
-          key={cultivo.nombre} // Unique key for list rendering
+          key={cultivo.nombre} // Clave única para renderizado de lista
           className="bg-background-card border border-border shadow-md hover:shadow-lg transition-shadow cursor-pointer p-4"
-          onClick={() => setDetalle(cultivo.nombre)} // Sets the detail view for the clicked crop
+          onClick={() => setDetalle(cultivo.nombre)} // Establece la vista detallada para el cultivo clicado
         >
-          {/* Crop image */}
+          {/* Imagen del cultivo */}
           <img src={cultivo.imagen || "https://placehold.co/600x400/A77B55/F2E8CF?text=🌱"} alt={cultivo.nombre} className="rounded-none w-full h-40 object-cover mb-3" />
-          {/* Crop name: large heading, bold, themed text, heading font. */}
+          {/* Nombre del cultivo: encabezado grande, en negrita, texto temático, fuente de encabezado. */}
           <h3 className="text-xl font-semibold text-text-main font-heading mb-1">{cultivo.nombre.toUpperCase()}</h3>
-          {/* Planting date */}
+          {/* Fecha de siembra */}
           <p className="text-text-main/80 text-sm mb-2">SIEMBRA: {cultivo.siembra}</p>
-          {/* Status indicator and text */}
+          {/* Indicador de estado y texto */}
           <div className="flex items-center">
-            {/* Small colored square based on cultivo.color (e.g., bg-primary, bg-secondary). */}
+            {/* Pequeño cuadrado de color basado en cultivo.color (ej. bg-primary, bg-secondary). */}
             <span className={`inline-block w-3 h-3 rounded-none ${cultivo.color} mr-2`}></span>
-            {/* Crop status: uppercase for emphasis. */}
+            {/* Estado del cultivo: en mayúsculas para énfasis. */}
             <span className="text-text-main/80 text-sm">ESTADO: {(cultivo.estado || 'N/D').toUpperCase()}</span>
           </div>
-          {/* Humidity metric */}
+          {/* Métrica de humedad */}
           <p className="text-text-main/80 text-sm mt-1">
             HUMEDAD SUELO (4H): {cultivo.humedad4h || "N/D"}
           </p>
-          {/* Temperature metric */}
+          {/* Métrica de temperatura */}
           <p className="text-text-main/80 text-sm">
             TEMP. (4H): {cultivo.temperatura4h || "N/D"}
           </p>
-          {/* AI insights summary */}
+          {/* Resumen de conocimientos de IA */}
           <p className="text-text-main/80 text-xs mt-1">
             IA: {cultivo.ia && cultivo.ia.length > 0 ? cultivo.ia[0] : "SIN DATOS IA"}
           </p>
@@ -58,10 +58,10 @@ const CultivoList = ({ cultivos, setDetalle }) => {
   );
 };
 
-// PropTypes for type checking and documentation
+// PropTypes para verificación de tipos y documentación
 CultivoList.propTypes = {
-  cultivos: PropTypes.array.isRequired, // 'cultivos' array is required
-  setDetalle: PropTypes.func.isRequired, // 'setDetalle' function is required
+  cultivos: PropTypes.array.isRequired, // El array 'cultivos' es requerido
+  setDetalle: PropTypes.func.isRequired, // La función 'setDetalle' es requerida
 };
 
 export default CultivoList;

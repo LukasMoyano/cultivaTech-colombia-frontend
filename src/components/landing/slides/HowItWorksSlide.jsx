@@ -2,55 +2,55 @@ import React from 'react';
 
 /**
  * @file HowItWorksSlide.jsx
- * @description Reusable component for displaying a single step in the "How It Works" section.
- *              It takes an icon, title, subtitle, and a border color class as props.
- *              Styling is applied using the application's theming system.
+ * @description Componente reutilizable para mostrar un solo paso en la sección "Cómo Funciona".
+ *              Toma un ícono, título, subtítulo y una clase de color de borde como props.
+ *              El estilo se aplica usando el sistema de temas de la aplicación.
  *
- * @param {object} props - The component props.
- * @param {string} props.icon - The emoji or icon representing the step.
- * @param {string} props.title - The title of the step (e.g., "1. Sensores").
- * @param {string} props.subtitle - A brief description of the step.
- * @param {string} props.borderColor - Tailwind CSS class for the top border color (e.g., "border-primary").
- * @returns {JSX.Element} A styled card representing a step in the process.
+ * @param {object} props - Las props del componente.
+ * @param {string} props.icon - El emoji o ícono que representa el paso.
+ * @param {string} props.title - El título del paso (ej. "1. Sensores").
+ * @param {string} props.subtitle - Una breve descripción del paso.
+ * @param {string} props.borderColor - Clase CSS de Tailwind para el color del borde superior (ej. "border-primary").
+ * @returns {JSX.Element} Una tarjeta estilizada que representa un paso en el proceso.
  */
 const StepCard = ({ icon, title, subtitle, borderColor }) => (
-  // Card container: centered text, themed padding, top border, and background.
-  // The border color is dynamic based on props.
+  // Contenedor de tarjeta: texto centrado, relleno temático, borde superior y fondo.
+  // El color del borde es dinámico basado en las props.
   <div className={`text-center p-6 border-t-4 ${borderColor} bg-background-card`}>
-    {/* Icon: large text. */}
+    {/* Ícono: texto grande. */}
     <div className="text-5xl mb-4">{icon}</div>
-    {/* Title: uses heading font, large text, and accent color. */}
+    {/* Título: usa fuente de encabezado, texto grande y color de énfasis. */}
     <h3 className="font-heading text-xl text-text-accent">{title}</h3>
-    {/* Subtitle: smaller text, slightly muted main text color. */}
+    {/* Subtítulo: texto más pequeño, color de texto principal ligeramente atenuado. */}
     <p className="text-sm text-text-main/80">{subtitle}</p>
   </div>
 );
 
 /**
  * @file HowItWorksSlide.jsx
- * @description Represents the fourth slide of the Landing Page, explaining the simple, effective process
- *              of CultivaTech ColombIA in four steps.
- *              It utilizes the `StepCard` component for consistent display of each step.
- *              The layout uses a grid with a 1px gap to create visual separators, and all styling
- *              is integrated with the application's theming system.
+ * @description Representa la cuarta diapositiva de la página de inicio, explicando el proceso simple y efectivo
+ *              de CultivaTech ColombIA en cuatro pasos.
+ *              Utiliza el componente `StepCard` para mostrar consistentemente cada paso.
+ *              El diseño usa una cuadrícula con un espacio de 1px para crear separadores visuales temáticos, y todo el estilo
+ *              está integrado con el sistema de temas de la aplicación.
  *
- * @returns {JSX.Element} The JSX for the "How It Works" slide.
+ * @returns {JSX.Element} El JSX para la diapositiva "Cómo Funciona".
  */
 const HowItWorksSlide = () => {
   return (
-    // Main container for the slide content. Uses space-y for vertical spacing.
+    // Contenedor principal para el contenido de la diapositiva. Usa space-y para espaciado vertical.
     <div className="space-y-8">
-      {/* Grid for the four steps. The `gap-px bg-border` creates thin, themed dividers between cards. */}
+      {/* Cuadrícula para los cuatro pasos. El `gap-px bg-border` crea divisores delgados temáticos entre tarjetas. */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-border">
-        {/* Individual StepCard components for each step, with dynamic border colors. */}
+        {/* Componentes StepCard individuales para cada paso, con colores de borde dinámicos. */}
         <StepCard icon="📡" title="1. SENSORES" subtitle="Recolectan datos 24/7" borderColor="border-primary" />
         <StepCard icon="🧠" title="2. IA ANALIZA" subtitle="Procesa y predice" borderColor="border-secondary" />
         <StepCard icon="⚠️" title="3. ALERTAS" subtitle="Notifica problemas" borderColor="border-primary" />
         <StepCard icon="🎯" title="4. ACCIÓN" subtitle="Tomas decisiones" borderColor="border-secondary" />
       </div>
-      {/* Result summary text. */}
+      {/* Texto de resumen del resultado. */}
       <div className="text-center pt-4">
-        {/* Uses themed text color and accent color for emphasis. */}
+        {/* Usa color de texto temático y color de énfasis para énfasis. */}
         <p className="text-lg text-text-main">
           <strong className="text-accent font-heading">RESULTADO:</strong> Cultivos más saludables, mayor productividad y decisiones informadas.
         </p>

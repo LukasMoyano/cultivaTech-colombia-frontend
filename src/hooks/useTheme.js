@@ -2,51 +2,51 @@ import { useState, useEffect } from 'react';
 
 /**
  * @file useTheme.js
- * @description Custom React Hook for managing and persisting the application's theme (Day/Night mode).
- *              It handles theme state, applies it to the document's root element, and saves user preference in localStorage.
- *              It also respects the user's operating system theme preference on initial load.
+ * @description Hook personalizado de React para gestionar y persistir el tema de la aplicación (modo Día/Noche).
+ *              Maneja el estado del tema, lo aplica al elemento raíz del documento y guarda la preferencia del usuario en localStorage.
+ *              También respeta la preferencia de tema del sistema operativo del usuario en la carga inicial.
  */
 
 export const useTheme = () => {
-  // State to hold the current theme ('day' or 'night').
-  // 'day' is set as the default theme as per user's request.
+  // Estado para mantener el tema actual ('day' o 'night').
+  // 'day' se establece como tema por defecto según la solicitud del usuario.
   const [theme, setTheme] = useState('day'); 
 
   /**
-   * useEffect hook to determine the initial theme when the component mounts.
-   * Priority:
-   * 1. Theme saved in localStorage (user's last preference).
-   * 2. User's operating system theme preference (prefers-color-scheme).
-   * 3. Default to 'day' if no preference is found.
+   * Hook useEffect para determinar el tema inicial cuando el componente se monta.
+   * Prioridad:
+   * 1. Tema guardado en localStorage (última preferencia del usuario).
+   * 2. Preferencia de tema del sistema operativo del usuario (prefers-color-scheme).
+   * 3. Por defecto 'day' si no se encuentra preferencia.
    */
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme'); // Get theme from localStorage
-    // Check OS preference for dark mode
+    const storedTheme = localStorage.getItem('theme'); // Obtiene el tema de localStorage
+    // Verifica la preferencia del SO para modo oscuro
     const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
     
-    // Set the initial theme based on stored preference or OS preference, defaulting to 'day'.
-    // The user specifically requested 'day' to be the first theme on initial load if no stored preference.
+    // Establece el tema inicial basado en la preferencia guardada o la del SO, por defecto 'day'.
+    // El usuario solicitó específicamente que 'day' sea el primer tema en la carga inicial si no hay preferencia guardada.
     setTheme(storedTheme || 'day'); 
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []); // Array de dependencias vacío asegura que esto se ejecute solo una vez al montar
 
   /**
-   * useEffect hook to apply the current theme to the document's root element
-   * and persist it in localStorage whenever the 'theme' state changes.
-   * The 'data-theme' attribute on <html> is used by CSS to apply theme-specific styles.
+   * Hook useEffect para aplicar el tema actual al elemento raíz del documento
+   * y persistirlo en localStorage cada vez que el estado 'theme' cambia.
+   * El atributo 'data-theme' en <html> es usado por CSS para aplicar estilos específicos del tema.
    */
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme); // Apply theme to HTML element
-    localStorage.setItem('theme', theme); // Persist theme in localStorage
-  }, [theme]); // Reruns whenever the 'theme' state changes
+    document.documentElement.setAttribute('data-theme', theme); // Aplica el tema al elemento HTML
+    localStorage.setItem('theme', theme); // Persiste el tema en localStorage
+  }, [theme]); // Se ejecuta cada vez que el estado 'theme' cambia
 
   /**
-   * Function to toggle the theme between 'day' and 'night'.
-   * This function is exposed by the hook for components to use.
+   * Función para alternar el tema entre 'day' y 'night'.
+   * Esta función es expuesta por el hook para que los componentes la usen.
    */
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'day' ? 'night' : 'day'));
   };
 
-  // Returns the current theme and the toggle function for components to consume.
+  // Devuelve el tema actual y la función de alternancia para que los componentes la consuman.
   return { theme, toggleTheme };
 };
