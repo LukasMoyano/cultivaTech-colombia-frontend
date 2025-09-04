@@ -58,5 +58,23 @@
     "ia": [
       "szsdfszDfsfzsdfzxfzxdf zsd"
     ]
+  },
+  {
+    "nombre": "drtyrty",
+    "siembra": "2025-09-03",
+    "estado": "Saludable",
+    "humedad": "",
+    "humedad4h": "64",
+    "temperatura4h": "46",
+    "color": "bg-primary",
+    "imagen": "",
+    "fenologico": "",
+    "ia": [
+      "sdfgsdfgsdfg"
+    ]
+  },
+  {
+    "nombre": "Prueba",
+    "siembra": "2025-09-03"
   }
 ]

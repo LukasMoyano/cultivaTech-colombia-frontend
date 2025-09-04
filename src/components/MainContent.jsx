@@ -9,6 +9,7 @@ import Alertas from "./Alertas";
 import Robot from "./Robot";
 import LandingPage from "./LandingPage";
 import JuegosIA from "./JuegosIA";
+import CultivoDetailView from "./cultivos/CultivoDetailView";
 
 // Componente principal que renderiza el contenido central de la aplicación.
 // Recibe dos props:
@@ -48,6 +49,10 @@ export default function MainContent({ currentPage, setCurrentPage }) {
       {/* Si la página actual es "alertas", muestra el componente de alertas.
           Recibe setCurrentPage para navegación desde las alertas. */}
       {currentPage === "alertas" && <Alertas setCurrentPage={setCurrentPage} />}
+
+
+      {
+      }
 
       {/* Si la página actual es "robot", muestra el componente del robot.
           Recibe setCurrentPage para navegación desde el control del robot. */}

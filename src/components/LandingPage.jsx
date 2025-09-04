@@ -67,7 +67,7 @@ export default function LandingPage({ setCurrentPage }) {
         {/* Header */}
         <div className="text-center mb-4">
             <h1 className="text-3xl font-heading text-text-accent">
-              CULTIVA TECH COLOMBIA
+              Cultiva Tech ColombIA
             </h1>
         </div>
 
