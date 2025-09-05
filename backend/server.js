@@ -259,6 +259,10 @@ app.post('/api/cultivos', authenticateToken, async (req, res) => {
     }
 });
 
+app.get('/', (req, res) => {
+    res.send('CultivaTech Backend is running!');
+});
+
 app.listen(PORT, () => {
     console.log(`Backend proxy server running on port ${PORT}`);
     console.log(`Access it at http://localhost:${PORT}`);
