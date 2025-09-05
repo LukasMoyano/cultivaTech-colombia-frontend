@@ -2,7 +2,7 @@
   {
     "id": 1,
     "email": "admin@example.com",
-    "passwordHash": "$2b$10$okCV65CnGq9sJetJ8xQNNOSj/OvFVklz4fQEfITTtmrVy5pxt.f5y",
+    "passwordHash": "$2b$10$J6jYc3VYp4Diwjm0wBbRveXpK0nPrz5xII5aag/FQXiBGCF3ma5DW",
     "role": "admin"
   },
   {
