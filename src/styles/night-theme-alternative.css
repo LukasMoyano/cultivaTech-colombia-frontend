@@ -1,0 +1,13 @@
+/* Alternative night theme with improved contrast (Solution 2) */
+/* To use this theme, replace the [data-theme='night'] section in index.css with this */
+
+[data-theme='night'] {
+  --color-primary: #8A3A95; /* Lighter purple for better visibility */
+  --color-secondary: #B3FF33; /* Brighter neon green */
+  --color-accent: #B3FF33; /* Brighter neon green */
+  --color-background: #222222; /* Slightly lighter background */
+  --color-text-main: #F0F0F0; /* Near white text */
+  --color-text-accent: #B3FF33; /* Brighter accent text */
+  --color-border: #666666; /* More visible borders */
+  --color-background-card: #333333; /* Card background */
+}

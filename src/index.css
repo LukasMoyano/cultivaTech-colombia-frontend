@@ -24,10 +24,10 @@
   --color-secondary: #99FF00; /* Neon Green */
   --color-accent: #99FF00;
   --color-background: #1A1A1A; /* Near Black */
-  --color-text-main: #EAEAEA; /* Light Grey */
+  --color-text-main: #FFFFFF; /* Pure white for better contrast */
   --color-text-accent: #99FF00;
-  --color-border: #444444;
-  --color-background-card: #2A2A2A;
+  --color-border: #555555; /* Lighter border for better visibility */
+  --color-background-card: #2D2D2D; /* Slightly lighter card background */
 }
 
 @layer base {
@@ -48,4 +48,25 @@
 /* You can add component-level overrides here if needed */
 .btn-primary {
     @apply bg-primary text-white; /* Assuming you want high contrast text on buttons */
+}
+
+/* Specific styles for cultivo description paragraph */
+.cultivo-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+[data-theme='night'] .cultivo-description {
+  color: #FFFFFF;
+  opacity: 0.9;
+}
+
+/* Styles for cultivo list placeholder images */
+.cultivo-placeholder {
+  border: 1px solid var(--color-border);
+}
+
+[data-theme='night'] .cultivo-placeholder {
+  background-color: #C99D77 !important; /* Lighter brown for night mode */
+  color: #1A1A1A !important; /* Dark text for contrast */
 }

@@ -119,7 +119,7 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
         handleAgregarCultivo={handleAgregarCultivo} 
       />
 
-      <p className="mb-6 text-text-main/80">
+      <p className="mb-6 text-text-main cultivo-description">
         Gestiona y monitorea todos tus cultivos registrados. Selecciona un cultivo para ver su estado detallado, historial de sensores y alertas específicas.
       </p>
       

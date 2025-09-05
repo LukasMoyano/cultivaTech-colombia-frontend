@@ -27,29 +27,28 @@ const CultivoList = ({ cultivos, setDetalle }) => {
           className="bg-background-card border border-border shadow-md hover:shadow-lg transition-shadow cursor-pointer p-4"
           onClick={() => setDetalle(cultivo.nombre)} // Establece la vista detallada para el cultivo clicado
         >
-          {/* Imagen del cultivo */}
-          <img src={cultivo.imagen || "https://placehold.co/600x400/A77B55/F2E8CF?text=🌱"} alt={cultivo.nombre} className="rounded-none w-full h-40 object-cover mb-3" />
+          {/* Imagen del cultivo */}\n          {cultivo.imagen ? (\n            <img src={cultivo.imagen} alt={cultivo.nombre} className=\"rounded-none w-full h-40 object-cover mb-3\" />\n          ) : (\n            <div className=\"cultivo-placeholder rounded-none w-full h-40 mb-3 flex items-center justify-center text-lg font-heading\">\n              \\U0001F331\n            </div>\n          )}\n
           {/* Nombre del cultivo: encabezado grande, en negrita, texto temático, fuente de encabezado. */}
           <h3 className="text-xl font-semibold text-text-main font-heading mb-1">{cultivo.nombre.toUpperCase()}</h3>
           {/* Fecha de siembra */}
-          <p className="text-text-main/80 text-sm mb-2">SIEMBRA: {cultivo.siembra}</p>
+          <p className="text-text-main text-sm mb-2">SIEMBRA: {cultivo.siembra}</p>
           {/* Indicador de estado y texto */}
           <div className="flex items-center">
             {/* Pequeño cuadrado de color basado en cultivo.color (ej. bg-primary, bg-secondary). */}
             <span className={`inline-block w-3 h-3 rounded-none ${cultivo.color} mr-2`}></span>
             {/* Estado del cultivo: en mayúsculas para énfasis. */}
-            <span className="text-text-main/80 text-sm">ESTADO: {(cultivo.estado || 'N/D').toUpperCase()}</span>
+            <span className="text-text-main text-sm">ESTADO: {(cultivo.estado || 'N/D').toUpperCase()}</span>
           </div>
           {/* Métrica de humedad */}
-          <p className="text-text-main/80 text-sm mt-1">
+          <p className="text-text-main text-sm mt-1">
             HUMEDAD SUELO (4H): {cultivo.humedad4h || "N/D"}
           </p>
           {/* Métrica de temperatura */}
-          <p className="text-text-main/80 text-sm">
+          <p className="text-text-main text-sm">
             TEMP. (4H): {cultivo.temperatura4h || "N/D"}
           </p>
           {/* Resumen de conocimientos de IA */}
-          <p className="text-text-main/80 text-xs mt-1">
+          <p className="text-text-main text-xs mt-1">
             IA: {cultivo.ia && cultivo.ia.length > 0 ? cultivo.ia[0] : "SIN DATOS IA"}
           </p>
         </div>
