@@ -2,7 +2,7 @@
   {
     "id": 1,
     "email": "admin@example.com",
-    "passwordHash": "$2b$10$aIHf/gxmnX6rNLOsZ8EQteBuP.Z8WgxPPN/pAcieP/IT/ywYnZB1S",
+    "passwordHash": "$2b$10$okCV65CnGq9sJetJ8xQNNOSj/OvFVklz4fQEfITTtmrVy5pxt.f5y",
     "role": "admin"
   },
   {
@@ -14,7 +14,13 @@
   {
     "id": 3,
     "email": "test@example.com",
-    "passwordHash": "password",
+    "passwordHash": "$2b$10$W1RhacTocu3XGrP8EwtwAOGQRvQshabaybzVAo2P2vWd90mOVBFTC",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "email": "micorreo@dominio.com",
+    "passwordHash": "$2b$10$/mJ372K3JRJBYt.D8vzMK.Brkv7aIP62cgU55zoIDIaLJ9EuFrIHS",
     "role": "user"
   }
 ]

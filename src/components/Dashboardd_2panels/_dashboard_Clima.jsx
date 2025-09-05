@@ -82,7 +82,7 @@ export default function DashboardClima() {
             <div className="bg-background-card border border-border p-6 flex flex-col items-center justify-center h-full">
                 <p className="text-red-500 text-center mb-4">{error}</p>
                 {error.includes('ubicación') && (
-                    <button 
+                    <button
                         onClick={getUserLocation}
                         className="w-full bg-primary text-white py-2 px-4 hover:bg-primary/80 transition-all font-heading"
                     >
@@ -99,18 +99,18 @@ export default function DashboardClima() {
         <div className="bg-background-card border border-border shadow-md p-6 transition-all duration-300">
             <div className="flex items-center justify-between mb-6">
                 <span className="flex items-center gap-2">
-                    <span className="text-2xl text-accent">📍</span> 
+                    <span className="text-2xl text-accent">📍</span>
                     <span className="text-lg font-bold text-text-main font-heading truncate max-w-[200px]" title={locationName}>
                         {locationName.toUpperCase()}
                     </span>
                 </span>
                 <span className="text-xs bg-secondary/20 text-text-accent px-2 py-1 font-heading">
-                    ALT: {userLocation.alt !== 'No disponible' 
-                        ? `${Math.round(userLocation.alt)}M` 
+                    ALT: {userLocation.alt !== 'No disponible'
+                        ? `${Math.round(userLocation.alt)}M`
                         : 'N/A'}
                 </span>
             </div>
-            
+
             <div className="text-center mb-6">
                 <p className="text-6xl font-bold text-primary mb-2 font-heading">
                     {Math.round(weather.main.temp)}°C
@@ -118,7 +118,7 @@ export default function DashboardClima() {
                 <p className="text-text-main/90 capitalize text-lg mb-4">
                     {weather.weather[0].description}
                 </p>
-                <img 
+                <img
                     src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                     alt={weather.weather[0].description}
                     className="mx-auto w-20 h-20 filter brightness-110 contrast-125"
@@ -149,7 +149,7 @@ export default function DashboardClima() {
                 </div>
             </div>
 
-            <button 
+            <button
                 onClick={getUserLocation}
                 className="w-full bg-secondary text-black py-2 px-4 hover:bg-secondary/80 transition-all text-sm font-bold font-heading"
             >

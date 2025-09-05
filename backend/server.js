@@ -46,7 +46,7 @@ const USERS_FILE_PATH = './data/usuarios.json';
 // Register a new user
 app.post('/api/register', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, tipoDocumento, numeroDocumento, telefono } = req.body;
         if (!email || !password) {
             return res.status(400).json({ error: 'Email and password are required.' });
         }
@@ -65,11 +65,29 @@ app.post('/api/register', async (req, res) => {
             id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
             email,
             passwordHash,
+            tipoDocumento,
+            numeroDocumento,
+            telefono,
             role: 'user' // Default role
         };
 
         users.push(newUser);
         await fs.writeJson(USERS_FILE_PATH, users, { spaces: 2 });
+
+        // --- Add Default Cultivos for the new user ---
+        const cultivos = await fs.readJson(CULTIVOS_FILE_PATH);
+        const newUserId = newUser.id;
+        const cultivoIdBase = cultivos.length > 0 ? Math.max(...cultivos.map(c => c.id)) + 1 : 1;
+
+        const defaultCultivos = [
+            { id: cultivoIdBase, userId: newUserId, nombre: '🍅 Tomates - Lote Sol Naciente', estado: 'Saludable' },
+            { id: cultivoIdBase + 1, userId: newUserId, nombre: '🍓 Fresas - El Edén', estado: 'Saludable' },
+            { id: cultivoIdBase + 2, userId: newUserId, nombre: '🌽 Maíz - La Esperanza', estado: 'Monitoreando' }
+        ];
+
+        cultivos.push(...defaultCultivos);
+        await fs.writeJson(CULTIVOS_FILE_PATH, cultivos, { spaces: 2 });
+        // --- End of Default Cultivos ---
 
         // No devolver el hash de la contraseña
         const userForResponse = { ...newUser };
@@ -98,7 +116,7 @@ app.post('/api/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
 
-        const isMatch = user.passwordHash.startsWith('$2b
+        const isMatch = await bcrypt.compare(password, user.passwordHash);
 
         if (!isMatch) {
             return res.status(401).json({ error: 'Invalid credentials.' });
@@ -133,85 +151,41 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/admin/users', [authenticateToken, isAdmin], async (req, res) => {
     try {
         const users = await fs.readJson(USERS_FILE_PATH);
-        // Nunca devuelvas las contraseñas, ni siquiera hasheadas
-        const safeUsers = users.map(({ passwordHash, ...user }) => user);
-        res.json(safeUsers);
+        // Devuelve todos los datos de los usuarios, incluido el hash, para el admin
+        res.json(users);
     } catch (error) {
         console.error('Error reading users.json:', error.message);
         res.status(500).json({ error: 'Error fetching users.' });
     }
 });
 
-
-// =================================================================
-// GENERAL API ENDPOINTS
-// =================================================================
-
-// Proxy endpoint for OpenWeatherMap API
-app.get('/api/clima', async (req, res) => {
-    // ... (código existente sin cambios)
-});
-
-// API endpoint for Cultivos
-const CULTIVOS_FILE_PATH = './data/cultivos.json';
-
-// GET all cultivos
-app.get('/api/cultivos', async (req, res) => {
-    // ... (código existente sin cambios)
-});
-
-// POST a new cultivo
-app.post('/api/cultivos', async (req, res) => {
-    // ... (código existente sin cambios)
-});
-
-app.listen(PORT, () => {
-    console.log(`Backend proxy server running on port ${PORT}`);
-    console.log(`Access it at http://localhost:${PORT}`);
-});
-)
-          ? await bcrypt.compare(password, user.passwordHash)
-          : password === user.passwordHash;
-
-        if (!isMatch) {
-            return res.status(401).json({ error: 'Invalid credentials.' });
+// Reset a user's password
+app.post('/api/admin/reset-password', [authenticateToken, isAdmin], async (req, res) => {
+    try {
+        const { userId, newPassword } = req.body;
+        if (!userId || !newPassword) {
+            return res.status(400).json({ error: 'User ID and new password are required.' });
         }
 
-        // Crear el payload para el token
-        const payload = {
-            id: user.id,
-            email: user.email,
-            role: user.role
-        };
-
-        // Firmar el token
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        res.json({ 
-            message: "Login successful",
-            user: payload,
-            token 
-        });
-
-    } catch (error) {
-        console.error('Error logging in user:', error.message);
-        res.status(500).json({ error: 'Error logging in user.' });
-    }
-});
-
-// =================================================================
-// ADMIN ENDPOINTS
-// =================================================================
-
-app.get('/api/admin/users', [authenticateToken, isAdmin], async (req, res) => {
-    try {
         const users = await fs.readJson(USERS_FILE_PATH);
-        // Nunca devuelvas las contraseñas, ni siquiera hasheadas
-        const safeUsers = users.map(({ passwordHash, ...user }) => user);
-        res.json(safeUsers);
+        
+        const userIndex = users.findIndex(u => u.id === userId);
+        if (userIndex === -1) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(newPassword, salt);
+
+        users[userIndex].passwordHash = passwordHash;
+
+        await fs.writeJson(USERS_FILE_PATH, users, { spaces: 2 });
+
+        res.json({ message: `Password for user ${userId} has been reset successfully.` });
+
     } catch (error) {
-        console.error('Error reading users.json:', error.message);
-        res.status(500).json({ error: 'Error fetching users.' });
+        console.error('Error resetting password:', error.message);
+        res.status(500).json({ error: 'Error resetting password.' });
     }
 });
 
@@ -222,20 +196,67 @@ app.get('/api/admin/users', [authenticateToken, isAdmin], async (req, res) => {
 
 // Proxy endpoint for OpenWeatherMap API
 app.get('/api/clima', async (req, res) => {
-    // ... (código existente sin cambios)
+    const { lat, lon } = req.query; // Get lat and lon from frontend query parameters
+    const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY; // Get API key from environment variables
+
+    if (!lat || !lon) {
+        return res.status(400).json({ error: 'Latitude and longitude are required.' });
+    }
+
+    if (!OPENWEATHER_API_KEY) {
+        console.error('OPENWEATHER_API_KEY is not set in backend/.env');
+        return res.status(500).json({ error: 'Server configuration error: API key missing.' });
+    }
+
+    try {
+        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=es`;
+        const response = await axios.get(weatherApiUrl);
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error calling OpenWeatherMap API:', error.message);
+        if (error.response) {
+            res.status(error.response.status).json(error.response.data);
+        } else if (error.request) {
+            res.status(500).json({ error: 'No response from OpenWeatherMap API.' });
+        } else {
+            res.status(500).json({ error: 'An unexpected error occurred.' });
+        }
+    }
 });
 
 // API endpoint for Cultivos
 const CULTIVOS_FILE_PATH = './data/cultivos.json';
 
-// GET all cultivos
-app.get('/api/cultivos', async (req, res) => {
-    // ... (código existente sin cambios)
+// GET all cultivos for the logged-in user
+app.get('/api/cultivos', authenticateToken, async (req, res) => {
+    try {
+        const cultivos = await fs.readJson(CULTIVOS_FILE_PATH);
+        const userCultivos = cultivos.filter(c => c.userId === req.user.id);
+        res.json(userCultivos);
+    } catch (error) {
+        console.error('Error reading cultivos.json:', error.message);
+        res.status(500).json({ error: 'Error fetching cultivos.' });
+    }
 });
 
-// POST a new cultivo
-app.post('/api/cultivos', async (req, res) => {
-    // ... (código existente sin cambios)
+// POST a new cultivo for the logged-in user
+app.post('/api/cultivos', authenticateToken, async (req, res) => {
+    try {
+        const cultivos = await fs.readJson(CULTIVOS_FILE_PATH);
+        const newCultivo = {
+            id: cultivos.length > 0 ? Math.max(...cultivos.map(c => c.id)) + 1 : 1,
+            userId: req.user.id, // Associate with logged-in user
+            ...req.body // Add all other properties from request
+        };
+
+        cultivos.push(newCultivo);
+        await fs.writeJson(CULTIVOS_FILE_PATH, cultivos, { spaces: 2 });
+
+        res.status(201).json(newCultivo);
+    } catch (error) {
+        console.error('Error creating cultivo:', error.message);
+        res.status(500).json({ error: 'Error creating cultivo.' });
+    }
 });
 
 app.listen(PORT, () => {

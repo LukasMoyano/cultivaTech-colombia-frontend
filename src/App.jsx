@@ -58,7 +58,7 @@ function App() {
         )}
         
         {currentPage === 'ingreso' && !isAuthenticated ? (
-          <IngresoRegistro onLoginSuccess={handleLoginSuccess} />
+          <IngresoRegistro onLoginSuccess={handleLoginSuccess} setCurrentPage={handleNav} />
         ) : (
           <MainContent 
             currentPage={currentPage} 

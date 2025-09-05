@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import apiClient from '../api';
 
-const IngresoRegistro = ({ onLoginSuccess }) => {
-  const [isRegister, setIsRegister] = useState(true);
+const IngresoRegistro = ({ onLoginSuccess, setCurrentPage }) => {
+  const [isRegister, setIsRegister] = useState(false); // Changed default to false to show login first
   const [formData, setFormData] = useState({
     tipoDocumento: '',
     numeroDocumento: '',
@@ -55,6 +55,11 @@ const IngresoRegistro = ({ onLoginSuccess }) => {
         };
 
         const response = await apiClient.post('/api/login', loginPayload);
+
+        // Guardar el token y los datos del usuario en localStorage
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+
         setMessage('Inicio de sesión exitoso.');
         // Llama a la función onLoginSuccess para notificar al componente padre
         if (onLoginSuccess) {
@@ -181,6 +186,9 @@ const IngresoRegistro = ({ onLoginSuccess }) => {
               className="shadow appearance-none border border-border rounded w-full py-2 px-3 text-text-main bg-background-card leading-tight focus:outline-none focus:shadow-outline transition-all"
               required={isRegister}
             />
+            <p className="text-xs text-text-main/80 mt-1 font-medium">
+              La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales.
+            </p>
           </div>
         )}
         
