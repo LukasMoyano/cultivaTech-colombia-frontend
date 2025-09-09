@@ -32,5 +32,21 @@
     "userId": 5,
     "nombre": "🌽 Maíz - La Esperanza",
     "estado": "Monitoreando"
+  },
+  {
+    "id": 5,
+    "userId": 5,
+    "nombre": "dASDAsd",
+    "siembra": "2025-09-12",
+    "estado": "Saludable",
+    "humedad": "",
+    "humedad4h": "45",
+    "temperatura4h": "54",
+    "color": "bg-primary",
+    "imagen": "",
+    "fenologico": "",
+    "ia": [
+      "asasdfaertaeveuvrt7bit7no789mp890,p0b7u5ecytw3cw4 rt3w52t24ye67iik"
+    ]
   }
 ]
