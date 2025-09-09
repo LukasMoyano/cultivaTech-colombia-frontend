@@ -22,5 +22,14 @@
     "email": "micorreo@dominio.com",
     "passwordHash": "$2b$10$/mJ372K3JRJBYt.D8vzMK.Brkv7aIP62cgU55zoIDIaLJ9EuFrIHS",
     "role": "user"
+  },
+  {
+    "id": 5,
+    "email": "lukasmoyanomorales@gmail.com",
+    "passwordHash": "$2b$10$lpcUyfBhhnbdIFnUkspEMe3R//T4qWzOiopU4Ckgq5/byqFRxhzdC",
+    "tipoDocumento": "CC",
+    "numeroDocumento": "1014189995",
+    "telefono": "573197919742",
+    "role": "user"
   }
 ]

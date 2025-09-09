@@ -27,7 +27,14 @@ const CultivoList = ({ cultivos, setDetalle }) => {
           className="bg-background-card border border-border shadow-md hover:shadow-lg transition-shadow cursor-pointer p-4"
           onClick={() => setDetalle(cultivo.nombre)} // Establece la vista detallada para el cultivo clicado
         >
-          {/* Imagen del cultivo */}\n          {cultivo.imagen ? (\n            <img src={cultivo.imagen} alt={cultivo.nombre} className=\"rounded-none w-full h-40 object-cover mb-3\" />\n          ) : (\n            <div className=\"cultivo-placeholder rounded-none w-full h-40 mb-3 flex items-center justify-center text-lg font-heading\">\n              \\U0001F331\n            </div>\n          )}\n
+          {/* Imagen del cultivo */}
+          {cultivo.imagen ? (
+            <img src={cultivo.imagen} alt={cultivo.nombre} className="rounded-none w-full h-40 object-cover mb-3" />
+          ) : (
+            <div className="cultivo-placeholder rounded-none w-full h-40 mb-3 flex items-center justify-center text-lg font-heading">
+              🌱
+            </div>
+          )}
           {/* Nombre del cultivo: encabezado grande, en negrita, texto temático, fuente de encabezado. */}
           <h3 className="text-xl font-semibold text-text-main font-heading mb-1">{cultivo.nombre.toUpperCase()}</h3>
           {/* Fecha de siembra */}

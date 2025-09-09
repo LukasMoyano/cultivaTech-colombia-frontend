@@ -14,5 +14,23 @@
     "ia": [
       "asdfsdfasdfasdf"
     ]
+  },
+  {
+    "id": 2,
+    "userId": 5,
+    "nombre": "🍅 Tomates - Lote Sol Naciente",
+    "estado": "Saludable"
+  },
+  {
+    "id": 3,
+    "userId": 5,
+    "nombre": "🍓 Fresas - El Edén",
+    "estado": "Saludable"
+  },
+  {
+    "id": 4,
+    "userId": 5,
+    "nombre": "🌽 Maíz - La Esperanza",
+    "estado": "Monitoreando"
   }
 ]
