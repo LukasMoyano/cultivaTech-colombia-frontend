@@ -92,6 +92,22 @@ export default function Cultivos({ modoResumen = false, onSeleccionar, setCurren
 
   if (detalle) {
     const cultivo = cultivos.find((c) => c.nombre === detalle);
+
+    // Si no se encuentra el cultivo, muestra un error y un botón para volver.
+    if (!cultivo) {
+      return (
+        <div className="text-center p-8">
+          <p className="text-red-500 text-lg mb-4">Error: No se pudo encontrar el cultivo seleccionado.</p>
+          <button
+            onClick={() => setDetalle(null)}
+            className="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded"
+          >
+            Volver a la lista
+          </button>
+        </div>
+      );
+    }
+
     return (
       <CultivoDetailView 
         cultivo={cultivo} 
