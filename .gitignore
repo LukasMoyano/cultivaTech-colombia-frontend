@@ -1,3 +1,10 @@
 # Environment variables
 .env
 .env.*
+
+# Documentation files
+accesorapidopanel_fix_documentation.md
+brown_color_solutions.md
+contrast_improvements_documentation.md
+cultivolist_improvements_documentation.md
+solution_proposals.md
