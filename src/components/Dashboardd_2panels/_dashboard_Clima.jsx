@@ -88,9 +88,7 @@ export default function DashboardClima() {
       if (!userLocation) return;
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL || "http://localhost:3001"
-          }/api/clima?lat=${userLocation.lat}&lon=${userLocation.lon}`
+          `https://cultivatech-backend.onrender.com/api/clima?lat=${userLocation.lat}&lon=${userLocation.lon}`
         );
         setWeather(response.data);
         setError(null);

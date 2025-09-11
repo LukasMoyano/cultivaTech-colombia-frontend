@@ -4,7 +4,7 @@ import axios from "axios";
 // La URL base se toma de las variables de entorno de Vite (VITE_BACKEND_URL).
 // Si no está definida (como en el desarrollo local), usa 'http://localhost:3001' como fallback.
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:3001",
+  baseURL: "https://cultivatech-backend.onrender.com",
 });
 
 // Configura un interceptor de peticiones.
