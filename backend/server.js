@@ -9,7 +9,34 @@ const jwt = require('jsonwebtoken'); // Importar jsonwebtoken
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+// Configurar CORS para producción
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Permitir solicitudes sin origen (como móvil apps o curl)
+    if (!origin) return callback(null, true);
+    
+    // Obtener orígenes permitidos de las variables de entorno o usar lista por defecto
+    const allowedOriginsEnv = process.env.ALLOWED_ORIGINS;
+    const allowedOrigins = allowedOriginsEnv 
+      ? allowedOriginsEnv.split(',').map(origin => origin.trim())
+      : [
+          'http://localhost:5173', // Vite dev server
+          'http://localhost:3000', // React dev server
+          'https://cultivatech-colombia-frontend.netlify.app', // Tu frontend en producción
+          'https://cultivatech-backend.onrender.com' // Backend en producción (por si acaso)
+        ];
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // =================================================================

@@ -1,8 +1,7 @@
 # Environment variables
 .env
 .env.*
-
-# Documentation files
+-extra": "^11.3.1",
 accesorapidopanel_fix_documentation.md
 brown_color_solutions.md
 contrast_improvements_documentation.md

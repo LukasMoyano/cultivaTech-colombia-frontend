@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import apiClient from "../../api"; // Importar el cliente API compartido
 
 /**
  * Componente para mostrar el clima.
@@ -87,10 +88,8 @@ export default function DashboardClima() {
     const fetchWeather = async () => {
       if (!userLocation) return;
       try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL || "http://localhost:3001"
-          }/api/clima?lat=${userLocation.lat}&lon=${userLocation.lon}`
+        const response = await apiClient.get(
+          `/api/clima?lat=${userLocation.lat}&lon=${userLocation.lon}`
         );
         setWeather(response.data);
         setError(null);
