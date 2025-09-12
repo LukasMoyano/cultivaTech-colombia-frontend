@@ -27,6 +27,14 @@ export default function DashboardClima() {
     }
     setLoading(true);
     setWarning(null); // Limpia advertencias anteriores al reintentar.
+    
+    // Opciones para la geolocalización con mayor precisión y tiempo de espera
+    const geoOptions = {
+      enableHighAccuracy: true,
+      timeout: 10000, // 10 segundos de tiempo de espera
+      maximumAge: 300000 // 5 minutos de caché
+    };
+    
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setUserLocation({
@@ -41,25 +49,27 @@ export default function DashboardClima() {
         switch (err.code) {
           case err.PERMISSION_DENIED:
             userFriendlyMessage =
-              "Permiso de ubicación denegado. Por favor, habilítalo en la configuración de tu navegador y actualiza. Mostrando clima para Bogotá.";
+              "Permiso de ubicación denegado. Por favor, habilítalo en la configuración de tu navegador y actualiza.";
             break;
           case err.POSITION_UNAVAILABLE:
             userFriendlyMessage =
-              "La información de ubicación no está disponible. Mostrando clima para Bogotá.";
+              "La información de ubicación no está disponible.";
             break;
           case err.TIMEOUT:
             userFriendlyMessage =
-              "La solicitud de ubicación expiró. Mostrando clima para Bogotá.";
+              "La solicitud de ubicación expiró.";
             break;
           default:
             userFriendlyMessage =
-              "No se pudo obtener tu ubicación. Mostrando clima para Bogotá.";
+              "No se pudo obtener tu ubicación.";
             break;
         }
         setWarning(userFriendlyMessage);
-        // Usa la ubicación de fallback para que el componente siga funcionando.
-        setUserLocation(fallbackLocation);
-      }
+        setError("No se pudo obtener tu ubicación. Por favor, verifica los permisos de ubicación en tu navegador.");
+        setLoading(false);
+        // No usamos la ubicación de fallback para evitar confusiones
+      },
+      geoOptions
     );
   };
 
@@ -119,16 +129,51 @@ export default function DashboardClima() {
     );
   }
 
+  // Si no hay ubicación y hay un error, mostrar el error con opción de reintentar
+  if (!userLocation && error) {
+    return (
+      <div className="bg-background-card border border-border p-6 flex flex-col items-center justify-center h-full">
+        <p className="text-red-500 text-center mb-4">{error}</p>
+        <button
+          onClick={getUserLocation}
+          className="mt-4 bg-secondary text-black py-2 px-4 hover:bg-secondary/80 transition-all text-sm font-bold font-heading"
+        >
+          🔄 REINTENTAR
+        </button>
+      </div>
+    );
+  }
+
+  // Si no hay datos de clima pero sí ubicación, mostrar un mensaje de carga del clima
+  if (userLocation && !weather && !error) {
+    return (
+      <div className="bg-background-card border border-border p-6 flex items-center justify-center h-full">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-secondary mb-4 mx-auto"></div>
+          <p className="text-sm text-text-main/70 font-heading">
+            OBTENIENDO DATOS DEL CLIMA...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Estado de error fatal (ej. la API del clima no responde).
   if (error) {
     return (
       <div className="bg-background-card border border-border p-6 flex flex-col items-center justify-center h-full">
         <p className="text-red-500 text-center mb-4">{error}</p>
+        <button
+          onClick={getUserLocation}
+          className="mt-4 bg-secondary text-black py-2 px-4 hover:bg-secondary/80 transition-all text-sm font-bold font-heading"
+        >
+          🔄 REINTENTAR
+        </button>
       </div>
     );
   }
 
-  // Si no hay datos de clima o ubicación (un estado improbable después de los manejos anteriores), no renderiza nada.
+  // Si no hay datos de clima o ubicación, no renderiza nada.
   if (!weather || !userLocation) return null;
 
   return (
@@ -138,16 +183,14 @@ export default function DashboardClima() {
         <div className="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-4 mb-4 rounded-r-lg" role="alert">
           <p className="font-bold">Aviso de Ubicación</p>
           <p className="text-sm">{warning}</p>
-          {warning.includes("denegado") && (
-             <div className="mt-2 text-xs">
-                <p className="font-semibold">¿Cómo solucionarlo?</p>
-                <ol className="list-decimal list-inside">
-                    <li>Haz clic en el ícono <strong>🔒</strong> junto a la dirección del sitio.</li>
-                    <li>Activa el permiso de <strong>Ubicación</strong>.</li>
-                    <li>Recarga la página o haz clic en "Actualizar Ubicación".</li>
-                </ol>
-            </div>
-          )}
+          <div className="mt-2 text-xs">
+            <p className="font-semibold">¿Cómo solucionarlo?</p>
+            <ol className="list-decimal list-inside">
+                <li>Haz clic en el ícono <strong>🔒</strong> junto a la dirección del sitio.</li>
+                <li>Activa el permiso de <strong>Ubicación</strong>.</li>
+                <li>Recarga la página o haz clic en "Actualizar Ubicación".</li>
+            </ol>
+          </div>
         </div>
       )}
       <div className="flex items-center justify-between mb-6">

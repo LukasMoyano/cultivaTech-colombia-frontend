@@ -26,7 +26,7 @@ const CultivoDetailView = ({ cultivo, setDetalle, setCurrentPage }) => {
       {/* Detalles del cultivo: usa el color de texto principal, algo en negrita. */}
       <p className="text-text-main/80 mb-1">FECHA DE SIEMBRA: {cultivo.siembra}</p>
       <p className="text-text-main/80 mb-4">
-        ESTADO FENOLÓGICO: <span className="font-semibold">{cultivo.fenologico.toUpperCase()}</span>
+        ESTADO FENOLÓGICO: <span className="font-semibold">{cultivo.fenologico ? cultivo.fenologico.toUpperCase() : 'NO DISPONIBLE'}</span>
       </p>
       {/* Cuadrícula para varias tarjetas de información (humedad, temperatura, detecciones de IA). */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

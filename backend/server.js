@@ -107,9 +107,48 @@ app.post('/api/register', async (req, res) => {
         const cultivoIdBase = cultivos.length > 0 ? Math.max(...cultivos.map(c => c.id)) + 1 : 1;
 
         const defaultCultivos = [
-            { id: cultivoIdBase, userId: newUserId, nombre: '🍅 Tomates - Lote Sol Naciente', estado: 'Saludable' },
-            { id: cultivoIdBase + 1, userId: newUserId, nombre: '🍓 Fresas - El Edén', estado: 'Saludable' },
-            { id: cultivoIdBase + 2, userId: newUserId, nombre: '🌽 Maíz - La Esperanza', estado: 'Monitoreando' }
+            { 
+                id: cultivoIdBase, 
+                userId: newUserId, 
+                nombre: '🍅 Tomates - Lote Sol Naciente', 
+                estado: 'Saludable',
+                siembra: new Date().toISOString().split('T')[0], // Fecha actual
+                humedad: '',
+                humedad4h: '',
+                temperatura4h: '',
+                color: 'bg-primary',
+                imagen: '',
+                fenologico: '',
+                ia: []
+            },
+            { 
+                id: cultivoIdBase + 1, 
+                userId: newUserId, 
+                nombre: '🍓 Fresas - El Edén', 
+                estado: 'Saludable',
+                siembra: new Date().toISOString().split('T')[0],
+                humedad: '',
+                humedad4h: '',
+                temperatura4h: '',
+                color: 'bg-primary',
+                imagen: '',
+                fenologico: '',
+                ia: []
+            },
+            { 
+                id: cultivoIdBase + 2, 
+                userId: newUserId, 
+                nombre: '🌽 Maíz - La Esperanza', 
+                estado: 'Monitoreando',
+                siembra: new Date().toISOString().split('T')[0],
+                humedad: '',
+                humedad4h: '',
+                temperatura4h: '',
+                color: 'bg-primary',
+                imagen: '',
+                fenologico: '',
+                ia: []
+            }
         ];
 
         cultivos.push(...defaultCultivos);
