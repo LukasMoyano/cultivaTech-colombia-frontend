@@ -48,15 +48,19 @@ const CultivoDetailView = ({ cultivo, setDetalle, setCurrentPage }) => {
         <div className="bg-background-card border border-border shadow-md p-6 md:col-span-2">
           <div className="font-heading text-text-main text-lg mb-4">💡 ÚLTIMAS DETECCIONES IA</div>
           <ul className="space-y-2 text-text-main">
-            {cultivo.ia.map((comentario, idx) => (
-              <li key={idx}>
-                <span className="mr-2">
-                  {/* Ícono condicional basado en el contenido del comentario */}
-                  {comentario.startsWith("✅") ? "✅" : comentario.startsWith("⚠️") ? "⚠️" : "💡"}
-                </span>{" "}
-                {comentario}
-              </li>
-            ))}
+            {cultivo.ia && Array.isArray(cultivo.ia) ? (
+              cultivo.ia.map((comentario, idx) => (
+                <li key={idx}>
+                  <span className="mr-2">
+                    {/* Ícono condicional basado en el contenido del comentario */}
+                    {comentario.startsWith("✅") ? "✅" : comentario.startsWith("⚠️") ? "⚠️" : "💡"}
+                  </span>{" "}
+                  {comentario}
+                </li>
+              ))
+            ) : (
+              <li>No hay detecciones de IA disponibles</li>
+            )}
           </ul>
         </div>
       </div>
