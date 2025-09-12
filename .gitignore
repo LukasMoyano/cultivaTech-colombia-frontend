@@ -1,6 +1,9 @@
 # Environment variables
 .env
-.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.*.local
 -extra": "^11.3.1",
 accesorapidopanel_fix_documentation.md
 brown_color_solutions.md
