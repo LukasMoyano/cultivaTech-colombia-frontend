@@ -9,6 +9,7 @@ import Alertas from "./Alertas";
 import Robot from "./Robot";
 import LandingPage from "./LandingPage";
 import JuegosIA from "./JuegosIA";
+import Foro from "./Foro";
 import CultivoDetailView from "./cultivos/CultivoDetailView";
 
 // Componente principal que renderiza el contenido central de la aplicación.
@@ -61,6 +62,11 @@ export default function MainContent({ currentPage, setCurrentPage }) {
       {/* Página de juegos IA colaborativa */}
       {currentPage === "juegos" && (
         <JuegosIA setCurrentPage={setCurrentPage} />
+      )}
+
+      {/* Foro de Agricultores */}
+      {currentPage === "foro" && (
+        <Foro setCurrentPage={setCurrentPage} />
       )}
     </main>
   );

@@ -13,6 +13,7 @@ import RobotPanel from "./dashboard/RobotPanel";
 import AccesoRapidoPanel from "./dashboard/AccesoRapidoPanel";
 import ComunidadAyudaPanel from "./dashboard/ComunidadAyudaPanel";
 import RecomendacionesPanel from "./dashboard/RecomendacionesPanel";
+import EstadoBlockchainPanel from "./dashboard/EstadoBlockchainPanel";
 
 // Import existing components
 import DashboardClima from "./Dashboardd_2panels/_dashboard_Clima";
@@ -49,6 +50,9 @@ const Dashboard = ({ setCurrentPage }) => {
           </section>
           <section aria-label="Panel de Alertas y Recomendaciones">
             <DashboardAlertasYRecomendaciones setCurrentPage={setCurrentPage} />
+          </section>
+          <section aria-label="Panel de Trazabilidad Blockchain">
+            <EstadoBlockchainPanel />
           </section>
         </div>
         

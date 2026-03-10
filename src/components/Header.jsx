@@ -12,6 +12,8 @@ export default function Header({
   const navItems = [
     { key: "dashboard", icon: "📊", label: "Panel" },
     { key: "cultivos", icon: "🌱", label: "Cultivos" },
+    { key: "foro", icon: "🗣️", label: "Foro" },
+    { key: "juegos", icon: "🎮", label: "Juegos" },
     { key: "alertas", icon: "⚠️", label: "Alertas" },
     { key: "robot", icon: "🤖", label: "Robot" },
   ];

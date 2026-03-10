@@ -29,7 +29,22 @@ apiClient.interceptors.request.use(
   (error) => {
     // Si hay un error al configurar la petición, lo rechaza.
     return Promise.reject(error);
-  }
-);
+    }
+    );
 
-export default apiClient;
+    /**
+    * Registra una lectura de sensores en la blockchain (Simulación)
+    * @param {Object} datosSensor - Objeto con temperatura y humedad
+    * @returns {Promise} - Respuesta del backend
+    */
+    export const registrarDatosBlockchain = async (datosSensor) => {
+    try {
+    const response = await apiClient.post('/api/blockchain/registrar', datosSensor);
+    return response.data;
+    } catch (error) {
+    console.error("Error al registrar en blockchain:", error);
+    throw error;
+    }
+    };
+
+    export default apiClient;

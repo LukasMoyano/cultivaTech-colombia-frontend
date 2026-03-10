@@ -5,6 +5,8 @@ require('dotenv').config();
 const fs = require('fs-extra');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); // Importar jsonwebtoken
+const { ethers } = require("ethers");
+const crypto = require("crypto");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -322,6 +324,40 @@ app.post('/api/cultivos', authenticateToken, async (req, res) => {
     } catch (error) {
         console.error('Error creating cultivo:', error.message);
         res.status(500).json({ error: 'Error creating cultivo.' });
+    }
+});
+
+// --- CONFIGURACIÓN BLOCKCHAIN CULTIVATECH (GANACHE LOCAL) ---
+const RPC_URL = "http://127.0.0.1:7545"; // Puerto estándar de Ganache
+let provider, wallet;
+try {
+    provider = new ethers.JsonRpcProvider(RPC_URL);
+    // Llave privada de prueba de Ganache (Cuenta 1) - Reemplazar en producción
+    const privateKeyTest = "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"; 
+    wallet = new ethers.Wallet(privateKeyTest, provider);
+} catch (error) {
+    console.log("Servidor Blockchain no iniciado aún. Ganache debe estar corriendo.");
+}
+
+app.post('/api/blockchain/registrar', async (req, res) => {
+    const { temperatura, humedad } = req.body;
+    try {
+        // Simulación Edge Computing: Generar Hash del paquete de datos
+        const dataString = JSON.stringify({ temp: temperatura, hum: humedad, time: Date.now() });
+        const hashDato = "0x" + crypto.createHash('sha256').update(dataString).digest('hex');
+
+        // Aquí iría la llamada al contrato inteligente instanciado con ethers.js
+        // const tx = await contrato.registrarLectura(temperatura, humedad, hashDato);
+        // await tx.wait();
+
+        res.status(200).json({ 
+            success: true, 
+            mensaje: "Lectura inyectada en Blockchain local", 
+            hashGenerado: hashDato,
+            txStatus: "Simulado (Ganache)"
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

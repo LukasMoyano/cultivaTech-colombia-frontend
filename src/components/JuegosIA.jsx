@@ -15,7 +15,7 @@ export default function JuegosIA({ setCurrentPage }) {
       id: "detector_plagas",
       titulo: "🐛 Detector de Plagas",
       descripcion: "Ayuda a la IA a identificar plagas en imágenes de cultivos",
-      color: "from-red-400 to-red-600",
+      color: "bg-primary",
       icono: "🔍",
       dificultad: "Principiante"
     },
@@ -23,7 +23,7 @@ export default function JuegosIA({ setCurrentPage }) {
       id: "clima_predictor", 
       titulo: "🌤️ Predictor Climático",
       descripcion: "Entrena el modelo para predecir condiciones climáticas óptimas",
-      color: "from-blue-400 to-blue-600",
+      color: "bg-secondary",
       icono: "🌡️",
       dificultad: "Intermedio"
     },
@@ -31,7 +31,7 @@ export default function JuegosIA({ setCurrentPage }) {
       id: "optimizador_riego",
       titulo: "💧 Optimizador de Riego", 
       descripcion: "Enseña a la IA cuándo y cuánto regar según las condiciones",
-      color: "from-green-400 to-green-600",
+      color: "bg-accent",
       icono: "🚿",
       dificultad: "Avanzado"
     }
@@ -84,25 +84,25 @@ export default function JuegosIA({ setCurrentPage }) {
     return (
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-2xl font-bold mb-2">🐛 Detector de Plagas</h3>
-          <p className="text-gray-600">Pregunta {imagenActual + 1} de {imagenes.length}</p>
+          <h3 className="text-2xl font-bold font-heading text-text-accent mb-2">🐛 Detector de Plagas</h3>
+          <p className="text-text-main/80">Pregunta {imagenActual + 1} de {imagenes.length}</p>
           <div className="flex justify-center gap-4 mt-2">
-            <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">
+            <span className="text-sm bg-primary/20 text-text-accent px-3 py-1 rounded-full font-heading">
               Puntuación: {puntuacion}
             </span>
-            <span className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+            <span className="text-sm bg-secondary/20 text-text-accent px-3 py-1 rounded-full font-heading">
               Respondidas: {preguntasRespondidas}
             </span>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg p-6 shadow-lg">
+        <div className="bg-background-card border border-border rounded-lg p-6 shadow-md">
           <img 
             src={imagenes[imagenActual].url}
             alt="Imagen de cultivo para análisis"
             className="w-full h-64 object-cover rounded-lg mb-4"
           />
-          <h4 className="text-lg font-semibold mb-4 text-center">
+          <h4 className="text-lg font-semibold font-heading text-text-accent mb-4 text-center">
             {imagenes[imagenActual].pregunta}
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -110,7 +110,7 @@ export default function JuegosIA({ setCurrentPage }) {
               <button
                 key={index}
                 onClick={() => handleRespuesta(index)}
-                className="p-3 border border-gray-300 rounded-lg hover:bg-green-50 hover:border-green-400 transition-all text-left"
+                className="p-3 border border-border rounded-lg hover:bg-primary/10 hover:border-primary transition-all text-left text-text-main"
               >
                 {opcion}
               </button>
@@ -159,17 +159,17 @@ export default function JuegosIA({ setCurrentPage }) {
     return (
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-2xl font-bold mb-2">🌤️ Predictor Climático</h3>
-          <p className="text-gray-600">Escenario {escenario + 1} de {escenarios.length}</p>
+          <h3 className="text-2xl font-bold font-heading text-text-accent mb-2">🌤️ Predictor Climático</h3>
+          <p className="text-text-main/80">Escenario {escenario + 1} de {escenarios.length}</p>
         </div>
 
-        <div className="bg-white rounded-lg p-6 shadow-lg">
-          <div className="bg-blue-50 p-4 rounded-lg mb-4">
-            <h4 className="font-semibold text-blue-800 mb-2">Condiciones Actuales:</h4>
-            <p className="text-blue-700">{escenarios[escenario].condiciones}</p>
+        <div className="bg-background-card border border-border rounded-lg p-6 shadow-md">
+          <div className="bg-secondary/20 border border-secondary/30 p-4 rounded-lg mb-4">
+            <h4 className="font-semibold font-heading text-text-accent mb-2">Condiciones Actuales:</h4>
+            <p className="text-text-main">{escenarios[escenario].condiciones}</p>
           </div>
           
-          <h4 className="text-lg font-semibold mb-4 text-center">
+          <h4 className="text-lg font-semibold font-heading text-text-accent mb-4 text-center">
             {escenarios[escenario].pregunta}
           </h4>
           
@@ -178,7 +178,7 @@ export default function JuegosIA({ setCurrentPage }) {
               <button
                 key={index}
                 onClick={() => handleRespuesta(index)}
-                className="p-3 border border-gray-300 rounded-lg hover:bg-blue-50 hover:border-blue-400 transition-all text-left"
+                className="p-3 border border-border rounded-lg hover:bg-secondary/10 hover:border-secondary transition-all text-left text-text-main"
               >
                 {opcion}
               </button>
@@ -244,31 +244,31 @@ export default function JuegosIA({ setCurrentPage }) {
     return (
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-2xl font-bold mb-2">💧 Optimizador de Riego</h3>
-          <p className="text-gray-600">Nivel {nivel} de {niveles.length}</p>
-          <p className="text-sm text-blue-600">Agua disponible: {aguaDisponible}L</p>
+          <h3 className="text-2xl font-bold font-heading text-text-accent mb-2">💧 Optimizador de Riego</h3>
+          <p className="text-text-main/80">Nivel {nivel} de {niveles.length}</p>
+          <p className="text-sm text-accent font-heading">Agua disponible: {aguaDisponible}L</p>
         </div>
 
-        <div className="bg-white rounded-lg p-6 shadow-lg">
+        <div className="bg-background-card border border-border rounded-lg p-6 shadow-md">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="bg-green-50 p-4 rounded-lg text-center">
+            <div className="bg-primary/20 border border-primary/30 p-4 rounded-lg text-center">
               <div className="text-2xl mb-2">🌱</div>
-              <p className="font-semibold">{nivelActual.cultivo}</p>
-              <p className="text-sm text-gray-600">{nivelActual.etapaFenologica}</p>
+              <p className="font-semibold font-heading text-text-accent">{nivelActual.cultivo}</p>
+              <p className="text-sm text-text-main/80">{nivelActual.etapaFenologica}</p>
             </div>
-            <div className="bg-blue-50 p-4 rounded-lg text-center">
+            <div className="bg-secondary/20 border border-secondary/30 p-4 rounded-lg text-center">
               <div className="text-2xl mb-2">💧</div>
-              <p className="font-semibold">Humedad: {nivelActual.humedad}%</p>
-              <p className="text-sm text-gray-600">Suelo</p>
+              <p className="font-semibold font-heading text-text-accent">Humedad: {nivelActual.humedad}%</p>
+              <p className="text-sm text-text-main/80">Suelo</p>
             </div>
-            <div className="bg-orange-50 p-4 rounded-lg text-center">
+            <div className="bg-accent/20 border border-accent/30 p-4 rounded-lg text-center">
               <div className="text-2xl mb-2">🌡️</div>
-              <p className="font-semibold">Temp: {nivelActual.temperatura}°C</p>
-              <p className="text-sm text-gray-600">Ambiente</p>
+              <p className="font-semibold font-heading text-text-accent">Temp: {nivelActual.temperatura}°C</p>
+              <p className="text-sm text-text-main/80">Ambiente</p>
             </div>
           </div>
 
-          <h4 className="text-lg font-semibold mb-4 text-center">
+          <h4 className="text-lg font-semibold font-heading text-text-accent mb-4 text-center">
             {nivelActual.pregunta}
           </h4>
 
@@ -280,8 +280,8 @@ export default function JuegosIA({ setCurrentPage }) {
                 disabled={cantidad > aguaDisponible}
                 className={`p-3 rounded-lg border transition-all ${
                   cantidad > aguaDisponible 
-                    ? 'border-gray-300 text-gray-400 cursor-not-allowed' 
-                    : 'border-green-400 text-green-700 hover:bg-green-50'
+                    ? 'border-border text-text-main/50 cursor-not-allowed' 
+                    : 'border-accent text-text-main hover:bg-accent/10'
                 }`}
               >
                 {cantidad}L/m²
@@ -299,7 +299,7 @@ export default function JuegosIA({ setCurrentPage }) {
         <div className="mb-6">
           <button
             onClick={() => setJuegoActivo(null)}
-            className="btn btn-outline mb-4"
+            className="border border-secondary text-secondary px-4 py-2 hover:bg-secondary/20 font-heading"
           >
             ← Volver a Juegos
           </button>
@@ -315,10 +315,10 @@ export default function JuegosIA({ setCurrentPage }) {
   return (
     <div className="container mx-auto p-6">
       <div className="mb-8 text-center">
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+        <h2 className="text-3xl font-bold font-heading text-text-accent mb-4">
           🎮 Juegos IA Colaborativa
         </h2>
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        <p className="text-text-main/90 max-w-3xl mx-auto cultivo-description">
           Ayuda a mejorar nuestro modelo de inteligencia artificial jugando. 
           Cada respuesta que das entrena a la IA para tomar mejores decisiones agrícolas.
         </p>
@@ -328,25 +328,25 @@ export default function JuegosIA({ setCurrentPage }) {
         {juegos.map(juego => (
           <div
             key={juego.id}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            className="bg-background-card border border-border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]"
           >
-            <div className={`h-32 bg-gradient-to-br ${juego.color} flex items-center justify-center`}>
+            <div className={`h-32 ${juego.color} flex items-center justify-center`}>
               <span className="text-6xl">{juego.icono}</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-2">{juego.titulo}</h3>
-              <p className="text-gray-600 mb-4 text-sm">{juego.descripcion}</p>
+              <h3 className="text-xl font-bold font-heading text-text-accent mb-2">{juego.titulo}</h3>
+              <p className="text-text-main/80 mb-4 text-sm">{juego.descripcion}</p>
               <div className="flex justify-between items-center mb-4">
-                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                <span className="text-xs bg-background border border-border text-text-main px-2 py-1 rounded-full">
                   {juego.dificultad}
                 </span>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-text-main/70">
                   +10-20 puntos
                 </span>
               </div>
               <button
                 onClick={() => setJuegoActivo(juego.id)}
-                className={`w-full bg-gradient-to-r ${juego.color} text-white py-3 px-4 rounded-lg hover:shadow-lg transition-all font-medium`}
+                className={`w-full ${juego.color} text-text-accent py-3 px-4 rounded-lg hover:opacity-90 transition-all font-heading font-bold`}
               >
                 🎮 Jugar Ahora
               </button>
@@ -356,22 +356,22 @@ export default function JuegosIA({ setCurrentPage }) {
       </div>
 
       {/* Estadísticas del usuario */}
-      <div className="bg-white rounded-2xl shadow-lg p-6">
-        <h3 className="text-xl font-bold mb-4 text-center">📊 Tus Estadísticas</h3>
+      <div className="bg-background-card border border-border rounded-lg shadow-md p-6">
+        <h3 className="text-xl font-bold font-heading text-text-accent mb-4 text-center">📊 Tus Estadísticas</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center p-4 bg-purple-50 rounded-lg">
-            <div className="text-2xl font-bold text-purple-600">{puntuacion}</div>
-            <p className="text-sm text-gray-600">Puntos Totales</p>
+          <div className="text-center p-4 bg-primary/20 border border-primary/30 rounded-lg">
+            <div className="text-2xl font-bold font-heading text-text-accent">{puntuacion}</div>
+            <p className="text-sm text-text-main/80">Puntos Totales</p>
           </div>
-          <div className="text-center p-4 bg-blue-50 rounded-lg">
-            <div className="text-2xl font-bold text-blue-600">{preguntasRespondidas}</div>
-            <p className="text-sm text-gray-600">Preguntas Respondidas</p>
+          <div className="text-center p-4 bg-secondary/20 border border-secondary/30 rounded-lg">
+            <div className="text-2xl font-bold font-heading text-text-accent">{preguntasRespondidas}</div>
+            <p className="text-sm text-text-main/80">Preguntas Respondidas</p>
           </div>
-          <div className="text-center p-4 bg-green-50 rounded-lg">
-            <div className="text-2xl font-bold text-green-600">
+          <div className="text-center p-4 bg-accent/20 border border-accent/30 rounded-lg">
+            <div className="text-2xl font-bold font-heading text-text-accent">
               {preguntasRespondidas > 0 ? Math.round((puntuacion / (preguntasRespondidas * 20)) * 100) : 0}%
             </div>
-            <p className="text-sm text-gray-600">Precisión</p>
+            <p className="text-sm text-text-main/80">Precisión</p>
           </div>
         </div>
       </div>
@@ -379,7 +379,7 @@ export default function JuegosIA({ setCurrentPage }) {
       <div className="text-center mt-8">
         <button
           onClick={() => setCurrentPage("dashboard")}
-          className="btn btn-outline"
+          className="border border-secondary text-secondary px-4 py-2 hover:bg-secondary/20 font-heading"
         >
           ← Volver al Dashboard
         </button>

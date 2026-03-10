@@ -8,9 +8,10 @@ export default function Sidebar({ currentPage, onNav, sidebarOpen, setSidebarOpe
     { key: "landing", icon: "🏠", label: "Presentación" },
     { key: "dashboard", icon: "📊", label: "Panel" },
     { key: "cultivos", icon: "🌱", label: "Cultivos" },
+    { key: "foro", icon: "🗣️", label: "Foro de Agricultores" },
+    { key: "juegos", icon: "🎮", label: "Juegos IA" },
     { key: "alertas", icon: "⚠️", label: "Alertas" },
     { key: "robot", icon: "🤖", label: "Robot" },
-    { key: "juegos", icon: "🎮", label: "Juegos IA" },
   ];
 
   const handleNavigation = (page) => {
