@@ -6,8 +6,11 @@
 <h1 align="center">🌱🤖 CultivaTech ColombIA 🐝🇨🇴</h1>
 <p align="center"><i>Innovación Agro-IoT con Arte, Ciencia y Tecnología by <strong> _-IR-_ </strong> Productions</i></p>
 <p align="center">
-<br/>  https://cultivatech-colombia-frontend.netlify.app
-  <a href="#español">Español</a>
+<p align="center">
+  <a href="https://cultivatech-colombia-frontend.netlify.app" target="_blank">
+    <strong style="font-size: 1.3em;">✨ "CultivaTech ColombIA-MVP" ✨</strong>
+  </a>
+</p>  <a href="#español">Español</a>
   <a href="#english">English</a> 
   <a href="#français">Français</a>
 </p>
