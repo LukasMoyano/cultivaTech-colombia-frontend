@@ -152,7 +152,7 @@ We require **technological, physical, and human infrastructure** to take Cultiva
 
 ### 📬 Get in Touch
 
-- **Email**: [Contacto-MasterLukasMoyano@MasterLukasMoyano.com](managementandplanning@masterlukasmoyano.com)
+- **Email**: [contact-MasterLukasMoyano@MasterLukasMoyano.com](managementandplanning@masterlukasmoyano.com)
 - **LinkedIn**: [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)
 - **GitHub**: [github.com/IR-Productions](https://github.com/LukasMoyano)
 
@@ -226,7 +226,7 @@ Nous avons besoin **d’infrastructures technologiques, physiques et humaines** 
 
 ### 📬 Contact
 
-- **Email**: [Contacto-MasterLukasMoyano@MasterLukasMoyano.com](managementandplanning@masterlukasmoyano.com)
+- **Email**: [contact-MasterLukasMoyano@MasterLukasMoyano.com](managementandplanning@masterlukasmoyano.com)
 - **LinkedIn** : [linkedin.com/in/lukasmoyano](https://www.linkedin.com/in/lukasmoyano)  
 - **GitHub** : [github.com/IR-Productions](https://github.com/IR-Productions)
 
