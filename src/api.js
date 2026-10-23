@@ -1,50 +1,65 @@
 import axios from "axios";
 
 // Determina si estamos en un entorno de producción
-const isProduction = import.meta.env.PROD || window.location.hostname.includes('netlify.app');
+const isProduction = import.meta.env.PROD || window.location.hostname.includes("netlify.app");
 
 // Crea una instancia de Axios.
 // La URL base se toma de las variables de entorno de Vite (VITE_BACKEND_URL).
-// Si no está definida, usa 'https://cultivatech-backend.onrender.com' en producción o 'http://localhost:3001' en desarrollo.
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || (isProduction ? "https://cultivatech-backend.onrender.com" : "http://localhost:3001"),
+  baseURL:
+    import.meta.env.VITE_BACKEND_URL ||
+    (isProduction ? "https://cultivatech-backend.onrender.com" : "http://localhost:3001"),
 });
 
-// Configura un interceptor de peticiones.
-// Esto es una pieza clave: se ejecuta ANTES de que cada petición sea enviada.
+// Ejecuta este interceptor ANTES de cada petición.
 apiClient.interceptors.request.use(
   (config) => {
-    // Obtiene el token de autenticación guardado en localStorage.
     const token = localStorage.getItem("token");
 
-    // Si el token existe, lo añade a las cabeceras de la petición.
-    // El backend usará este token para verificar que el usuario está autenticado.
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // Devuelve la configuración modificada para que la petición continúe.
     return config;
   },
-  (error) => {
-    // Si hay un error al configurar la petición, lo rechaza.
-    return Promise.reject(error);
-    }
-    );
+  (error) => Promise.reject(error)
+);
 
-    /**
-    * Registra una lectura de sensores en la blockchain (Simulación)
-    * @param {Object} datosSensor - Objeto con temperatura y humedad
-    * @returns {Promise} - Respuesta del backend
-    */
-    export const registrarDatosBlockchain = async (datosSensor) => {
-    try {
-    const response = await apiClient.post('/api/blockchain/registrar', datosSensor);
-    return response.data;
-    } catch (error) {
-    console.error("Error al registrar en blockchain:", error);
-    throw error;
-    }
-    };
+/**
+ * Devuelve el estado real de la cola y del último anclaje.
+ * @returns {Promise} - Estado público del oráculo
+ */
+export const obtenerEstadoBlockchain = async () => {
+  const response = await apiClient.get("/api/blockchain/status");
+  return response.data;
+};
 
-    export default apiClient;
+/**
+ * Devuelve la última lectura MQ-4 recibida por el backend.
+ * @returns {Promise} - { latest }
+ */
+export const obtenerTelemetriaLatest = async () => {
+  const response = await apiClient.get("/api/telemetry/latest");
+  return response.data;
+};
+
+/**
+ * Devuelve el historial reciente de telemetría.
+ * @param {number} limit - Número de puntos (1-240)
+ * @returns {Promise} - { history, count }
+ */
+export const obtenerTelemetriaHistorial = async (limit = 40) => {
+  const response = await apiClient.get("/api/telemetry/history", { params: { limit } });
+  return response.data;
+};
+
+/**
+ * Devuelve los últimos lotes anclados (raíz, tx y hashes).
+ * @returns {Promise} - Eventos locales del oráculo
+ */
+export const obtenerEventosBlockchain = async () => {
+  const response = await apiClient.get("/api/blockchain/eventos");
+  return response.data.eventos || [];
+};
+
+export default apiClient;

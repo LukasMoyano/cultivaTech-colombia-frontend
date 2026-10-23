@@ -7,6 +7,7 @@ export default function Sidebar({ currentPage, onNav, sidebarOpen, setSidebarOpe
   const navItems = [
     { key: "landing", icon: "🏠", label: "Presentación" },
     { key: "dashboard", icon: "📊", label: "Panel" },
+    { key: "telemetria", icon: "📡", label: "Telemetría MQ-4" },
     { key: "cultivos", icon: "🌱", label: "Cultivos" },
     { key: "foro", icon: "🗣️", label: "Foro de Agricultores" },
     { key: "juegos", icon: "🎮", label: "Juegos IA" },

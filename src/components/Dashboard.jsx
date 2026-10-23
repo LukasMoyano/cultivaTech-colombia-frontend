@@ -14,10 +14,14 @@ import AccesoRapidoPanel from "./dashboard/AccesoRapidoPanel";
 import ComunidadAyudaPanel from "./dashboard/ComunidadAyudaPanel";
 import RecomendacionesPanel from "./dashboard/RecomendacionesPanel";
 import EstadoBlockchainPanel from "./dashboard/EstadoBlockchainPanel";
+import PanelAlertas from "./dashboard/PanelAlertas";
 
 // Import existing components
 import DashboardClima from "./Dashboardd_2panels/_dashboard_Clima";
 import DashboardAlertasYRecomendaciones from "./Dashboardd_2panels/_dashboard_alertasyrecomendaciones";
+
+// Telemetría en tiempo real MQ-4 / ESP32 (SSE desde Render)
+import { Mq4Dashboard } from "./telemetria";
 
 /**
  * Componente principal del Dashboard
@@ -42,9 +46,13 @@ const Dashboard = ({ setCurrentPage }) => {
 
       {/* Sección principal con grid para paneles */}
       <main className="flex-1 min-h-0 overflow-auto">
+        {/* Telemetría ambiental en vivo (MQ-4 / ESP32 por SSE) */}
+        <section aria-label="Telemetría MQ-4 en tiempo real" className="mb-6">
+          <Mq4Dashboard />
+        </section>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <EstadoGeneralPanel setCurrentPage={setCurrentPage} />
-          <GraficoPanel />
+          <GraficoPanel setCurrentPage={setCurrentPage} />
           <section aria-label="Panel de Clima">
             <DashboardClima />
           </section>
@@ -53,6 +61,9 @@ const Dashboard = ({ setCurrentPage }) => {
           </section>
           <section aria-label="Panel de Trazabilidad Blockchain">
             <EstadoBlockchainPanel />
+          </section>
+          <section aria-label="Panel de Alertas Blockchain">
+            <PanelAlertas />
           </section>
         </div>
         

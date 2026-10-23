@@ -3,3 +3,11 @@
 
 # Node modules
 node_modules/
+
+# Estado runtime del oráculo (contiene hashes y cola local)
+data/oraculo_estado.json
+data/oraculo_estado.json.tmp
+
+# Historial efímero de telemetría (Render Free no tiene disco persistente)
+data/telemetria.json
+data/telemetria.json.tmp

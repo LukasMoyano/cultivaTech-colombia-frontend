@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 // Importa los componentes hijos que se mostrarán según la página actual.
 import IngresoRegistro from "./IngresoRegistro";
 import Dashboard from "./Dashboard";
+import { Mq4Dashboard } from "./telemetria";
 import Cultivos from "./Cultivos";
 import Alertas from "./Alertas";
 import Robot from "./Robot";
@@ -37,6 +38,14 @@ export default function MainContent({ currentPage, setCurrentPage }) {
 
       {currentPage === "dashboard" && (
         <Dashboard setCurrentPage={setCurrentPage} />
+      )}
+
+      {/* Telemetría en tiempo real MQ-4 / ESP32 vía SSE desde Render.
+          Página dedicada: KPIs + semáforo de riesgo + gráfica deslizante. */}
+      {currentPage === "telemetria" && (
+        <div className="container mx-auto">
+          <Mq4Dashboard />
+        </div>
       )}
 
       {/* Si la página actual es "cultivos", muestra el componente Cultivos.

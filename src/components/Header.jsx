@@ -11,6 +11,7 @@ export default function Header({
   // Base nav items
   const navItems = [
     { key: "dashboard", icon: "📊", label: "Panel" },
+    { key: "telemetria", icon: "📡", label: "Telemetría" },
     { key: "cultivos", icon: "🌱", label: "Cultivos" },
     { key: "foro", icon: "🗣️", label: "Foro" },
     { key: "juegos", icon: "🎮", label: "Juegos" },

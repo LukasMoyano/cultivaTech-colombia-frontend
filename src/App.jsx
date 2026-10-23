@@ -13,7 +13,10 @@ Chart.register(...registerables);
 function App() {
   const [currentPage, setCurrentPage] = useState("landing");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem("user");
+    return saved ? JSON.parse(saved) : null;
+  });
   const { theme, toggleTheme } = useTheme(); // Activa el hook del tema
 
   const handleNav = (page) => {
