@@ -1,6 +1,7 @@
 /**
- * CultivaTech Colombia · Telemetría ambiental MQ-4 (ESP32)
- * Dashboard en tiempo real vía SSE desde Render.
+ * CultivaTech Colombia · Telemetría In Situ (Mi Granja / ESP32)
+ * Dashboard en tiempo real vía SSE desde Render / Local.
+ * Adaptado dinámicamente al tema global: Modo Claro / Modo Evangelion (Night).
  */
 
 import React, { useMemo, useState } from "react";
@@ -46,7 +47,7 @@ function Mq4Dashboard({ windowSize = DEFAULT_WINDOW_SIZE }) {
 
   const raw = displayLatest?.mq4_raw;
   const voltage = displayLatest?.voltage;
-  const mac = displayLatest?.node || displayLatest?.mac || "—";
+  const mac = displayLatest?.node || displayLatest?.mac || "ESP32-GRANJA-01";
 
   const connLabel = isOnline
     ? "En línea"
@@ -57,15 +58,15 @@ function Mq4Dashboard({ windowSize = DEFAULT_WINDOW_SIZE }) {
         : "Desconectado";
 
   return (
-    <section className="mq4" aria-label="Telemetría MQ-4 en tiempo real">
+    <section className="mq4" aria-label="Telemetría in situ de la granja en tiempo real">
       <header className="mq4-head">
         <div>
-          <p className="mq4-eyebrow">CULTIVATECH COLOMBIA · IoT AMBIENTAL</p>
+          <p className="mq4-eyebrow">CULTIVATECH COLOMBIA · NODO EN MI GRANJA</p>
           <h2 className="mq4-title">
-            <span aria-hidden="true">🌱</span> Calidad del aire · ESP32
+            <span aria-hidden="true">🌱</span> Telemetría In Situ · Nodo Granja (ESP32)
           </h2>
           <p className="mq4-sub">
-            Telemetría en tiempo real · <code>{streamUrl}</code> · ventana de {windowSize} puntos
+            Monitoreo ambiental multivariable · Calidad de aire / Gases · Muestras activas: {displayHistory.length}
           </p>
         </div>
         <div className="mq4-head-actions">
@@ -85,83 +86,92 @@ function Mq4Dashboard({ windowSize = DEFAULT_WINDOW_SIZE }) {
         <div className="mq4-error" role="alert">
           <span aria-hidden="true">⚠️</span>
           <div>
-            <strong>Sin comunicación con el backend.</strong>
-            <span> {error} Verifica Render y que el ESP32 publique en {streamUrl}.</span>
+            <strong>Sin comunicación con el nodo de la granja.</strong>
+            <span> {error} Verificando canal de datos en {streamUrl}.</span>
           </div>
         </div>
       )}
 
+      {/* Tarjetas KPI Superiores */}
       <div className="mq4-kpis">
         <KpiCard
           icon="📶"
-          label="Estado de conexión"
-          accent={isOnline ? "#10B981" : "#EF4444"}
+          label="Estado del Enlace"
           pulse={isOnline}
           value={
             <span className={isOnline ? "mq4-ok" : "mq4-bad"}>
               {connLabel}
             </span>
           }
-          sub={`${messagesReceived} mensajes · ${displayHistory.length}/${windowSize} puntos`}
+          sub={`${messagesReceived} paquetes recibidos · ${displayHistory.length}/${windowSize} en memoria`}
         />
         <KpiCard
-          icon="🔌"
-          label="ID del dispositivo"
-          accent="#34D399"
+          icon="📍"
+          label="Identificador de Nodo"
           value={<span className="mq4-mono">{mac}</span>}
-          sub={displayLatest ? `Sensor ${displayLatest.sensor} · t=${formatNumber(displayLatest.timestamp)}` : "Sin datos aún"}
+          sub={displayLatest ? `Sensor Activo: GPIO12 · t=${formatNumber(displayLatest.timestamp)}` : "En espera de ráfaga"}
         />
         <KpiCard
-          icon="🧪"
-          label="Señal del sensor (cruda ADC)"
-          accent="#A7F3D0"
+          icon="💨"
+          label="Gases / Calidad Aire (MQ-4)"
           value={raw != null ? formatNumber(raw) : "—"}
-          sub={stats.avg != null ? `min ${formatNumber(stats.min)} · prom ${formatNumber(stats.avg)} · max ${formatNumber(stats.max)}` : "Escala 0–4095 (ESP32)"}
+          sub={stats.avg != null ? `Mín: ${formatNumber(stats.min)} · Prom: ${formatNumber(stats.avg)} · Máx: ${formatNumber(stats.max)}` : "Rango ADC 0–4095"}
         />
         <KpiCard
           icon="⚡"
-          label="Voltaje (V)"
-          accent="#6EE7B7"
+          label="Voltaje de Salida"
           value={voltage != null ? `${Number(voltage).toFixed(2)} V` : "—"}
-          sub="Convertido del ADC (ref 3.3 V)"
+          sub="Lectura de referencia 3.3V"
         />
       </div>
 
+      {/* Semáforo de Riesgo */}
       <RiskSemaphore mq4Raw={raw} />
 
+      {/* Gráfica Multivariable */}
       <div className="mq4-chart-card">
         <div className="mq4-chart-head">
           <div>
-            <h3 className="mq4-chart-title">Concentración en tiempo real</h3>
+            <h3 className="mq4-chart-title">Comportamiento Dinámico en Mi Granja</h3>
             <p className="mq4-chart-sub">
-              Eje X: tiempo · Eje Y: {metric === "raw" ? "MQ-4 Raw (ADC)" : "voltaje (V)"}
-              {displayLatest ? ` · último: ${displayLatest.timeLabel}` : ""}
+              Eje X: Tiempo · Eje Y: {metric === "raw" ? "Señal Sensor (ADC Raw)" : "Voltaje (V)"}
+              {displayLatest ? ` · Última actualización: ${displayLatest.timeLabel}` : ""}
             </p>
           </div>
-          <div className="mq4-toggle" role="group" aria-label="Métrica de la gráfica">
+          <div className="mq4-toggle" role="group" aria-label="Métrica graficada">
             <button
               type="button"
-              className={metric === "raw" ? "mq4-toggle-btn mq4-toggle-btn--active" : "mq4-toggle-btn"}
+              className={`mq4-toggle-btn ${metric === "raw" ? "mq4-toggle-btn--active" : ""}`}
               onClick={() => setMetric("raw")}
-              aria-pressed={metric === "raw"}
             >
-              RAW
+              RAW ADC
             </button>
             <button
               type="button"
-              className={metric === "voltage" ? "mq4-toggle-btn mq4-toggle-btn--active" : "mq4-toggle-btn"}
+              className={`mq4-toggle-btn ${metric === "voltage" ? "mq4-toggle-btn--active" : ""}`}
               onClick={() => setMetric("voltage")}
-              aria-pressed={metric === "voltage"}
             >
-              VOLTAJE
+              VOLTAJE (V)
             </button>
           </div>
         </div>
-        <Mq4Chart history={displayHistory} metric={metric} />
+
+        <div className="mq4-chart-wrap">
+          {displayHistory.length > 0 ? (
+            <Mq4Chart history={displayHistory} metric={metric} />
+          ) : (
+            <div className="mq4-chart-empty">
+              <span aria-hidden="true">📡</span>
+              <p>Esperando telemetría viva del nodo en la granja…</p>
+              <small>Canal activo escuchando en tiempo real</small>
+            </div>
+          )}
+        </div>
+
         <div className="mq4-chart-foot">
-          <span>● Ventana deslizante · {displayHistory.length} puntos</span>
-          <span>● Umbrales: 1200 / 2200 raw</span>
-          <span>● Fuente: ESP32 vía Render SSE</span>
+          <span>● Nodo en Campo: Granja Fusagasugá</span>
+          <span>● Módulo Expansible: Humedad de suelo y Temp ambiente (próximos sensores)</span>
+          <span>● Fuente: ESP32 Edge V2</span>
         </div>
       </div>
     </section>
@@ -172,4 +182,4 @@ Mq4Dashboard.propTypes = {
   windowSize: PropTypes.number,
 };
 
-export default React.memo(Mq4Dashboard);
+export default Mq4Dashboard;
