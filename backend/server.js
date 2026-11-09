@@ -28,7 +28,14 @@ const corsOptions = {
           'https://cultivatech-backend.onrender.com' // Backend en producción (por si acaso)
         ];
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // Permitir explícitamente localhost, red LAN y Tailscale (100.x.x.x o 192.168.x.x)
+    if (
+      allowedOrigins.indexOf(origin) !== -1 ||
+      origin.includes('100.93.134.33') ||
+      origin.includes('192.168.1.') ||
+      origin.includes('localhost') ||
+      origin.includes('127.0.0.1')
+    ) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -659,13 +666,30 @@ async function anclarLote(lote) {
         };
     }
 
-    const tx = await contratoTrazabilidad.registrarHashesBatch(hashes, { gasLimit: 600000 });
+    // Control estricto de Nonce hacia Sepolia para evitar colisiones ante ráfagas concurrentes de hardware
+    const noncePendiente = await provider.getTransactionCount(wallet.address, "pending");
+
+    // Optimización de Gas: llamada directa a registrarRaizBatch(raiz) para mantener el consumo < 35,000 gas
+    let tx;
+    if (typeof contratoTrazabilidad.registrarRaizBatch === "function") {
+        tx = await contratoTrazabilidad.registrarRaizBatch(raiz, {
+            gasLimit: 120000,
+            nonce: noncePendiente
+        });
+    } else {
+        tx = await contratoTrazabilidad.registrarHashesBatch(hashes, {
+            gasLimit: 400000,
+            nonce: noncePendiente
+        });
+    }
+
     const receipt = await tx.wait();
     return {
         modo: "sepolia",
         raiz,
         txHash: tx.hash,
-        blockNumber: receipt.blockNumber
+        blockNumber: receipt.blockNumber,
+        gasUsed: receipt.gasUsed ? receipt.gasUsed.toString() : null
     };
 }
 
