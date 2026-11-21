@@ -45,12 +45,47 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
+app.disable('x-powered-by');
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    next();
+});
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json({ limit: '100kb' }));
 
 // =================================================================
 // MIDDLEWARE
 // =================================================================
+
+const createRateLimiter = ({ windowMs = 15 * 60 * 1000, max = 20, message = 'Demasiadas solicitudes. Intenta más tarde.' } = {}) => {
+    const hits = new Map();
+    const timer = setInterval(() => {
+        const now = Date.now();
+        for (const [key, entry] of hits.entries()) {
+            if (now >= entry.resetAt) hits.delete(key);
+        }
+    }, Math.min(windowMs, 5 * 60 * 1000));
+    if (typeof timer.unref === 'function') timer.unref();
+
+    return (req, res, next) => {
+        const ip = req.ip || req.socket?.remoteAddress || 'unknown';
+        const now = Date.now();
+        const current = hits.get(ip);
+        if (!current || now >= current.resetAt) {
+            hits.set(ip, { count: 1, resetAt: now + windowMs });
+            return next();
+        }
+        current.count += 1;
+        if (current.count > max) {
+            return res.status(429).json({ error: message });
+        }
+        return next();
+    };
+};
+
+const authLoginLimiter = createRateLimiter({ windowMs: 15 * 60 * 1000, max: 20, message: 'Demasiados intentos de inicio de sesión. Espera unos minutos.' });
+const authRegisterLimiter = createRateLimiter({ windowMs: 15 * 60 * 1000, max: 10, message: 'Demasiados intentos de registro. Espera unos minutos.' });
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -80,7 +115,7 @@ const isAdmin = (req, res, next) => {
 const USERS_FILE_PATH = './data/usuarios.json';
 
 // Register a new user
-app.post('/api/register', async (req, res) => {
+app.post('/api/register', authRegisterLimiter, async (req, res) => {
     try {
         const { email, password, tipoDocumento, numeroDocumento, telefono } = req.body;
         if (!email || !password) {
@@ -177,7 +212,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 // Login a user
-app.post('/api/login', async (req, res) => {
+app.post('/api/login', authLoginLimiter, async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -226,8 +261,9 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/admin/users', [authenticateToken, isAdmin], async (req, res) => {
     try {
         const users = await fs.readJson(USERS_FILE_PATH);
-        // Devuelve todos los datos de los usuarios, incluido el hash, para el admin
-        res.json(users);
+        // Excluir passwordHash de la respuesta administrativa
+        const safeUsers = users.map(({ passwordHash, ...safeUser }) => safeUser);
+        res.json(safeUsers);
     } catch (error) {
         console.error('Error reading users.json:', error.message);
         res.status(500).json({ error: 'Error fetching users.' });
@@ -271,31 +307,46 @@ app.post('/api/admin/reset-password', [authenticateToken, isAdmin], async (req, 
 
 // Proxy endpoint for OpenWeatherMap API
 app.get('/api/clima', async (req, res) => {
-    const { lat, lon } = req.query; // Get lat and lon from frontend query parameters
+    const latNum = Number(req.query.lat);
+    const lonNum = Number(req.query.lon);
     const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY; // Get API key from environment variables
 
-    if (!lat || !lon) {
-        return res.status(400).json({ error: 'Latitude and longitude are required.' });
+    if (
+        req.query.lat === undefined ||
+        req.query.lon === undefined ||
+        !Number.isFinite(latNum) ||
+        !Number.isFinite(lonNum) ||
+        latNum < -90 ||
+        latNum > 90 ||
+        lonNum < -180 ||
+        lonNum > 180
+    ) {
+        return res.status(400).json({ error: 'Coordenadas lat/lon inválidas.' });
     }
 
     if (!OPENWEATHER_API_KEY) {
         console.error('OPENWEATHER_API_KEY is not set in backend/.env');
-        return res.status(500).json({ error: 'Server configuration error: API key missing.' });
+        return res.status(500).json({ error: 'Error de configuración meteorológica del servidor.' });
     }
 
     try {
-        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=es`;
-        const response = await axios.get(weatherApiUrl);
+        const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
+            params: {
+                lat: latNum,
+                lon: lonNum,
+                appid: OPENWEATHER_API_KEY,
+                units: 'metric',
+                lang: 'es',
+            },
+            timeout: 8000,
+        });
         res.json(response.data);
     } catch (error) {
         console.error('Error calling OpenWeatherMap API:', error.message);
-        if (error.response) {
-            res.status(error.response.status).json(error.response.data);
-        } else if (error.request) {
-            res.status(500).json({ error: 'No response from OpenWeatherMap API.' });
-        } else {
-            res.status(500).json({ error: 'An unexpected error occurred.' });
-        }
+        const status = error.response?.status && error.response.status >= 400 && error.response.status < 500
+            ? error.response.status
+            : 502;
+        res.status(status).json({ error: 'No se pudo consultar el servicio meteorológico.' });
     }
 });
 
@@ -317,11 +368,39 @@ app.get('/api/cultivos', authenticateToken, async (req, res) => {
 // POST a new cultivo for the logged-in user
 app.post('/api/cultivos', authenticateToken, async (req, res) => {
     try {
+        const {
+            nombre,
+            estado = 'Saludable',
+            siembra = new Date().toISOString().split('T')[0],
+            humedad = '',
+            humedad4h = '',
+            temperatura4h = '',
+            color = 'bg-primary',
+            imagen = '',
+            fenologico = '',
+            ia = [],
+            perfil = '',
+        } = req.body || {};
+
+        if (!nombre || typeof nombre !== 'string' || !nombre.trim()) {
+            return res.status(400).json({ error: 'El nombre del cultivo es obligatorio.' });
+        }
+
         const cultivos = await fs.readJson(CULTIVOS_FILE_PATH);
         const newCultivo = {
             id: cultivos.length > 0 ? Math.max(...cultivos.map(c => c.id)) + 1 : 1,
             userId: req.user.id, // Associate with logged-in user
-            ...req.body // Add all other properties from request
+            nombre: nombre.trim().slice(0, 120),
+            estado: String(estado).slice(0, 40),
+            siembra: String(siembra).slice(0, 20),
+            humedad: String(humedad).slice(0, 20),
+            humedad4h: String(humedad4h).slice(0, 20),
+            temperatura4h: String(temperatura4h).slice(0, 20),
+            color: String(color).slice(0, 40),
+            imagen: String(imagen).slice(0, 300),
+            fenologico: String(fenologico).slice(0, 200),
+            ia: Array.isArray(ia) ? ia.slice(0, 20) : [],
+            ...(perfil ? { perfil: String(perfil).slice(0, 60) } : {}),
         };
 
         cultivos.push(newCultivo);
@@ -881,8 +960,11 @@ app.get('/api/blockchain/eventos', (req, res) => {
     res.json({ eventos: oracleState.anclados.slice(0, 20) });
 });
 
-app.post('/api/blockchain/flush', async (req, res) => {
+app.post('/api/blockchain/flush', [authenticateToken, isAdmin], async (req, res) => {
     const resultado = await procesarCola({ force: true });
+    if (resultado?.error) {
+        return res.status(502).json({ error: 'No se pudo completar el anclaje en la red.', estado: estadoPublico() });
+    }
     res.json({ ...resultado, estado: estadoPublico() });
 });
 
