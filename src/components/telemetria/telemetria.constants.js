@@ -65,5 +65,13 @@ export function rawToVoltage(raw, vRef = MQ4_THRESHOLDS.V_REF) {
   return Number(((v * vRef) / MQ4_THRESHOLDS.ADC_MAX).toFixed(3));
 }
 
-export const DEFAULT_WS_URL = "ws://127.0.0.1:8080";
+const getWsUrl = () => {
+  if (typeof window !== "undefined" && window.location.hostname) {
+    const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
+    return `${proto}//${window.location.hostname}:8080`;
+  }
+  return "ws://127.0.0.1:8080";
+};
+
+export const DEFAULT_WS_URL = getWsUrl();
 export const DEFAULT_WINDOW_SIZE = 40;

@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const DEFAULT_BACKEND_URL = import.meta.env.PROD
-  ? "https://cultivatech-backend.onrender.com"
-  : "http://localhost:3001";
+const getDefaultBackendUrl = () => {
+  if (import.meta.env.VITE_BACKEND_URL) return import.meta.env.VITE_BACKEND_URL;
+  if (import.meta.env.PROD) return "https://cultivatech-backend.onrender.com";
+  const hostname = typeof window !== "undefined" && window.location.hostname ? window.location.hostname : "localhost";
+  const protocol = typeof window !== "undefined" && window.location.protocol ? window.location.protocol : "http:";
+  return `${protocol}//${hostname}:3001`;
+};
 
-export const TELEMETRY_BASE_URL = String(
-  import.meta.env.VITE_BACKEND_URL || DEFAULT_BACKEND_URL
-).replace(/\/+$/, "");
+const DEFAULT_BACKEND_URL = getDefaultBackendUrl();
+
+export const TELEMETRY_BASE_URL = String(DEFAULT_BACKEND_URL).replace(/\/+$/, "");
 
 export const TELEMETRY_STREAM_URL = `${TELEMETRY_BASE_URL}/api/telemetry/stream`;
 

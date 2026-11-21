@@ -13,6 +13,14 @@ dist/
 
 # Runtime
 *.log
+*.pid
+.backend.pid
+.frontend.pid
+.edge.pid
+.history/
+.gemini_security/
+stitch_agrotech_management_hub.zip
+node_modules/.vite/
 
 # Documentos internos
 DOCs_DontUpLoad/

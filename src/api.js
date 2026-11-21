@@ -3,12 +3,23 @@ import axios from "axios";
 // Determina si estamos en un entorno de producción
 const isProduction = import.meta.env.PROD || window.location.hostname.includes("netlify.app");
 
+// Obtener dinámicamente la URL del backend según el host desde donde se accede
+const getBackendBaseUrl = () => {
+  if (import.meta.env.VITE_BACKEND_URL) {
+    return import.meta.env.VITE_BACKEND_URL;
+  }
+  if (isProduction) {
+    return "https://cultivatech-backend.onrender.com";
+  }
+  // En desarrollo/red remota: usar el mismo host (Tailscale / LAN) en el puerto 3001
+  const hostname = window.location.hostname || "localhost";
+  const protocol = window.location.protocol || "http:";
+  return `${protocol}//${hostname}:3001`;
+};
+
 // Crea una instancia de Axios.
-// La URL base se toma de las variables de entorno de Vite (VITE_BACKEND_URL).
 const apiClient = axios.create({
-  baseURL:
-    import.meta.env.VITE_BACKEND_URL ||
-    (isProduction ? "https://cultivatech-backend.onrender.com" : "http://localhost:3001"),
+  baseURL: getBackendBaseUrl(),
 });
 
 // Ejecuta este interceptor ANTES de cada petición.
