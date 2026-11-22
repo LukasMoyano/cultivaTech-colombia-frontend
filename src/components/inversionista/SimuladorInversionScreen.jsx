@@ -8,30 +8,50 @@ import {
   TERMINOS_Y_CONDICIONES_RESUMEN,
   formatCop,
 } from "../../data/pilotoFallback";
+import {
+  HORIZONTES_SIMULACION,
+  calcularProyeccionCiclos,
+} from "../../data/simulacionFinanciera";
 
 const PASOS_DEMO_DEFAULT = [
   {
     id: 1,
     icono: "🪪",
     titulo: "Confirmación privada de identidad (KYC)",
+    resumenCorto: "Confirmamos que eres tú, sin mostrar tu nombre en público.",
+    tuHaces: "🙋 Subes tu dato básico",
+    haceSistema: "🔐 Se guarda en bóveda privada",
+    garantia: "🚫 Cero nombres públicos (Ley 1581)",
     detalle: "Validamos en privado quién está detrás de la inversión (Ley 1581). Tu nombre y cédula jamás se publican en Blockchain.",
   },
   {
     id: 2,
     icono: "🏦",
-    titulo: "Reserva segura de cupo (sin intermediarios)",
+    titulo: "Reserva segura de tu cupo",
+    resumenCorto: "Apartamos tus participaciones solo para ti dentro del lote.",
+    tuHaces: "💰 Eliges cuántos puestos quieres",
+    haceSistema: "🧮 Revisa tope (< 20 aliados)",
+    garantia: "🎟️ Nadie más puede tomar tu puesto",
     detalle: "Se verifica que el grupo siga siendo privado (< 20 aliados) y se apartan tus participaciones dentro de las 100 disponibles.",
   },
   {
     id: 3,
     icono: "🪙",
-    titulo: "Emisión de tu certificado digital único",
+    titulo: "Emisión de tu certificado digital",
+    resumenCorto: "Queda sellado tu % de la cosecha unido a tu contrato PDF.",
+    tuHaces: "📄 Aceptas tu contrato PDF único",
+    haceSistema: "⛓️ Crea código irrepetible del lote",
+    garantia: "🪙 Tu % queda probado ante todos",
     detalle: "Se registra tu participación inalterable en el Lote Piloto #01, amarrada a tu contrato PDF privado e individual.",
   },
   {
     id: 4,
     icono: "✅",
-    titulo: "Sello listo y acceso 24/7 al cultivo",
+    titulo: "Sello listo y monitoreo 24/7",
+    resumenCorto: "Vigilas el cultivo desde el celular hasta recibir tu pago.",
+    tuHaces: "📱 Abres Mi Portafolio cuando quieras",
+    haceSistema: "🌡️ Muestra aire, CO₂ y humedad en vivo",
+    garantia: "💸 Liquidación clara al día 90",
     detalle: "¡Listo! Ya puedes vigilar en vivo la salud de la plantación (aire, CO₂, humedad) y seguir tu liquidación en Mi Portafolio.",
   },
 ];
@@ -39,13 +59,15 @@ const PASOS_DEMO_DEFAULT = [
 /**
  * PANTALLA 2 · Antes de Invertir (★ MOMENTO DELICADO)
  * Incluye T&C completos, 3 riesgos obligatorios, 3 casillas sin pre-marcar
- * y simulación animada guiada paso a paso para Demo Day de cómo opera el pago/registro Blockchain.
+ * y simulación animada guiada paso a paso para Demo Day explicada con iconografía clara.
  */
 const SimuladorInversionScreen = ({ onNav, participacionDemo, onConfirmarParticipacion }) => {
   const { resumen } = usePilotoResumen();
   const { lote, oraculo } = resumen;
 
   const [montoCop, setMontoCop] = useState(participacionDemo.montoCop || 1200000);
+  const [mesesVista, setMesesVista] = useState(3);
+  const [reinvertirVista, setReinvertirVista] = useState(true);
   const [verTerminos, setVerTerminos] = useState(false);
 
   // Tres casillas separadas estrictamente SIN pre-marcar
@@ -53,9 +75,10 @@ const SimuladorInversionScreen = ({ onNav, participacionDemo, onConfirmarPartici
   const [autorizoLey1581, setAutorizoLey1581] = useState(false);
   const [aceptoAlertas, setAceptoAlertas] = useState(false);
 
-  // Estado de animación guiada Demo Day
+  // Estado de animación guiada Demo Day + paso abierto para inspeccionar
   const [animandoAuto, setAnimandoAuto] = useState(false);
   const [pasoVisible, setPasoVisible] = useState(0); // 0 = inactivo, 1..4 = paso alcanzado
+  const [pasoExpandido, setPasoExpandido] = useState(1);
   const [pasosDemo, setPasosDemo] = useState(PASOS_DEMO_DEFAULT);
   const [comprobante, setComprobante] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
@@ -64,8 +87,24 @@ const SimuladorInversionScreen = ({ onNav, participacionDemo, onConfirmarPartici
   const participaciones = Math.max(1, Math.round(montoCop / lote.valorParticipacionCop));
   const montoExacto = participaciones * lote.valorParticipacionCop;
   const porcentajeLote = Number(((participaciones / lote.totalParticipaciones) * 100).toFixed(1));
-  const retornoEstMin = Math.round(montoExacto * (1 + lote.escenarioBaseMinPct / 100));
-  const retornoEstMax = Math.round(montoExacto * (1 + lote.escenarioBaseMaxPct / 100));
+  const proyeccionMin = calcularProyeccionCiclos({
+    montoCop: montoExacto,
+    tasaCicloPct: lote.escenarioBaseMinPct,
+    meses: mesesVista,
+    reinvertir: reinvertirVista,
+  });
+  const proyeccionBase = calcularProyeccionCiclos({
+    montoCop: montoExacto,
+    tasaCicloPct: 20,
+    meses: mesesVista,
+    reinvertir: reinvertirVista,
+  });
+  const proyeccionSuper = calcularProyeccionCiclos({
+    montoCop: montoExacto,
+    tasaCicloPct: 28,
+    meses: mesesVista,
+    reinvertir: reinvertirVista,
+  });
 
   const todasCasillasMarcadas = aceptoContratoRiesgos && autorizoLey1581 && aceptoAlertas;
 
@@ -77,7 +116,11 @@ const SimuladorInversionScreen = ({ onNav, participacionDemo, onConfirmarPartici
       return undefined;
     }
     const timer = window.setTimeout(() => {
-      setPasoVisible((prev) => Math.min(4, prev + 1));
+      setPasoVisible((prev) => {
+        const next = Math.min(4, prev + 1);
+        setPasoExpandido(next);
+        return next;
+      });
     }, 1150);
     return () => window.clearTimeout(timer);
   }, [animandoAuto, pasoVisible]);
@@ -125,6 +168,7 @@ const SimuladorInversionScreen = ({ onNav, participacionDemo, onConfirmarPartici
     }
     setComprobante(resultadoApi);
     setPasoVisible(1);
+    setPasoExpandido(1);
     setAnimandoAuto(autoPlay);
 
     onConfirmarParticipacion({
@@ -181,10 +225,10 @@ const SimuladorInversionScreen = ({ onNav, participacionDemo, onConfirmarPartici
             />
             <div className="flex flex-wrap gap-2 justify-between text-xs text-text-main/80">
               <span>Equivale a <strong>{participaciones} / 100</strong> participaciones (<strong>{porcentajeLote}%</strong> del lote)</span>
-              <span>Escenario base día 90 (NO garantizado): <strong>{formatCop(retornoEstMin)} – {formatCop(retornoEstMax)}</strong></span>
+              <span>Cosecha 90 días (NO garantizado): <strong>{formatCop(Math.round(montoExacto * (1 + lote.escenarioBaseMinPct / 100)))} – {formatCop(Math.round(montoExacto * (1 + lote.escenarioBaseMaxPct / 100)))}</strong></span>
             </div>
             <div className="flex flex-wrap gap-2 pt-1">
-              {[1080000, 1200000, 2040000, 3000000].map((preset) => (
+              {[360000, 1200000, 2040000, 3000000].map((preset) => (
                 <button
                   key={preset}
                   type="button"
@@ -198,6 +242,57 @@ const SimuladorInversionScreen = ({ onNav, participacionDemo, onConfirmarPartici
                   {formatCop(preset)}
                 </button>
               ))}
+            </div>
+
+            {/* Calculadora de horizonte rápido (3 a 24 meses) */}
+            <div className="pt-3 mt-2 border-t border-border/70 space-y-2.5">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span className="font-bold text-text-accent">
+                  ⏳ Simula cuánto crece si sigues más cosechas:
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setReinvertirVista((v) => !v)}
+                  className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border transition-colors ${
+                    reinvertirVista
+                      ? "bg-accent/15 text-accent border-accent"
+                      : "bg-background-card text-text-main border-border"
+                  }`}
+                >
+                  {reinvertirVista ? "🔄 Reinvirtiendo utilidad" : "💵 Retirando cada 90d"}
+                </button>
+              </div>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+                {HORIZONTES_SIMULACION.map((h) => (
+                  <button
+                    key={h.meses}
+                    type="button"
+                    onClick={() => setMesesVista(h.meses)}
+                    className={`py-1.5 px-2 rounded border text-center transition-colors ${
+                      mesesVista === h.meses
+                        ? "bg-primary text-white border-primary font-bold"
+                        : "bg-background-card text-text-main border-border hover:border-primary/60"
+                    }`}
+                  >
+                    <div className="text-xs leading-tight">{h.etiqueta}</div>
+                    <div className="text-[10px] opacity-80">{h.ciclos}x</div>
+                  </button>
+                ))}
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-[11px] pt-1">
+                <div className="p-2 rounded bg-background-card border border-border">
+                  <span className="block text-text-main/70">🌱 Conservador (+15%)</span>
+                  <strong className="text-text-accent">{formatCop(proyeccionMin.totalFinalEstimado)}</strong>
+                </div>
+                <div className="p-2 rounded bg-accent/10 border border-accent">
+                  <span className="block text-accent">🌾 Exitosa (+20%)</span>
+                  <strong className="text-accent">{formatCop(proyeccionBase.totalFinalEstimado)}</strong>
+                </div>
+                <div className="p-2 rounded bg-primary/10 border border-primary/50">
+                  <span className="block text-primary">🚀 Súper (+28%)</span>
+                  <strong className="text-primary">{formatCop(proyeccionSuper.totalFinalEstimado)}</strong>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -308,52 +403,80 @@ const SimuladorInversionScreen = ({ onNav, participacionDemo, onConfirmarPartici
           </div>
         </div>
 
-        {/* Columna derecha: Animación Paso a Paso del Flujo de Pago/Registro Blockchain */}
+        {/* Columna derecha: Animación Paso a Paso "Masticada" con Iconografía */}
         <div className="lg:col-span-5 bg-background-card border border-border rounded-lg p-6 space-y-4 shadow-md flex flex-col justify-between">
           <div className="space-y-4">
             <div>
               <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-bold bg-secondary/20 text-text-main border border-secondary">
-                DEMO ARQUITECTURA WEB3 · PASO A PASO EN VIVO
+                🎬 DEMO VISUAL · SIN ENREDOS TÉCNICOS
               </span>
               <h3 className="text-lg font-bold font-heading text-text-accent mt-2">
-                Cómo ocurre el Registro y Pago en Blockchain
+                ¿Qué pasa por dentro paso a paso?
               </h3>
-              <p className="text-xs text-text-main/75 mt-1 leading-relaxed">
-                Secuencia visual interactiva de lo que sucede por debajo al vincular un aporte ({formatCop(montoExacto)}).
-                En el piloto real en Colombia, el usuario puede operar sin necesidad de instalar MetaMask ni manejar cripto directamente.
+              <p className="text-xs text-text-main/80 mt-1 leading-relaxed">
+                Desglose masticadito de lo que ocurre con tu aporte de{" "}
+                <strong className="text-primary">{formatCop(montoExacto)}</strong> ({participaciones}{" "}
+                {participaciones === 1 ? "puesto" : "puestos"} de 100). Toca cualquier paso para ver sus 3 momentos.
               </p>
+              <div className="mt-2 flex flex-wrap gap-1.5 text-[11px] font-bold">
+                <span className="px-2 py-0.5 rounded bg-background border border-border">💵 {formatCop(montoExacto)}</span>
+                <span className="px-2 py-0.5 rounded bg-background border border-border">🎟️ {participaciones}/100 ({porcentajeLote}%)</span>
+                <span className="px-2 py-0.5 rounded bg-accent/15 text-accent">🚫 Sin MetaMask</span>
+              </div>
             </div>
 
-            {/* Tarjetas animadas de los 4 pasos */}
+            {/* Tarjetas animadas e interactivas de los 4 pasos */}
             <div className="space-y-3">
               {pasosDemo.map((paso) => {
                 const completado = pasoVisible > paso.id || (pasoVisible === 4 && paso.id === 4);
                 const enCurso = pasoVisible === paso.id && paso.id < 4;
                 const pendiente = pasoVisible < paso.id;
+                const abierto = pasoExpandido === paso.id || enCurso || completado;
 
                 return (
-                  <div
+                  <button
                     key={paso.id}
-                    className={`p-3.5 rounded-lg border-2 transition-all duration-300 ${
+                    type="button"
+                    onClick={() => setPasoExpandido(paso.id)}
+                    className={`w-full text-left p-3.5 rounded-lg border-2 transition-all duration-300 cursor-pointer ${
                       completado
                         ? "border-accent bg-accent/10"
                         : enCurso
                           ? "border-primary bg-primary/10 animate-pulse"
-                          : "border-border bg-background opacity-65"
+                          : pasoExpandido === paso.id
+                            ? "border-primary/70 bg-background"
+                            : "border-border bg-background opacity-80 hover:opacity-100"
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-heading text-xs font-bold text-text-accent">
+                      <span className="font-heading text-xs sm:text-sm font-bold text-text-accent">
                         {paso.icono} PASO {paso.id} · {paso.titulo}
                       </span>
-                      <span className="text-[11px] font-bold">
-                        {completado ? "✓ Listo" : enCurso ? "● Ejecutando..." : pendiente ? "Pendiente" : ""}
+                      <span className="text-[11px] font-bold shrink-0">
+                        {completado ? "✅ Listo" : enCurso ? "⏳ En curso..." : pendiente ? "🔒 Toca" : ""}
                       </span>
                     </div>
-                    <p className="text-xs text-text-main/85 mt-1 leading-relaxed">
-                      {paso.detalle}
+                    <p className="text-xs text-text-main/90 mt-1 font-medium">
+                      {paso.resumenCorto}
                     </p>
-                  </div>
+
+                    {abierto && (
+                      <div className="mt-2.5 pt-2.5 border-t border-border/70 grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-[11px]">
+                        <div className="p-2 rounded bg-background-card border border-border/70">
+                          <span className="block text-[10px] font-bold text-text-main/60 uppercase">Tú haces</span>
+                          <span className="font-bold text-text-accent">{paso.tuHaces}</span>
+                        </div>
+                        <div className="p-2 rounded bg-background-card border border-border/70">
+                          <span className="block text-[10px] font-bold text-text-main/60 uppercase">Sistema</span>
+                          <span className="font-bold text-primary">{paso.haceSistema}</span>
+                        </div>
+                        <div className="p-2 rounded bg-background-card border border-border/70">
+                          <span className="block text-[10px] font-bold text-text-main/60 uppercase">Tu blindaje</span>
+                          <span className="font-bold text-accent">{paso.garantia}</span>
+                        </div>
+                      </div>
+                    )}
+                  </button>
                 );
               })}
             </div>

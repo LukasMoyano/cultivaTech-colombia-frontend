@@ -65,6 +65,7 @@ export default function MainContent({
         <OfertaLoteScreen
           onNav={setCurrentPage}
           participacionDemo={participacionDemo}
+          onConfirmarParticipacion={onConfirmarParticipacion}
         />
       )}
 
@@ -80,6 +81,7 @@ export default function MainContent({
         <PortafolioInversionistaScreen
           onNav={setCurrentPage}
           participacionDemo={participacionDemo}
+          onConfirmarParticipacion={onConfirmarParticipacion}
         />
       )}
 

@@ -6,6 +6,10 @@ import useTelemetryStream from "../../hooks/useTelemetryStream";
 import { usePilotoResumen } from "../../hooks/usePilotoResumen";
 import { rawToVoltage } from "../telemetria/telemetria.constants";
 import { formatCop } from "../../data/pilotoFallback";
+import {
+  HORIZONTES_SIMULACION,
+  calcularProyeccionCiclos,
+} from "../../data/simulacionFinanciera";
 
 const ESCENARIOS_DEMO_PORTAFOLIO = [
   {
@@ -16,6 +20,7 @@ const ESCENARIOS_DEMO_PORTAFOLIO = [
     estadoCosecha: "Inoculación y arranque de lote",
     multiplicadorRetorno: 0.15,
     margenEstimadoPct: 0,
+    tasaMultiCicloPct: 15,
     nota: "Capital aplicado en sustrato e insumos. Telemetría inicial verificando estabilidad térmica.",
   },
   {
@@ -26,6 +31,7 @@ const ESCENARIOS_DEMO_PORTAFOLIO = [
     estadoCosecha: "Crecimiento óptimo bajo alertas 24/7",
     multiplicadorRetorno: 0.62,
     margenEstimadoPct: 12,
+    tasaMultiCicloPct: 18,
     nota: "Sensores activos sin incidencias. Comprador mayorista con orden de compra vigente.",
   },
   {
@@ -36,6 +42,7 @@ const ESCENARIOS_DEMO_PORTAFOLIO = [
     estadoCosecha: "Venta completada al 100 % · Recaudo listo",
     multiplicadorRetorno: 1.0,
     margenEstimadoPct: 20,
+    tasaMultiCicloPct: 20,
     nota: "Meta productiva alcanzada gracias a cero pérdidas por alerta temprana. Capital + utilidad liquidables.",
   },
   {
@@ -46,6 +53,7 @@ const ESCENARIOS_DEMO_PORTAFOLIO = [
     estadoCosecha: "Rendimiento superior · Mayor utilidad compartida",
     multiplicadorRetorno: 1.0,
     margenEstimadoPct: 28,
+    tasaMultiCicloPct: 28,
     nota: "El productor optimizó rendimiento por m²: al crecer el éxito del agricultor, crece proporcionalmente la retribución del inversionista.",
   },
 ];
@@ -78,25 +86,57 @@ const PASOS_VIVOS_INVERSIONISTA = [
  * Muestra en vivo qué hace el inversionista, telemetría real ESP32, gráfica animada de torta + barra
  * de retribución ligada al éxito del agricultor, y auditoría de sellos Merkle.
  */
-const PortafolioInversionistaScreen = ({ onNav, participacionDemo }) => {
+const PortafolioInversionistaScreen = ({
+  onNav,
+  participacionDemo,
+  onConfirmarParticipacion,
+}) => {
   const { resumen } = usePilotoResumen();
   const { latest, isOnline, history } = useTelemetryStream({ windowSize: 30 });
   const { lote, oraculo, confianzaSensor } = resumen;
 
-  const [escenarioIdx, setEscenarioIdx] = useState(1); // Arranca en Día 42 En Producción
+  const [escenarioIdx, setEscenarioIdx] = useState(2); // Arranca en Cosecha Exitosa para ver cálculo claro
+  const [horizonteMeses, setHorizonteMeses] = useState(3);
+  const [reinvertir, setReinvertir] = useState(true);
   const [animandoDemo, setAnimandoDemo] = useState(false);
   const [pasoGuiaActivo, setPasoGuiaActivo] = useState(0);
   const [mostrarContratoModal, setMostrarContratoModal] = useState(false);
 
   const escenario = ESCENARIOS_DEMO_PORTAFOLIO[escenarioIdx];
   const capital = participacionDemo.montoCop;
-  const utilidadTotalEstimada = Math.round(capital * (escenario.margenEstimadoPct / 100));
-  const retornoObjetivo = capital + utilidadTotalEstimada;
-  const montoAcumuladoVisual = Math.round(retornoObjetivo * escenario.multiplicadorRetorno);
-  const faltanteVisual = Math.max(0, retornoObjetivo - montoAcumuladoVisual);
-  const avanceRetribucionPct = retornoObjetivo > 0
-    ? Math.min(100, Math.round((montoAcumuladoVisual / retornoObjetivo) * 100))
-    : 0;
+  const tasaActivaPct = horizonteMeses > 3
+    ? escenario.tasaMultiCicloPct
+    : escenario.margenEstimadoPct;
+
+  const proyeccion = useMemo(
+    () =>
+      calcularProyeccionCiclos({
+        montoCop: capital,
+        tasaCicloPct: tasaActivaPct,
+        meses: horizonteMeses,
+        reinvertir,
+        multiplicadorAvanceActual: escenario.multiplicadorRetorno,
+      }),
+    [capital, tasaActivaPct, horizonteMeses, reinvertir, escenario.multiplicadorRetorno]
+  );
+
+  const utilidadTotalEstimada = proyeccion.utilidadNetaEstimada;
+  const retornoObjetivo = proyeccion.totalFinalEstimado;
+  const montoAcumuladoVisual = proyeccion.montoAcumuladoVisual;
+  const faltanteVisual = proyeccion.faltanteVisual;
+  const avanceRetribucionPct = proyeccion.avancePorcentaje;
+
+  const cambiarAporteRapido = (nuevoMonto) => {
+    if (!onConfirmarParticipacion) return;
+    const puestos = Math.max(1, Math.round(nuevoMonto / lote.valorParticipacionCop));
+    const pct = Number(((puestos / lote.totalParticipaciones) * 100).toFixed(1));
+    onConfirmarParticipacion({
+      ...participacionDemo,
+      montoCop: nuevoMonto,
+      participaciones: puestos,
+      porcentajeLote: pct,
+    });
+  };
 
   // Animación automática para Demo Day (recorre Día 1 -> Día 42 -> Cosecha Exitosa -> Súper Cosecha)
   useEffect(() => {
@@ -107,11 +147,12 @@ const PortafolioInversionistaScreen = ({ onNav, participacionDemo }) => {
     }
     const timer = window.setTimeout(() => {
       setEscenarioIdx((prev) => prev + 1);
-    }, 1500);
+    }, 1450);
     return () => window.clearTimeout(timer);
   }, [animandoDemo, escenarioIdx]);
 
   const iniciarAnimacionRetribucion = () => {
+    setHorizonteMeses(3);
     setEscenarioIdx(0);
     setAnimandoDemo(true);
   };
@@ -119,9 +160,9 @@ const PortafolioInversionistaScreen = ({ onNav, participacionDemo }) => {
   const datosTorta = useMemo(
     () => ({
       labels: [
-        "Capital cubierto / en producción",
-        "Utilidad neta generada para ti",
-        "Tramo restante hasta cosecha",
+        "Tu aporte inicial",
+        "Utilidad neta acumulada estimada",
+        "Tramo restante de la cosecha",
       ],
       datasets: [
         {
@@ -217,25 +258,94 @@ const PortafolioInversionistaScreen = ({ onNav, participacionDemo }) => {
             </button>
           </div>
 
-          {/* Botones de escenario en vivo */}
-          <div className="flex flex-wrap gap-2">
-            {ESCENARIOS_DEMO_PORTAFOLIO.map((esc, idx) => (
-              <button
-                key={esc.id}
-                type="button"
-                onClick={() => {
-                  setAnimandoDemo(false);
-                  setEscenarioIdx(idx);
-                }}
-                className={`px-3 py-1.5 rounded text-xs font-bold border transition-colors ${
-                  escenarioIdx === idx
-                    ? "bg-primary text-white border-primary"
-                    : "bg-background text-text-main border-border hover:border-primary"
-                }`}
-              >
-                {esc.titulo}
-              </button>
-            ))}
+          {/* Botones de escenario de cosecha + Horizonte 3 a 24 meses + Monto */}
+          <div className="space-y-3">
+            <div className="flex flex-wrap gap-2">
+              {ESCENARIOS_DEMO_PORTAFOLIO.map((esc, idx) => (
+                <button
+                  key={esc.id}
+                  type="button"
+                  onClick={() => {
+                    setAnimandoDemo(false);
+                    setEscenarioIdx(idx);
+                  }}
+                  className={`px-3 py-1.5 rounded text-xs font-bold border transition-colors ${
+                    escenarioIdx === idx
+                      ? "bg-primary text-white border-primary"
+                      : "bg-background text-text-main border-border hover:border-primary"
+                  }`}
+                >
+                  {esc.titulo}
+                </button>
+              ))}
+            </div>
+
+            {/* Simulador multi-horizonte y capital */}
+            <div className="bg-background border border-border rounded-lg p-3.5 space-y-3 text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="font-heading font-bold text-text-accent">
+                  ⏳ Simulador de Horizonte (3 a 24 meses · Cosechas de 90 días)
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setReinvertir((v) => !v)}
+                  className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition-colors ${
+                    reinvertir
+                      ? "bg-accent text-white border-accent"
+                      : "bg-background-card text-text-main border-border"
+                  }`}
+                >
+                  {reinvertir
+                    ? "🔄 Reinvirtiendo en nuevas cosechas (Compuesto)"
+                    : "💵 Retirando ganancias cada 90 días (Simple)"}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+                {HORIZONTES_SIMULACION.map((h) => (
+                  <button
+                    key={h.meses}
+                    type="button"
+                    onClick={() => {
+                      setAnimandoDemo(false);
+                      setHorizonteMeses(h.meses);
+                    }}
+                    className={`p-2 rounded border text-center transition-all cursor-pointer ${
+                      horizonteMeses === h.meses
+                        ? "bg-accent text-white border-accent shadow"
+                        : "bg-background-card text-text-main border-border hover:border-accent"
+                    }`}
+                  >
+                    <div className="font-heading font-bold text-xs">{h.etiqueta}</div>
+                    <div className="text-[10px] opacity-85">{h.sub}</div>
+                  </button>
+                ))}
+              </div>
+
+              {onConfirmarParticipacion && (
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border/70">
+                  <span className="font-bold text-text-main/80">
+                    💰 Cambia el capital para probar:
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[360000, 1200000, 3000000, 6000000, 10000000].map((monto) => (
+                      <button
+                        key={monto}
+                        type="button"
+                        onClick={() => cambiarAporteRapido(monto)}
+                        className={`px-2.5 py-1 rounded text-[11px] font-bold border transition-colors ${
+                          capital === monto
+                            ? "bg-primary text-white border-primary"
+                            : "bg-background-card text-text-main border-border hover:border-primary"
+                        }`}
+                      >
+                        {formatCop(monto)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Barra de llenado progresivo + Gráfica de torta */}
@@ -247,7 +357,7 @@ const PortafolioInversionistaScreen = ({ onNav, participacionDemo }) => {
             <div className="space-y-4 text-xs">
               <div className="bg-background border border-border rounded-lg p-4 space-y-2">
                 <div className="flex justify-between font-bold">
-                  <span>LLENADO DE TU RETRIBUCIÓN</span>
+                  <span>LLENADO DE TU RETRIBUCIÓN ({proyeccion.ciclos} {proyeccion.ciclos === 1 ? "ciclo" : "ciclos"})</span>
                   <span className="text-accent">{avanceRetribucionPct}%</span>
                 </div>
                 <div className="w-full h-3 bg-border rounded-full overflow-hidden">
@@ -258,23 +368,31 @@ const PortafolioInversionistaScreen = ({ onNav, participacionDemo }) => {
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-2">
                   <div>
-                    <span className="text-text-main/65 block">Tu Aporte</span>
+                    <span className="text-text-main/65 block">Tu Aporte Base</span>
                     <strong className="text-sm text-text-accent">{formatCop(capital)}</strong>
                   </div>
                   <div>
-                    <span className="text-text-main/65 block">Proyección Cierre</span>
+                    <span className="text-text-main/65 block">Proyección Total ({horizonteMeses}m)</span>
                     <strong className="text-sm text-primary">{formatCop(retornoObjetivo)}</strong>
                   </div>
                 </div>
-                {escenario.margenEstimadoPct > 0 && (
+                {proyeccion.crecimientoPct > 0 && (
                   <div className="pt-1 text-accent font-bold">
-                    + {formatCop(utilidadTotalEstimada)} de utilidad neta estimada (+{escenario.margenEstimadoPct}%)
+                    + {formatCop(utilidadTotalEstimada)} de utilidad neta estimada (+{proyeccion.crecimientoPct}%)
+                  </div>
+                )}
+                {proyeccion.ventajaEstimadaVsBanco > 0 && (
+                  <div className="text-[11px] text-text-main/80 bg-accent/10 rounded p-2 border border-accent/30">
+                    🏦 vs. CDT tradicional (~10% EA): <strong>+{formatCop(proyeccion.ventajaEstimadaVsBanco)}</strong> adicionales en economía real.
                   </div>
                 )}
               </div>
 
               <div className="bg-background border border-border rounded-lg p-3 leading-relaxed text-text-main/85">
                 <strong>Qué significa:</strong> {escenario.nota}
+                <span className="block mt-1 text-[10px] text-text-main/60">
+                  *Proyección ilustrativa ({tasaActivaPct}% por ciclo de 90 días, {reinvertir ? "reinversión compuesta" : "retiro simple"}). No garantiza tasa fija.
+                </span>
               </div>
             </div>
           </div>
@@ -282,9 +400,15 @@ const PortafolioInversionistaScreen = ({ onNav, participacionDemo }) => {
           {/* Pagos recibidos y Estado Comprador */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-2 border-t border-border">
             <div className="p-3 rounded bg-background border border-border">
-              <span className="text-text-main/70 block">PAGOS RECIBIDOS HOY</span>
+              <span className="text-text-main/70 block">
+                {horizonteMeses > 3
+                  ? `RETORNO PROYECTADO (${proyeccion.ciclos} CICLOS / ${horizonteMeses} MESES)`
+                  : "PAGOS RECIBIDOS AL CIERRE"}
+              </span>
               <strong className="text-base font-heading text-text-accent">
-                {escenario.dia === 90 ? formatCop(retornoObjetivo) : "$0 COP (Pago único día 90)"}
+                {escenario.dia === 90 || horizonteMeses > 3
+                  ? formatCop(retornoObjetivo)
+                  : "$0 COP (Pago único día 90)"}
               </strong>
             </div>
             <div className="p-3 rounded bg-background border border-border">
@@ -405,6 +529,7 @@ const PortafolioInversionistaScreen = ({ onNav, participacionDemo }) => {
 PortafolioInversionistaScreen.propTypes = {
   onNav: PropTypes.func.isRequired,
   participacionDemo: PropTypes.object.isRequired,
+  onConfirmarParticipacion: PropTypes.func,
 };
 
 export default PortafolioInversionistaScreen;

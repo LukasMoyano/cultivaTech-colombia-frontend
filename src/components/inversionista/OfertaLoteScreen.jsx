@@ -3,14 +3,32 @@ import PropTypes from "prop-types";
 import InversionistaHub from "./InversionistaHub";
 import { usePilotoResumen } from "../../hooks/usePilotoResumen";
 import { formatCop } from "../../data/pilotoFallback";
+import {
+  EJEMPLOS_APORTE_PILOTO,
+  MODELOS_PROYECTO_EJEMPLOS,
+  calcularProyeccionCiclos,
+} from "../../data/simulacionFinanciera";
 
 /**
  * PANTALLA 1 · La ficha de la oferta (Entiende)
- * Claridad absoluta antes de comprometer dinero: qué sí se compra, qué no, costos y quién responde.
+ * Claridad absoluta antes de comprometer dinero: qué sí se compra, qué no, costos y ejemplos reales.
  */
-const OfertaLoteScreen = ({ onNav, participacionDemo }) => {
+const OfertaLoteScreen = ({ onNav, participacionDemo, onConfirmarParticipacion }) => {
   const { resumen } = usePilotoResumen();
-  const { lote, proximosLotes, oraculo } = resumen;
+  const { lote, oraculo } = resumen;
+
+  const simularEjemplo = (ejemplo) => {
+    if (onConfirmarParticipacion) {
+      const porcentajeLote = Number(((ejemplo.puestos / lote.totalParticipaciones) * 100).toFixed(1));
+      onConfirmarParticipacion({
+        ...participacionDemo,
+        montoCop: ejemplo.montoCop,
+        participaciones: ejemplo.puestos,
+        porcentajeLote,
+      });
+    }
+    onNav("inversion_simulador");
+  };
 
   return (
     <div className="container mx-auto px-2 sm:px-4 space-y-6">
@@ -150,27 +168,107 @@ const OfertaLoteScreen = ({ onNav, participacionDemo }) => {
           </div>
         </div>
 
-        {/* Próximos lotes del pipeline (Multicultivo) */}
-        {proximosLotes?.length > 0 && (
-          <div className="pt-2">
-            <h3 className="font-heading text-sm font-bold text-text-accent mb-3">
-              PRÓXIMAS LÍNEAS PRODUCTIVAS EN ESTRUCTURACIÓN (SUMAPAZ · CUNDINAMARCA)
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-              {proximosLotes.map((prox) => (
-                <div key={prox.id} className="bg-background border border-border rounded-lg p-4 flex items-center justify-between gap-3">
-                  <div>
-                    <div className="font-bold text-text-accent">{prox.nombre}</div>
-                    <div className="text-text-main/70">Ciclo: {prox.cicloDias} días · Meta estimada: {formatCop(prox.metaCop)}</div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded bg-secondary/20 text-text-main font-bold whitespace-nowrap">
-                    {prox.estado}
-                  </span>
-                </div>
-              ))}
+        {/* Ejemplos reales en pesos colombianos: ¿con cuánto participas y qué paga en la finca? */}
+        <div className="bg-background border border-border rounded-lg p-5 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 className="font-heading text-base font-bold text-text-accent">
+                💡 Ejemplos con Números Reales (Míralo en Pesos Colombianos)
+              </h3>
+              <p className="text-xs text-text-main/75">
+                Elige cualquiera para pre-cargar la calculadora y ver su proyección en tiempo real.
+              </p>
             </div>
+            <span className="text-[11px] font-bold px-2.5 py-1 rounded bg-accent/15 text-accent">
+              Desde $120.000 COP (1 puesto = 1%)
+            </span>
           </div>
-        )}
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            {EJEMPLOS_APORTE_PILOTO.map((ej) => {
+              const p90 = calcularProyeccionCiclos({ montoCop: ej.montoCop, tasaCicloPct: 20, meses: 3 });
+              const p12m = calcularProyeccionCiclos({ montoCop: ej.montoCop, tasaCicloPct: 20, meses: 12, reinvertir: true });
+              return (
+                <div
+                  key={ej.id}
+                  className="bg-background-card border border-border hover:border-primary rounded-lg p-4 flex flex-col justify-between gap-3 transition-all"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-heading font-bold text-text-accent">
+                        {ej.icono} {ej.nombre}
+                      </span>
+                      <span className="px-2 py-0.5 rounded bg-primary/15 text-primary font-bold">
+                        {ej.puestos}% del lote
+                      </span>
+                    </div>
+                    <div className="text-xl font-heading font-bold text-primary">
+                      {formatCop(ej.montoCop)}
+                    </div>
+                    <p className="text-text-main/80 leading-relaxed">{ej.cubreEnFinca}</p>
+                    <div className="pt-2 border-t border-border/70 space-y-1 text-[11px]">
+                      <div className="flex justify-between">
+                        <span className="text-text-main/70">⏱️ A 3 meses (+20% est.):</span>
+                        <strong className="text-accent">{formatCop(p90.totalFinalEstimado)}</strong>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-text-main/70">🌱 A 12 meses (reinvertido):</span>
+                        <strong className="text-text-accent">{formatCop(p12m.totalFinalEstimado)}</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => simularEjemplo(ej)}
+                    className="w-full py-2 rounded bg-primary text-white font-heading text-xs hover:bg-primary/90 transition-colors cursor-pointer"
+                  >
+                    Simular {formatCop(ej.montoCop)} →
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Catálogo ampliado de modalidades y líneas productivas */}
+        <div className="pt-2 space-y-3">
+          <div>
+            <h3 className="font-heading text-sm sm:text-base font-bold text-text-accent">
+              🌎 Más Ejemplos de Lotes y Modalidades Productivas CultivaTech
+            </h3>
+            <p className="text-xs text-text-main/75">
+              Además de la colocación privada cerrada del Lote Piloto #01 (&lt; 20 aliados), la tecnología IoT respalda distintos cultivos y etapas:
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            {MODELOS_PROYECTO_EJEMPLOS.map((modelo) => (
+              <div
+                key={modelo.id}
+                className={`rounded-lg p-4 border space-y-2 ${
+                  modelo.highlight
+                    ? "bg-accent/10 border-2 border-accent"
+                    : "bg-background border-border"
+                }`}
+              >
+                <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-background-card border border-border text-text-accent">
+                  {modelo.badge}
+                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl" aria-hidden="true">{modelo.icono}</span>
+                  <div>
+                    <h4 className="font-heading font-bold text-sm text-text-accent">{modelo.titulo}</h4>
+                    <div className="text-[11px] text-text-main/75">{modelo.contrato}</div>
+                  </div>
+                </div>
+                <p className="text-text-main/90 leading-relaxed">{modelo.queProduce}</p>
+                <div className="flex flex-wrap justify-between gap-2 pt-1 border-t border-border/60 text-[11px] text-text-main/75">
+                  <span>{modelo.ciclo}</span>
+                  <span className="font-semibold text-text-accent">{modelo.sensores}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -179,6 +277,7 @@ const OfertaLoteScreen = ({ onNav, participacionDemo }) => {
 OfertaLoteScreen.propTypes = {
   onNav: PropTypes.func.isRequired,
   participacionDemo: PropTypes.object.isRequired,
+  onConfirmarParticipacion: PropTypes.func,
 };
 
 export default OfertaLoteScreen;
