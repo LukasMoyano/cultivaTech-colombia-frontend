@@ -13,25 +13,68 @@ Chart.register(...registerables);
 function App() {
   const [currentPage, setCurrentPage] = useState("landing");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeModule, setActiveModule] = useState("agricultor");
+  const [participacionDemo, setParticipacionDemo] = useState({
+    montoCop: 1200000,
+    participaciones: 10,
+    porcentajeLote: 10,
+    txHash: null,
+    confirmado: false,
+  });
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem("user");
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem("user");
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
   });
   const { theme, toggleTheme } = useTheme(); // Activa el hook del tema
 
-  const handleNav = (page) => {
-    setCurrentPage(page);
+  const handleNav = (page, nextModule = null) => {
+    if (nextModule) {
+      setActiveModule(nextModule);
+    } else if (page.startsWith("inversion_")) {
+      setActiveModule("inversionista");
+    } else if (["dashboard", "telemetria", "cultivos", "foro", "alertas", "robot"].includes(page)) {
+      setActiveModule("agricultor");
+    }
+    setCurrentPage(page === "juegos" ? "dashboard" : page);
     setSidebarOpen(false);
     window.scrollTo(0, 0);
   };
 
-  const handleLoginSuccess = (userData) => {
-    setUser(userData);
-    handleNav("dashboard");
+  const handleLoginSuccess = (authResponse) => {
+    const loggedUser = authResponse?.user || authResponse;
+    setUser(loggedUser);
+    const defaultModule = loggedUser?.role === "investor" ? "inversionista" : "agricultor";
+    setActiveModule(defaultModule);
+    handleNav(defaultModule === "inversionista" ? "inversion_oferta" : "dashboard", defaultModule);
+  };
+
+  const handleEnterDemo = (targetModule = "inversionista", targetPage = null) => {
+    setUser({
+      id: 0,
+      email: "jurado-demo@cultivatech.local",
+      role: "demo",
+      isDemo: true,
+    });
+    const moduleResolved = targetModule === "agricultor" ? "agricultor" : "inversionista";
+    const pageResolved =
+      targetPage || (moduleResolved === "agricultor" ? "dashboard" : "inversion_oferta");
+    handleNav(pageResolved, moduleResolved);
+  };
+
+  const handleSwitchModule = (targetModule) => {
+    const mod = targetModule === "inversionista" ? "inversionista" : "agricultor";
+    handleNav(mod === "inversionista" ? "inversion_oferta" : "dashboard", mod);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
+    setActiveModule("agricultor");
     handleNav("landing");
   };
 
@@ -43,6 +86,8 @@ function App() {
         onMobileMenuClick={() => setSidebarOpen(!sidebarOpen)}
         isAuthenticated={isAuthenticated}
         currentPage={currentPage}
+        activeModule={activeModule}
+        onSwitchModule={handleSwitchModule}
         onNav={handleNav}
         sidebarOpen={sidebarOpen}
         user={user}
@@ -54,19 +99,27 @@ function App() {
         {isAuthenticated && (
           <Sidebar
             currentPage={currentPage}
+            activeModule={activeModule}
+            onSwitchModule={handleSwitchModule}
             onNav={handleNav}
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
+            onLogout={handleLogout}
+            user={user}
           />
         )}
-        
+
         {currentPage === 'ingreso' && !isAuthenticated ? (
           <IngresoRegistro onLoginSuccess={handleLoginSuccess} setCurrentPage={handleNav} />
         ) : (
-          <MainContent 
-            currentPage={currentPage} 
-            setCurrentPage={handleNav} 
+          <MainContent
+            currentPage={currentPage}
+            setCurrentPage={handleNav}
             isAuthenticated={isAuthenticated}
+            activeModule={activeModule}
+            onEnterDemo={handleEnterDemo}
+            participacionDemo={participacionDemo}
+            onConfirmarParticipacion={setParticipacionDemo}
           />
         )}
       </div>

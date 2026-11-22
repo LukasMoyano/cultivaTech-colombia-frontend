@@ -5,59 +5,104 @@ export default function Header({
   onMobileMenuClick,
   isAuthenticated,
   currentPage,
+  activeModule = "agricultor",
+  onSwitchModule,
   onNav,
-  sidebarOpen
+  sidebarOpen,
+  user,
+  onLogout,
 }) {
-  // Base nav items
-  const navItems = [
+  const navAgricultor = [
+    { key: "landing", icon: "🏠", label: "Inicio" },
     { key: "dashboard", icon: "📊", label: "Panel" },
     { key: "telemetria", icon: "📡", label: "Telemetría" },
     { key: "cultivos", icon: "🌱", label: "Cultivos" },
-    { key: "foro", icon: "🗣️", label: "Foro" },
-    { key: "juegos", icon: "🎮", label: "Juegos" },
     { key: "alertas", icon: "⚠️", label: "Alertas" },
+    { key: "foro", icon: "🗣️", label: "Foro" },
     { key: "robot", icon: "🤖", label: "Robot" },
+    { key: "como_funciona", icon: "⛓️", label: "Blockchain" },
   ];
-  
-  // Add "Presentation" link if authenticated
-  if (isAuthenticated) {
-    navItems.unshift({ key: "landing", icon: "🏠", label: "Presentación" });
-  }
+
+  const navInversionista = [
+    { key: "landing", icon: "🏠", label: "Inicio" },
+    { key: "inversion_oferta", icon: "📋", label: "1. Oferta" },
+    { key: "inversion_simulador", icon: "🪙", label: "2. Invertir" },
+    { key: "inversion_portafolio", icon: "📈", label: "3. Portafolio" },
+    { key: "inversion_salida", icon: "💸", label: "4. Salida" },
+    { key: "como_funciona", icon: "⛓️", label: "Blockchain" },
+  ];
+
+  const navItems = activeModule === "inversionista" ? navInversionista : navAgricultor;
 
   return (
     <header className="bg-background text-text-main shadow-md sticky top-0 z-50 border-b border-border">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-3">
+      <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-4">
+        <div className="flex justify-between items-center py-2.5 gap-2">
           <button
-            onClick={() => isAuthenticated ? onNav("dashboard") : onNav("landing")}
-            className="text-xl md:text-2xl flex items-center gap-2 hover:opacity-80 transition-opacity font-heading text-text-accent"
+            onClick={() => isAuthenticated ? onNav(activeModule === "inversionista" ? "inversion_oferta" : "dashboard") : onNav("landing")}
+            className="text-base md:text-lg flex items-center gap-2 shrink-0 whitespace-nowrap hover:opacity-80 transition-opacity font-heading text-text-accent"
           >
             <span role="img" aria-label="logo">🌿</span>
             <span className="hidden sm:inline">CultivaTech ColombIA</span>
-            <span className="sm:hidden">Cultiva Tech ColombIA</span>
+            <span className="sm:hidden">CultivaTech</span>
           </button>
 
           {isAuthenticated && (
-            <nav className="hidden lg:flex gap-1 items-center">
+            <nav className="hidden xl:flex gap-0.5 items-center min-w-0">
               {navItems.map((item) => (
                 <button
                   key={item.key}
                   onClick={() => onNav(item.key)}
-                  className={`flex flex-col items-center px-3 py-2 text-sm transition-all duration-200 hover:bg-secondary/20 font-heading ${ 
+                  className={`flex flex-col items-center px-2 py-1 text-xs whitespace-nowrap transition-all duration-200 hover:bg-secondary/20 font-heading ${ 
                     currentPage === item.key
                       ? 'text-primary'
                       : 'text-text-main'
                   }`}
                 >
-                  <span className="text-lg mb-1">{item.icon}</span>
-                  <span className="text-xs">{item.label.toUpperCase()}</span>
+                  <span className="text-base mb-0.5">{item.icon}</span>
+                  <span className="text-[10px]">{item.label.toUpperCase()}</span>
                 </button>
               ))}
             </nav>
           )}
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 shrink-0">
+            {isAuthenticated && onSwitchModule && (
+              <div className="hidden md:flex items-center border border-border rounded-lg overflow-hidden bg-background-card text-xs font-heading shrink-0">
+                <button
+                  type="button"
+                  onClick={() => onSwitchModule("agricultor")}
+                  className={`px-2.5 py-1.5 whitespace-nowrap transition-colors ${
+                    activeModule === "agricultor" ? "bg-accent text-white" : "text-text-main hover:bg-secondary/20"
+                  }`}
+                >
+                  🌱 Agricultor
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onSwitchModule("inversionista")}
+                  className={`px-2.5 py-1.5 whitespace-nowrap transition-colors ${
+                    activeModule === "inversionista" ? "bg-primary text-white" : "text-text-main hover:bg-secondary/20"
+                  }`}
+                >
+                  💎 Inversionista
+                </button>
+              </div>
+            )}
+
             <ThemeToggleButton />
+
+            {isAuthenticated && onLogout && (
+              <button
+                type="button"
+                onClick={onLogout}
+                className="hidden sm:inline-block px-2.5 py-1.5 rounded border border-border text-xs font-bold whitespace-nowrap text-text-main hover:border-primary hover:text-primary transition-colors"
+                title={user?.isDemo ? "Salir del Modo Demo" : "Cerrar Sesión"}
+              >
+                {user?.isDemo ? "Salir Demo" : "Salir"}
+              </button>
+            )}
+
             {isAuthenticated && (
               <button
                 onClick={onMobileMenuClick}
@@ -91,6 +136,10 @@ Header.propTypes = {
   onMobileMenuClick: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   currentPage: PropTypes.string,
+  activeModule: PropTypes.string,
+  onSwitchModule: PropTypes.func,
   onNav: PropTypes.func,
   sidebarOpen: PropTypes.bool,
+  user: PropTypes.object,
+  onLogout: PropTypes.func,
 };

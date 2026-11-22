@@ -37,7 +37,7 @@ const slides = [
   },
 ];
 
-export default function LandingPage({ setCurrentPage }) {
+export default function LandingPage({ setCurrentPage, onEnterDemo }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => {
@@ -47,28 +47,67 @@ export default function LandingPage({ setCurrentPage }) {
   const prevSlide = () => {
     setCurrentSlide((prev) => Math.max(prev - 1, 0));
   };
-  
-  // Pass setCurrentPage to the last slide component
+
+  const handleQuickDemo = (moduleName, targetPage) => {
+    if (onEnterDemo) {
+      onEnterDemo(moduleName, targetPage);
+      return;
+    }
+    setCurrentPage("ingreso");
+  };
+
+  // Pass setCurrentPage and onEnterDemo to the last slide component
   const slidesWithProps = slides.map((slide, index) => {
     if (index === slides.length - 1) {
       return {
         ...slide,
-        component: React.cloneElement(slide.component, { setCurrentPage }),
+        component: React.cloneElement(slide.component, { setCurrentPage, onEnterDemo }),
       };
     }
     return slide;
   });
 
-
   return (
     <div className="min-h-screen bg-background text-text-main flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-4xl mx-auto">
-        
         {/* Header */}
         <div className="text-center mb-4">
-            <h1 className="text-3xl font-heading text-text-accent">
-              Cultiva Tech ColombIA
-            </h1>
+          <h1 className="text-3xl font-heading text-text-accent">
+            Cultiva Tech ColombIA
+          </h1>
+          <p className="text-xs text-text-main/70 mt-1">
+            Trazabilidad IoT + Tokenización Productiva · Piloto Demo Day CCB
+          </p>
+        </div>
+
+        {/* Acceso directo Demo Day (sin fricción de registro para jurados) */}
+        <div className="mb-4 p-3 bg-background-card border border-border flex flex-col sm:flex-row items-center justify-between gap-2">
+          <span className="text-xs font-heading text-text-accent uppercase tracking-wider">
+            Acceso Directo Demo Day
+          </span>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => handleQuickDemo("inversionista")}
+              className="bg-primary text-white px-3 py-1.5 text-xs font-heading hover:bg-primary/85 transition-colors cursor-pointer"
+            >
+              💎 Explorar Demo Inversionista
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickDemo("agricultor")}
+              className="border border-accent text-accent px-3 py-1.5 text-xs font-heading hover:bg-accent/15 transition-colors cursor-pointer"
+            >
+              🌱 Explorar Demo Agricultor
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickDemo("inversionista", "como_funciona")}
+              className="border border-border text-text-main px-3 py-1.5 text-xs font-heading hover:border-text-accent hover:text-text-accent transition-colors cursor-pointer"
+            >
+              ⛓️ Cómo Funciona Blockchain
+            </button>
+          </div>
         </div>
 
         {/* Progress Bar */}
@@ -115,10 +154,10 @@ export default function LandingPage({ setCurrentPage }) {
             </button>
           ) : (
             <button
-              onClick={() => setCurrentPage("ingreso")}
+              onClick={() => (onEnterDemo ? onEnterDemo("inversionista") : setCurrentPage("ingreso"))}
               className="bg-primary text-white py-2.5 px-5 font-heading hover:bg-primary/80 transition-colors text-base"
             >
-              🚀 FINALIZAR
+              {onEnterDemo ? "💎 VER DEMO INVERSIONISTA" : "🚀 FINALIZAR"}
             </button>
           )}
         </div>
@@ -129,4 +168,5 @@ export default function LandingPage({ setCurrentPage }) {
 
 LandingPage.propTypes = {
   setCurrentPage: PropTypes.func.isRequired,
+  onEnterDemo: PropTypes.func,
 };

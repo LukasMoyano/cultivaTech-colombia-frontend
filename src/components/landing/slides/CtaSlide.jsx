@@ -32,7 +32,7 @@ const StatCard = ({ value, label }) => (
  * @param {function} props.setCurrentPage - Función para cambiar la página actual de la aplicación.
  * @returns {JSX.Element} El JSX para la diapositiva de Llamado a la Acción.
  */
-const CtaSlide = ({ setCurrentPage }) => {
+const CtaSlide = ({ setCurrentPage, onEnterDemo }) => {
   return (
     // Contenedor principal para el contenido de la diapositiva. Usa space-y para espaciado vertical y texto centrado.
     <div className="space-y-8 text-center">
@@ -42,7 +42,7 @@ const CtaSlide = ({ setCurrentPage }) => {
         <div className="text-6xl mb-4">🌾✨</div>
         {/* Párrafo descriptivo principal, destacando la confianza del usuario. Usa color de texto temático y color de énfasis para etiquetas strong. */}
         <p className="text-xl text-text-main mb-6">
-          Los<strong className="text-accent"> Agricultores </strong>en Colombia ya confían en CultivaTech ColombIA
+          Los<strong className="text-accent"> Agricultores </strong>e <strong className="text-primary">Inversionistas</strong> en Colombia confían en CultivaTech ColombIA
         </p>
       </div>
       {/* Cuadrícula para estadísticas clave. Usa `gap-px bg-border` para crear divisores delgados temáticos entre tarjetas. */}
@@ -50,23 +50,40 @@ const CtaSlide = ({ setCurrentPage }) => {
         {/* Componentes StatCard individuales para cada métrica clave. */}
         <StatCard value="+35%" label="Aumento en productividad" />
         <StatCard value="-50%" label="Reducción de pérdidas" />
-        <StatCard value="24/7" label="Monitoreo continuo" />
+        <StatCard value="24/7" label="Monitoreo + Trazabilidad Blockchain" />
       </div>
       {/* Sección de Llamado a la Acción. */}
       <div className="space-y-4 pt-6">
         {/* Pregunta CTA: usa fuente de encabezado, texto grande y color de énfasis. */}
         <p className="font-heading text-xl text-text-accent">
-          ¿LISTO PARA REVOLUCIONAR TU AGRICULTURA?
+          ¿LISTO PARA EXPLORAR CULTIVATECH COLOMBIA?
         </p>
         {/* Contenedor de botones. */}
-        <div className="space-x-4">
-          {/* Botón CTA primario: navega a la página de registro/inicio de sesión. */}
-          {/* Usa el color primario del tema para el fondo, texto blanco, fuente de encabezado y efectos de desplazamiento. */}
+        <div className="flex flex-wrap justify-center gap-3">
+          {onEnterDemo && (
+            <>
+              <button
+                type="button"
+                onClick={() => onEnterDemo("inversionista")}
+                className="bg-primary text-white py-3 px-6 font-heading hover:bg-primary/80 transition-colors text-sm"
+              >
+                💎 EXPLORAR DEMO INVERSIONISTA
+              </button>
+              <button
+                type="button"
+                onClick={() => onEnterDemo("agricultor")}
+                className="bg-accent text-white py-3 px-6 font-heading hover:opacity-90 transition-opacity text-sm"
+              >
+                🌱 EXPLORAR DEMO AGRICULTOR
+              </button>
+            </>
+          )}
           <button
+            type="button"
             onClick={() => setCurrentPage("ingreso")}
-            className="bg-primary text-white py-3 px-8 font-heading hover:bg-primary/80 transition-colors"
+            className="border border-border bg-background text-text-main py-3 px-6 font-heading hover:border-primary transition-colors text-sm"
           >
-            🚀 COMENZAR AHORA
+            🔐 INICIAR SESIÓN / REGISTRO
           </button>
         </div>
       </div>
@@ -76,6 +93,7 @@ const CtaSlide = ({ setCurrentPage }) => {
 
 CtaSlide.propTypes = {
   setCurrentPage: PropTypes.func.isRequired,
+  onEnterDemo: PropTypes.func,
 };
 
 export default CtaSlide;

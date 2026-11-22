@@ -86,6 +86,7 @@ const createRateLimiter = ({ windowMs = 15 * 60 * 1000, max = 20, message = 'Dem
 
 const authLoginLimiter = createRateLimiter({ windowMs: 15 * 60 * 1000, max: 20, message: 'Demasiados intentos de inicio de sesión. Espera unos minutos.' });
 const authRegisterLimiter = createRateLimiter({ windowMs: 15 * 60 * 1000, max: 10, message: 'Demasiados intentos de registro. Espera unos minutos.' });
+const pilotoSimLimiter = createRateLimiter({ windowMs: 15 * 60 * 1000, max: 40, message: 'Límite de simulaciones alcanzado temporalmente.' });
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -1011,6 +1012,109 @@ app.post('/api/blockchain/registrar', async (req, res) => {
     } catch (error) {
         console.error('Error en /api/blockchain/registrar:', error.message);
         return res.status(500).json({ error: 'No se pudo registrar la lectura simulada.' });
+    }
+});
+
+const LOTES_PILOTO_PATH = './data/lotes_piloto.json';
+
+app.get('/api/piloto/resumen', async (req, res) => {
+    try {
+        const data = await fs.readJson(LOTES_PILOTO_PATH);
+        const lote = data.lotePrincipal;
+        const fondeadoCop = lote.participacionesColocadas * lote.valorParticipacionCop;
+        const porcentajeFondeado = Math.min(100, Math.round((fondeadoCop / lote.metaCop) * 100));
+        const historialCount = telemetryState.history.length;
+        const lecturasFirmadas = telemetryState.history.filter((item) => Boolean(item?.hash)).length;
+        const porcentajeConfianzaSensor = historialCount > 0
+            ? Math.round((lecturasFirmadas / historialCount) * 100)
+            : 98;
+
+        res.json({
+            lote: {
+                ...lote,
+                fondeadoCop,
+                porcentajeFondeado,
+                cuposDisponibles: Math.max(0, lote.maxAliadosPrivados - lote.aliadosActuales),
+            },
+            proximosLotes: data.proximosLotes || [],
+            oraculo: {
+                modo: contratoTrazabilidad ? 'sepolia' : 'simulacion',
+                etiquetaEstado: contratoTrazabilidad
+                    ? 'Red Pública Sepolia Activa'
+                    : 'Oráculo en Simulación Local (listo para Sepolia)',
+                pendientes: oracleState.pending.length,
+                lotesAnclados: oracleState.anclados.length,
+                ultimaRaiz: oracleState.ultimaRaiz,
+                ultimaTx: oracleState.ultimaTx,
+                urlExplorador: oracleState.ultimaTx
+                    ? `https://sepolia.etherscan.io/tx/${oracleState.ultimaTx}`
+                    : null,
+            },
+            confianzaSensor: {
+                porcentajeIntegridad: porcentajeConfianzaSensor,
+                lecturasRegistradas: historialCount,
+                ultimaLectura: telemetryState.latest,
+            },
+        });
+    } catch (error) {
+        console.error('Error en /api/piloto/resumen:', error.message);
+        res.status(500).json({ error: 'No se pudo cargar el resumen del lote piloto.' });
+    }
+});
+
+app.post('/api/piloto/simular-vinculacion', pilotoSimLimiter, async (req, res) => {
+    try {
+        const {
+            montoCop,
+            aceptoContratoRiesgos,
+            autorizoLey1581,
+            aceptoAlertas,
+        } = req.body || {};
+
+        if (aceptoContratoRiesgos !== true || autorizoLey1581 !== true || aceptoAlertas !== true) {
+            return res.status(400).json({
+                error: 'Debes marcar las 3 casillas obligatorias antes de ejecutar la vinculación demo.',
+            });
+        }
+
+        const monto = Number(montoCop);
+        if (!Number.isFinite(monto) || monto < 120000 || monto > 3000000) {
+            return res.status(400).json({
+                error: 'El monto demo debe estar entre $120.000 COP y $3.000.000 COP.',
+            });
+        }
+
+        const data = await fs.readJson(LOTES_PILOTO_PATH);
+        const lote = data.lotePrincipal;
+        const participaciones = Math.max(1, Math.round(monto / lote.valorParticipacionCop));
+        const montoAjustado = participaciones * lote.valorParticipacionCop;
+        const porcentajeLote = Number(((participaciones / lote.totalParticipaciones) * 100).toFixed(1));
+
+        const seed = `${lote.id}:${montoAjustado}:${Date.now()}:${crypto.randomUUID()}`;
+        const txHashSimulado = `0x${crypto.createHash('sha256').update(seed).digest('hex')}`;
+        const allowlistProof = `0x${crypto.createHash('sha256').update(`allowlist:${seed}`).digest('hex').slice(0, 40)}`;
+
+        return res.json({
+            modo: contratoTrazabilidad ? 'sepolia_listo' : 'simulacion_demo',
+            etiquetaEstado: 'Oráculo en Simulación Local (listo para Sepolia)',
+            loteId: lote.id,
+            montoCop: montoAjustado,
+            participaciones,
+            porcentajeLote,
+            allowlistAddress: allowlistProof,
+            txHash: txHashSimulado,
+            gasEstimado: '<45,000 gas',
+            timestamp: new Date().toISOString(),
+            pasos: [
+                { id: 1, titulo: 'Validación KYC & Allowlist', detalle: 'Identidad privada verificada off-chain (Ley 1581); billetera habilitada en lista blanca.' },
+                { id: 2, titulo: 'Registro Escrow / Cupo Privado', detalle: `Verificado límite legal (<20 aliados) y asignadas ${participaciones}/100 participaciones.` },
+                { id: 3, titulo: 'Emisión de Registro Digital (mintParticipacion)', detalle: `Token no negociable asignado (${porcentajeLote}% del Lote Piloto #01).` },
+                { id: 4, titulo: 'Sellado Hash y Vinculación Activa', detalle: `Comprobante criptográfico generado (${txHashSimulado.slice(0, 18)}...).` },
+            ],
+        });
+    } catch (error) {
+        console.error('Error en /api/piloto/simular-vinculacion:', error.message);
+        res.status(500).json({ error: 'No se pudo procesar la simulación de vinculación.' });
     }
 });
 

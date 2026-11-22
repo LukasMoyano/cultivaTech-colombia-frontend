@@ -22,6 +22,7 @@ import DashboardAlertasYRecomendaciones from "./Dashboardd_2panels/_dashboard_al
 
 // Telemetría en tiempo real MQ-4 / ESP32 (SSE desde Render)
 import { Mq4Dashboard } from "./telemetria";
+import MiLoteFinanciadoPanel from "./agricultor/MiLoteFinanciadoPanel";
 
 /**
  * Componente principal del Dashboard
@@ -34,14 +35,14 @@ const Dashboard = ({ setCurrentPage }) => {
       {/* Título del panel */}
       <header className="mb-8">
         <h1 className="text-4xl font-bold text-text-accent mb-2 font-heading">
-          PANEL PRINCIPAL
+          PANEL PRINCIPAL · AGRICULTOR
         </h1>
         <div className="w-24 h-1 bg-primary rounded-full"></div>
       </header>
       
       {/* Descripción introductoria */}
       <p className="mb-8 text-text-main text-lg leading-relaxed">
-        Bienvenido a tu panel de control de CultivaTech ColombIA. Aquí encontrarás un resumen del estado de tus cultivos, alertas importantes y otra información relevante para ayudarte a tomar las mejores decisiones para tu campo.
+        Bienvenido a tu panel de control de CultivaTech ColombIA. Aquí encontrarás la telemetría en vivo de tus cultivos, el respaldo financiero de tu lote y alertas tempranas para proteger tu cosecha.
       </p>
 
       {/* Sección principal con grid para paneles */}
@@ -50,6 +51,12 @@ const Dashboard = ({ setCurrentPage }) => {
         <section aria-label="Telemetría MQ-4 en tiempo real" className="mb-6">
           <Mq4Dashboard />
         </section>
+
+        {/* Respaldo de financiamiento y salud de confianza digital del lote */}
+        <MiLoteFinanciadoPanel
+          onVerBlockchain={() => setCurrentPage("como_funciona")}
+          onVerInversionista={() => setCurrentPage("inversion_oferta", "inversionista")}
+        />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <EstadoGeneralPanel setCurrentPage={setCurrentPage} />
           <GraficoPanel setCurrentPage={setCurrentPage} />

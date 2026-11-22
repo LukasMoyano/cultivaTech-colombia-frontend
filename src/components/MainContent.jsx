@@ -9,82 +9,99 @@ import Cultivos from "./Cultivos";
 import Alertas from "./Alertas";
 import Robot from "./Robot";
 import LandingPage from "./LandingPage";
-import JuegosIA from "./JuegosIA";
 import Foro from "./Foro";
-import CultivoDetailView from "./cultivos/CultivoDetailView";
+import PuenteBlockchainVisual from "./shared/PuenteBlockchainVisual";
+import {
+  OfertaLoteScreen,
+  SimuladorInversionScreen,
+  PortafolioInversionistaScreen,
+  SalidaLiquidacionScreen,
+} from "./inversionista";
 
 // Componente principal que renderiza el contenido central de la aplicación.
-// Recibe dos props:
-// - currentPage: indica qué sección/página debe mostrarse.
-// - setCurrentPage: función para cambiar la página actual.
-export default function MainContent({ currentPage, setCurrentPage }) {
+export default function MainContent({
+  currentPage,
+  setCurrentPage,
+  onEnterDemo,
+  participacionDemo,
+  onConfirmarParticipacion,
+}) {
   return (
-    // El main ocupa el espacio principal y aplica un fondo personalizado.
     <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-background">
       {/* Página de presentación inicial */}
       {currentPage === "landing" && (
-        <LandingPage setCurrentPage={setCurrentPage} />
+        <LandingPage setCurrentPage={setCurrentPage} onEnterDemo={onEnterDemo} />
       )}
-
-      {/* Si la página actual es "ingreso", muestra el componente de ingreso/registro.
-          Le pasa la función setCurrentPage para poder cambiar de página desde ese componente. */}
 
       {currentPage === "ingreso" && (
         <IngresoRegistro setCurrentPage={setCurrentPage} />
       )}
 
-      {/* Si la página actual es "dashboard", muestra el dashboard principal.
-          También recibe setCurrentPage para navegación interna. */}
-
+      {/* Módulo A: Agricultores */}
       {currentPage === "dashboard" && (
         <Dashboard setCurrentPage={setCurrentPage} />
       )}
 
-      {/* Telemetría en tiempo real MQ-4 / ESP32 vía SSE desde Render.
-          Página dedicada: KPIs + semáforo de riesgo + gráfica deslizante. */}
       {currentPage === "telemetria" && (
         <div className="container mx-auto">
           <Mq4Dashboard />
         </div>
       )}
 
-      {/* Si la página actual es "cultivos", muestra el componente Cultivos.
-          Este componente debería permitir seleccionar un cultivo específico.
-          También recibe setCurrentPage para navegación. */}
-
       {currentPage === "cultivos" && (
         <Cultivos setCurrentPage={setCurrentPage} />
       )}
 
-      {/* Si la página actual es "alertas", muestra el componente de alertas.
-          Recibe setCurrentPage para navegación desde las alertas. */}
       {currentPage === "alertas" && <Alertas setCurrentPage={setCurrentPage} />}
 
-
-      {
-      }
-
-      {/* Si la página actual es "robot", muestra el componente del robot.
-          Recibe setCurrentPage para navegación desde el control del robot. */}
       {currentPage === "robot" && <Robot setCurrentPage={setCurrentPage} />}
 
-      {/* Página de juegos IA colaborativa */}
-      {currentPage === "juegos" && (
-        <JuegosIA setCurrentPage={setCurrentPage} />
-      )}
-
-      {/* Foro de Agricultores */}
       {currentPage === "foro" && (
         <Foro setCurrentPage={setCurrentPage} />
+      )}
+
+      {/* Módulo B: Inversionistas (4 Pantallas CCB) */}
+      {currentPage === "inversion_oferta" && (
+        <OfertaLoteScreen
+          onNav={setCurrentPage}
+          participacionDemo={participacionDemo}
+        />
+      )}
+
+      {currentPage === "inversion_simulador" && (
+        <SimuladorInversionScreen
+          onNav={setCurrentPage}
+          participacionDemo={participacionDemo}
+          onConfirmarParticipacion={onConfirmarParticipacion}
+        />
+      )}
+
+      {currentPage === "inversion_portafolio" && (
+        <PortafolioInversionistaScreen
+          onNav={setCurrentPage}
+          participacionDemo={participacionDemo}
+        />
+      )}
+
+      {currentPage === "inversion_salida" && (
+        <SalidaLiquidacionScreen
+          onNav={setCurrentPage}
+          participacionDemo={participacionDemo}
+        />
+      )}
+
+      {/* Puente Visual Blockchain (Compartido en lenguaje claro) */}
+      {currentPage === "como_funciona" && (
+        <PuenteBlockchainVisual onNavigate={setCurrentPage} />
       )}
     </main>
   );
 }
 
-// Define los tipos de las props para asegurar que se usen correctamente.
-// currentPage debe ser un string y es obligatorio.
-// setCurrentPage debe ser una función y es obligatoria.
 MainContent.propTypes = {
   currentPage: PropTypes.string.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
+  onEnterDemo: PropTypes.func,
+  participacionDemo: PropTypes.object,
+  onConfirmarParticipacion: PropTypes.func,
 };

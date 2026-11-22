@@ -1,0 +1,47 @@
+{
+  "lotePrincipal": {
+    "id": "LOTE-PILOTO-01",
+    "nombre": "Lote Piloto #01 — Hongos Gourmet Sumapaz",
+    "linea": "Micología Tecnificada (Hongos Gourmet y Medicinales)",
+    "ubicacion": "Provincia del Sumapaz · Cundinamarca",
+    "cicloDias": 90,
+    "diaActual": 42,
+    "metaCop": 12000000,
+    "totalParticipaciones": 100,
+    "valorParticipacionCop": 120000,
+    "participacionesColocadas": 65,
+    "aliadosActuales": 8,
+    "maxAliadosPrivados": 19,
+    "aporteMinCop": 1000000,
+    "aporteMaxCop": 3000000,
+    "escenarioBaseMinPct": 15,
+    "escenarioBaseMaxPct": 22,
+    "ahorroFinancieroBanco": "24% – 36% EA frente a crédito bancario tradicional",
+    "compradorMayorista": "Contrato suministro restaurantes Bogotá · Al día / Sin mora",
+    "saneamiento": "Predio verificado · Cero prendas en Registro de Garantías Mobiliarias",
+    "respaldoTecnico": "Tecnoparque SENA TRL 6 (Acta 15750-2025-09-15 · Código P2024-044977-15750)",
+    "contrato": "TrazabilidadAgricola_IR.sol (<45,000 gas)",
+    "desgloseCostos": [
+      { "rubro": "Sustrato inoculado, semilla certificada e insumos biológicos", "valorCop": 5400000 },
+      { "rubro": "Adecuación climática, empaque grado alimenticio y logística", "valorCop": 3100000 },
+      { "rubro": "Operación técnica en campo y monitoreo IoT 24/7", "valorCop": 2300000 },
+      { "rubro": "Fondo de contingencia agronómica y auditoría contable", "valorCop": 1200000 }
+    ]
+  },
+  "proximosLotes": [
+    {
+      "id": "LOTE-PILOTO-02",
+      "nombre": "Apicultura Alta Montaña — Sumapaz",
+      "cicloDias": 90,
+      "metaCop": 15000000,
+      "estado": "En estructuración técnica"
+    },
+    {
+      "id": "LOTE-PILOTO-03",
+      "nombre": "Acuaponía Tecnificada — Pasca / Fusagasugá",
+      "cicloDias": 90,
+      "metaCop": 18000000,
+      "estado": "Calibración multivariable"
+    }
+  ]
+}

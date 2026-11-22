@@ -27,7 +27,9 @@ const EstadoBlockchainPanel = () => {
     return () => window.clearInterval(intervalo);
   }, [actualizarEstado]);
 
-  const modo = estado?.modo === "sepolia" ? "Sepolia" : "Simulación";
+  const modo = estado?.modo === "sepolia"
+    ? "Red Pública Sepolia"
+    : "Oráculo en Simulación Local (listo para Sepolia)";
   const txHash = estado?.ultimaTx;
 
   return (

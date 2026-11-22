@@ -73,4 +73,23 @@ export const obtenerEventosBlockchain = async () => {
   return response.data.eventos || [];
 };
 
+/**
+ * Devuelve el resumen consolidado del Lote Piloto #01, estado del oráculo y confianza IoT.
+ * @returns {Promise} - Datos públicos del piloto (sin PII)
+ */
+export const obtenerResumenPiloto = async () => {
+  const response = await apiClient.get("/api/piloto/resumen");
+  return response.data;
+};
+
+/**
+ * Ejecuta una simulación guiada de vinculación on-chain para el Demo Day.
+ * @param {object} payload - { montoCop, aceptoContratoRiesgos, autorizoLey1581, aceptoAlertas }
+ * @returns {Promise} - Pasos y comprobante hash de simulación
+ */
+export const simularVinculacionPiloto = async (payload) => {
+  const response = await apiClient.post("/api/piloto/simular-vinculacion", payload);
+  return response.data;
+};
+
 export default apiClient;
