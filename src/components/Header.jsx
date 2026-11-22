@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ThemeToggleButton } from "./ui/ThemeToggleButton";
+import { getNavItems } from "../data/navigation";
 export default function Header({
   onMobileMenuClick,
   isAuthenticated,
@@ -12,27 +13,7 @@ export default function Header({
   user,
   onLogout,
 }) {
-  const navAgricultor = [
-    { key: "landing", icon: "🏠", label: "Inicio" },
-    { key: "dashboard", icon: "📊", label: "Panel" },
-    { key: "telemetria", icon: "📡", label: "Telemetría" },
-    { key: "cultivos", icon: "🌱", label: "Cultivos" },
-    { key: "alertas", icon: "⚠️", label: "Alertas" },
-    { key: "foro", icon: "🗣️", label: "Foro" },
-    { key: "robot", icon: "🤖", label: "Robot" },
-    { key: "como_funciona", icon: "⛓️", label: "Blockchain" },
-  ];
-
-  const navInversionista = [
-    { key: "landing", icon: "🏠", label: "Inicio" },
-    { key: "inversion_oferta", icon: "📋", label: "1. Oferta" },
-    { key: "inversion_simulador", icon: "🪙", label: "2. Invertir" },
-    { key: "inversion_portafolio", icon: "📈", label: "3. Portafolio" },
-    { key: "inversion_salida", icon: "💸", label: "4. Salida" },
-    { key: "como_funciona", icon: "⛓️", label: "Blockchain" },
-  ];
-
-  const navItems = activeModule === "inversionista" ? navInversionista : navAgricultor;
+  const navItems = getNavItems(activeModule, "header");
 
   return (
     <header className="bg-background text-text-main shadow-md sticky top-0 z-50 border-b border-border">

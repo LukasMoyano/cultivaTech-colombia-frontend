@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { getNavItems } from "../data/navigation";
 
 export default function Sidebar({
   currentPage,
@@ -11,27 +12,7 @@ export default function Sidebar({
   onLogout,
   user,
 }) {
-  const navAgricultor = [
-    { key: "landing", icon: "🏠", label: "Presentación" },
-    { key: "dashboard", icon: "📊", label: "Panel" },
-    { key: "telemetria", icon: "📡", label: "Telemetría MQ-4" },
-    { key: "cultivos", icon: "🌱", label: "Cultivos" },
-    { key: "alertas", icon: "⚠️", label: "Alertas" },
-    { key: "foro", icon: "🗣️", label: "Foro de Agricultores" },
-    { key: "robot", icon: "🤖", label: "Robot" },
-    { key: "como_funciona", icon: "⛓️", label: "Cómo Funciona Blockchain" },
-  ];
-
-  const navInversionista = [
-    { key: "landing", icon: "🏠", label: "Presentación" },
-    { key: "inversion_oferta", icon: "📋", label: "1. Ficha Oferta (Entiende)" },
-    { key: "inversion_simulador", icon: "🪙", label: "2. Invertir (★ Delicado)" },
-    { key: "inversion_portafolio", icon: "📈", label: "3. Mi Portafolio (Sigue)" },
-    { key: "inversion_salida", icon: "💸", label: "4. Salida / Liquidación" },
-    { key: "como_funciona", icon: "⛓️", label: "Cómo Funciona Blockchain" },
-  ];
-
-  const navItems = activeModule === "inversionista" ? navInversionista : navAgricultor;
+  const navItems = getNavItems(activeModule, "sidebar");
 
   const handleNavigation = (page) => {
     onNav(page);
