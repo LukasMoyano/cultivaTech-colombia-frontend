@@ -92,13 +92,6 @@ const PuenteBlockchainVisual = ({ compact = false, onNavigate = null }) => {
                 ? `Oráculo en línea · Lotes sellados: ${oraculo?.lotesAnclados ?? 0} · En cola: ${oraculo?.pendientes ?? 0}`
                 : "Vista de arquitectura · Esperando telemetría del servidor local"}
             </span>
-            <button
-              type="button"
-              onClick={() => setMostrarTecnico((prev) => !prev)}
-              className="text-xs font-bold text-primary underline hover:opacity-80"
-            >
-              {mostrarTecnico ? "Ocultar detalles de ingeniería" : "Ver detalles técnicos Web3"}
-            </button>
           </div>
         </div>
 
@@ -137,6 +130,16 @@ const PuenteBlockchainVisual = ({ compact = false, onNavigate = null }) => {
               </button>
             );
           })}
+        </div>
+
+        <div className="mt-4 flex justify-start">
+          <button
+            type="button"
+            onClick={() => setMostrarTecnico((prev) => !prev)}
+            className="text-xs font-bold text-primary underline hover:opacity-80 cursor-pointer"
+          >
+            {mostrarTecnico ? "Ocultar detalles de ingeniería" : "Ver detalles técnicos Web3"}
+          </button>
         </div>
       </div>
 
