@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { usePilotoResumen } from "../../hooks/usePilotoResumen";
 import { formatCop } from "../../data/pilotoFallback";
+
+const PASOS_RESPALDO_CAMPESINO = [
+  {
+    numero: "01",
+    badge: "CUIDADO EN VIVO",
+    icono: "🌿",
+    titulo: "Cuidas el ambiente 24/7",
+    detalle:
+      "El dispositivo vigila CO₂, oxígeno, humedad y temperatura sin parar. Si algo cambia de golpe, te avisa antes de que dañe tus hongos, abejas o cualquier cultivo.",
+    resumenEjemplo: "Alerta temprana automática directo a tu panel antes de perder cosecha.",
+    bordeActivo: "border-accent bg-accent/10",
+    franja: "bg-accent",
+    badgeClase: "bg-accent/20 text-accent",
+  },
+  {
+    numero: "02",
+    badge: "SELLO AUTOMÁTICO",
+    icono: "📦",
+    titulo: "Tu finca gana credibilidad",
+    detalle:
+      "Cada paquete de 5 mediciones reales se sella solo como prueba de trabajo bien hecho. No pierdes tiempo llenando planillas ni haciendo filas en bancos.",
+    resumenEjemplo: "Tu historial limpio aumenta la confianza para financiar próximos ciclos.",
+    bordeActivo: "border-secondary bg-secondary/15",
+    franja: "bg-secondary",
+    badgeClase: "bg-secondary/25 text-text-accent",
+  },
+  {
+    numero: "03",
+    badge: "CERO HIPOTECAS",
+    icono: "🤝",
+    titulo: "Capital sin arriesgar tu tierra",
+    detalle:
+      "Consigues respaldo para insumos y tecnología compartiendo utilidad al vender la cosecha. Sin hipotecar la finca ni cargar cuotas bancarias impagables.",
+    resumenEjemplo: "Si la cosecha rinde más y sale sana, crecen tanto tus ingresos como los de tus aliados.",
+    bordeActivo: "border-primary bg-primary/10",
+    franja: "bg-primary",
+    badgeClase: "bg-primary/20 text-primary",
+  },
+];
 
 /**
  * Panel para el Módulo de Agricultores:
@@ -11,9 +50,11 @@ import { formatCop } from "../../data/pilotoFallback";
 const MiLoteFinanciadoPanel = ({ onVerBlockchain, onVerInversionista }) => {
   const { resumen } = usePilotoResumen();
   const { lote, confianzaSensor, oraculo } = resumen;
+  const [pasoSeleccionado, setPasoSeleccionado] = useState(0);
 
   const ahorroEjemploMin = Math.round(lote.metaCop * 0.24 * (lote.cicloDias / 365));
   const progresoDias = Math.min(100, Math.round((lote.diaActual / lote.cicloDias) * 100));
+  const pasoActual = PASOS_RESPALDO_CAMPESINO[pasoSeleccionado];
 
   return (
     <section
@@ -94,18 +135,26 @@ const MiLoteFinanciadoPanel = ({ onVerBlockchain, onVerInversionista }) => {
         </div>
       </div>
 
-      {/* Guía visual de 3 pasos para el agricultor */}
-      <div className="bg-background border border-border rounded-lg p-4">
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <h3 className="text-sm font-heading font-bold text-text-accent">
-            ¿Cómo te respalda la tecnología paso a paso?
-          </h3>
+      {/* Guía visual destacada de 3 pasos para el agricultor */}
+      <div className="bg-gradient-to-br from-accent/10 via-background to-primary/10 border-2 border-primary/70 rounded-xl p-5 sm:p-6 shadow-md space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
+          <div className="space-y-1">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-heading font-bold bg-primary text-white tracking-wide">
+              🚀 RESPALDO PRODUCTIVO · FINANCIAMIENTO SIN DEUDA BANCARIA
+            </span>
+            <h3 className="text-lg sm:text-xl font-heading font-bold text-text-accent">
+              ✨ ¿Cómo te respalda la tecnología paso a paso?
+            </h3>
+            <p className="text-xs sm:text-sm text-text-main/85">
+              Tu dispositivo trabaja en silencio mientras cultivas: protege la cosecha, certifica tu esfuerzo y abre capital justo.
+            </p>
+          </div>
           <div className="flex flex-wrap gap-2">
             {onVerBlockchain && (
               <button
                 type="button"
                 onClick={onVerBlockchain}
-                className="text-xs font-bold px-3 py-1.5 rounded border border-primary text-primary hover:bg-primary hover:text-white transition-colors"
+                className="text-xs font-heading font-bold px-3.5 py-2 rounded-lg border-2 border-primary bg-background text-primary hover:bg-primary hover:text-white transition-colors cursor-pointer"
               >
                 🔗 Ver esquema Blockchain completo
               </button>
@@ -114,25 +163,78 @@ const MiLoteFinanciadoPanel = ({ onVerBlockchain, onVerInversionista }) => {
               <button
                 type="button"
                 onClick={onVerInversionista}
-                className="text-xs font-bold px-3 py-1.5 rounded bg-primary text-white hover:bg-primary/90 transition-colors"
+                className="text-xs font-heading font-bold px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 shadow transition-colors cursor-pointer"
               >
                 💎 Ver cómo te ve el Inversionista →
               </button>
             )}
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-text-main/85">
-          <div className="p-3 rounded bg-background-card border border-border">
-            <strong className="text-text-accent block mb-1">1. Cuidas el ambiente</strong>
-            Las alertas tempranas te avisan antes de que una variación térmica o de gas dañe los hongos o abejas.
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {PASOS_RESPALDO_CAMPESINO.map((paso, index) => {
+            const activo = pasoSeleccionado === index;
+            return (
+              <button
+                key={paso.numero}
+                type="button"
+                onClick={() => setPasoSeleccionado(index)}
+                className={`text-left relative overflow-hidden rounded-xl border-2 p-4 transition-all duration-200 cursor-pointer flex flex-col justify-between gap-3 ${
+                  activo
+                    ? `${paso.bordeActivo} shadow-lg -translate-y-0.5`
+                    : "border-border bg-background-card hover:border-primary/60 hover:shadow"
+                }`}
+              >
+                <div className={`absolute top-0 left-0 right-0 h-1.5 ${paso.franja}`} aria-hidden="true" />
+                <div className="space-y-2.5 pt-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <span
+                      className="w-10 h-10 rounded-lg bg-background border border-border flex items-center justify-center text-2xl shadow-sm"
+                      aria-hidden="true"
+                    >
+                      {paso.icono}
+                    </span>
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-heading font-bold ${paso.badgeClase}`}>
+                      PASO {paso.numero} · {paso.badge}
+                    </span>
+                  </div>
+                  <h4 className="text-sm sm:text-base font-heading font-bold text-text-accent">
+                    {paso.titulo}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-text-main/90 leading-relaxed">
+                    {paso.detalle}
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-border/70 flex items-center justify-between text-[11px] font-bold text-text-accent">
+                  <span>{activo ? "● En foco ahora" : "Toca para resaltar"}</span>
+                  <span aria-hidden="true">{index < 2 ? "Siguiente →" : "✓ Meta"}</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Ventana dinámica del paso enfocado + beneficios sin deuda */}
+        <div className="bg-background-card border border-border rounded-lg p-3.5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5">
+            <span className="text-xl" aria-hidden="true">{pasoActual.icono}</span>
+            <div>
+              <strong className="text-text-accent font-heading">
+                En resumen (Paso {pasoActual.numero}):
+              </strong>{" "}
+              <span className="text-text-main">{pasoActual.resumenEjemplo}</span>
+            </div>
           </div>
-          <div className="p-3 rounded bg-background-card border border-border">
-            <strong className="text-text-accent block mb-1">2. Tu finca gana credibilidad</strong>
-            Cada paquete de 5 mediciones queda sellado automáticamente sin quitar tiempo a tu trabajo diario.
-          </div>
-          <div className="p-3 rounded bg-background-card border border-border">
-            <strong className="text-text-accent block mb-1">3. Capital sin perder tu tierra</strong>
-            Recibes apoyo para producir y compartes utilidad al vender la cosecha, sin hipotecas ni deudas impagables.
+          <div className="flex flex-wrap gap-2 shrink-0">
+            <span className="px-2.5 py-1 rounded bg-accent/15 text-accent font-bold">
+              🚫 Cero hipotecas
+            </span>
+            <span className="px-2.5 py-1 rounded bg-primary/15 text-primary font-bold">
+              🛡️ Sin intereses 24%–36% EA
+            </span>
+            <span className="px-2.5 py-1 rounded bg-secondary/20 text-text-accent font-bold">
+              🌾 Pago al cosechar
+            </span>
           </div>
         </div>
       </div>
