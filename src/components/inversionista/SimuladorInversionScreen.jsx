@@ -13,26 +13,26 @@ const PASOS_DEMO_DEFAULT = [
   {
     id: 1,
     icono: "🪪",
-    titulo: "Validación KYC & Lista Blanca (Allowlist)",
-    detalle: "Identidad privada verificada fuera de cadena (Ley 1581). Se habilita la billetera del aliado sin exponer datos personales en blockchain.",
+    titulo: "Confirmación privada de identidad (KYC)",
+    detalle: "Validamos en privado quién está detrás de la inversión (Ley 1581). Tu nombre y cédula jamás se publican en Blockchain.",
   },
   {
     id: 2,
     icono: "🏦",
-    titulo: "Reserva de Cupo & Escrow del Contrato",
-    detalle: "El contrato verifica el límite legal privado (< 20 aliados) y bloquea las participaciones solicitadas dentro del tope de 100 tokens.",
+    titulo: "Reserva segura de cupo (sin intermediarios)",
+    detalle: "Se verifica que el grupo siga siendo privado (< 20 aliados) y se apartan tus participaciones dentro de las 100 disponibles.",
   },
   {
     id: 3,
     icono: "🪙",
-    titulo: "Emisión del Registro Digital (mintParticipacion)",
-    detalle: "Asigna el certificado digital no negociable del Lote Piloto #01 con vínculo criptográfico al contrato firmado off-chain.",
+    titulo: "Emisión de tu certificado digital único",
+    detalle: "Se registra tu participación inalterable en el Lote Piloto #01, amarrada a tu contrato PDF privado e individual.",
   },
   {
     id: 4,
     icono: "✅",
-    titulo: "Sello Hash Confirmado y Acceso en Vivo",
-    detalle: "Registro completado: el inversionista queda habilitado para auditar la telemetría IoT y liquidación desde Mi Portafolio.",
+    titulo: "Sello listo y acceso 24/7 al cultivo",
+    detalle: "¡Listo! Ya puedes vigilar en vivo la salud de la plantación (aire, CO₂, humedad) y seguir tu liquidación en Mi Portafolio.",
   },
 ];
 

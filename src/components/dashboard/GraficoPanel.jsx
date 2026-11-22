@@ -95,8 +95,8 @@ const GraficoPanel = ({ setCurrentPage }) => {
 
           <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-text-main/60">
             <span>
-              ⛓ Fuente: ESP32 {latest?.node ?? latest?.mac ?? ""} · CO₂ equivalente estimado
-              (el sensor mide CH₄; para CO₂ real usar MQ-135)
+              ⛓ Fuente: ESP32 {latest?.node ?? latest?.mac ?? ""} · Salubridad del cultivo
+              (CO₂ equivalente estimado, gases y aireación; compatible con sondas de CO₂/O₂)
             </span>
             {setCurrentPage && (
               <button

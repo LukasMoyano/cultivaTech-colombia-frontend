@@ -45,27 +45,16 @@ const Dashboard = ({ setCurrentPage }) => {
         Bienvenido a tu panel de control de CultivaTech ColombIA. Aquí encontrarás la telemetría en vivo de tus cultivos, el respaldo financiero de tu lote y alertas tempranas para proteger tu cosecha.
       </p>
 
-      {/* Sección principal con grid para paneles */}
-      <main className="flex-1 min-h-0 overflow-auto">
-        {/* Telemetría ambiental en vivo (MQ-4 / ESP32 por SSE) */}
-        <section aria-label="Telemetría MQ-4 en tiempo real" className="mb-6">
-          <Mq4Dashboard />
-        </section>
-
-        {/* Respaldo de financiamiento y salud de confianza digital del lote */}
+      {/* Sección principal ordenada por prioridad para el agricultor */}
+      <main className="flex-1 min-h-0 overflow-auto space-y-6">
+        {/* 1. Respaldo de financiamiento y salud de confianza digital del lote */}
         <MiLoteFinanciadoPanel
           onVerBlockchain={() => setCurrentPage("como_funciona")}
           onVerInversionista={() => setCurrentPage("inversion_oferta", "inversionista")}
         />
+
+        {/* 2. Trazabilidad y Alertas Blockchain */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <EstadoGeneralPanel setCurrentPage={setCurrentPage} />
-          <GraficoPanel setCurrentPage={setCurrentPage} />
-          <section aria-label="Panel de Clima">
-            <DashboardClima />
-          </section>
-          <section aria-label="Panel de Alertas y Recomendaciones">
-            <DashboardAlertasYRecomendaciones setCurrentPage={setCurrentPage} />
-          </section>
           <section aria-label="Panel de Trazabilidad Blockchain">
             <EstadoBlockchainPanel />
           </section>
@@ -73,8 +62,26 @@ const Dashboard = ({ setCurrentPage }) => {
             <PanelAlertas />
           </section>
         </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+
+        {/* 3. Telemetría ambiental en vivo (Nodo Granja / ESP32) */}
+        <section aria-label="Telemetría MQ-4 en tiempo real">
+          <Mq4Dashboard />
+        </section>
+
+        {/* 4. Calidad del aire en vivo, Temperatura / Clima, Alertas y Estado General */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <GraficoPanel setCurrentPage={setCurrentPage} />
+          <section aria-label="Panel de Clima y Temperatura">
+            <DashboardClima />
+          </section>
+          <section aria-label="Panel de Alertas y Recomendaciones">
+            <DashboardAlertasYRecomendaciones setCurrentPage={setCurrentPage} />
+          </section>
+          <EstadoGeneralPanel setCurrentPage={setCurrentPage} />
+        </div>
+
+        {/* 5. Robot CultivaTech, Acceso rápido al cultivo y Comunidad de ayuda */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <RobotPanel setCurrentPage={setCurrentPage} />
           <AccesoRapidoPanel setCurrentPage={setCurrentPage} />
           <ComunidadAyudaPanel setCurrentPage={setCurrentPage} />

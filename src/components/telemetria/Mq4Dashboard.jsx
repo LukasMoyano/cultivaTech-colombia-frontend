@@ -66,7 +66,7 @@ function Mq4Dashboard({ windowSize = DEFAULT_WINDOW_SIZE }) {
             <span aria-hidden="true">🌱</span> Telemetría In Situ · Nodo Granja (ESP32)
           </h2>
           <p className="mq4-sub">
-            Monitoreo ambiental multivariable · Calidad de aire / Gases · Muestras activas: {displayHistory.length}
+            Monitoreo ambiental multivariable · Calidad de aire, gases (CO₂/O₂) y salubridad · Muestras activas: {displayHistory.length}
           </p>
         </div>
         <div className="mq4-head-actions">

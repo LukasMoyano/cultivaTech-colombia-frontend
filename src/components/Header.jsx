@@ -19,14 +19,39 @@ export default function Header({
     <header className="bg-background text-text-main shadow-md sticky top-0 z-50 border-b border-border">
       <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-4">
         <div className="flex justify-between items-center py-2.5 gap-2">
-          <button
-            onClick={() => isAuthenticated ? onNav(activeModule === "inversionista" ? "inversion_oferta" : "dashboard") : onNav("landing")}
-            className="text-base md:text-lg flex items-center gap-2 shrink-0 whitespace-nowrap hover:opacity-80 transition-opacity font-heading text-text-accent"
-          >
-            <span role="img" aria-label="logo">🌿</span>
-            <span className="hidden sm:inline">CultivaTech ColombIA</span>
-            <span className="sm:hidden">CultivaTech</span>
-          </button>
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <button
+              onClick={() => isAuthenticated ? onNav(activeModule === "inversionista" ? "inversion_oferta" : "dashboard") : onNav("landing")}
+              className="text-base md:text-lg flex items-center gap-2 shrink-0 whitespace-nowrap hover:opacity-80 transition-opacity font-heading text-text-accent"
+            >
+              <span role="img" aria-label="logo">🌿</span>
+              <span className="hidden sm:inline">CultivaTech ColombIA</span>
+              <span className="sm:hidden">CultivaTech</span>
+            </button>
+
+            {isAuthenticated && onSwitchModule && (
+              <div className="hidden sm:flex items-center border border-border rounded-lg overflow-hidden bg-background-card text-xs font-heading shrink-0">
+                <button
+                  type="button"
+                  onClick={() => onSwitchModule("agricultor")}
+                  className={`px-2.5 py-1.5 whitespace-nowrap transition-colors ${
+                    activeModule === "agricultor" ? "bg-accent text-white" : "text-text-main hover:bg-secondary/20"
+                  }`}
+                >
+                  🌱 Agricultor
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onSwitchModule("inversionista")}
+                  className={`px-2.5 py-1.5 whitespace-nowrap transition-colors ${
+                    activeModule === "inversionista" ? "bg-primary text-white" : "text-text-main hover:bg-secondary/20"
+                  }`}
+                >
+                  💎 Inversionista
+                </button>
+              </div>
+            )}
+          </div>
 
           {isAuthenticated && (
             <nav className="hidden xl:flex gap-0.5 items-center min-w-0">
@@ -48,29 +73,6 @@ export default function Header({
           )}
 
           <div className="flex items-center gap-2 shrink-0">
-            {isAuthenticated && onSwitchModule && (
-              <div className="hidden md:flex items-center border border-border rounded-lg overflow-hidden bg-background-card text-xs font-heading shrink-0">
-                <button
-                  type="button"
-                  onClick={() => onSwitchModule("agricultor")}
-                  className={`px-2.5 py-1.5 whitespace-nowrap transition-colors ${
-                    activeModule === "agricultor" ? "bg-accent text-white" : "text-text-main hover:bg-secondary/20"
-                  }`}
-                >
-                  🌱 Agricultor
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onSwitchModule("inversionista")}
-                  className={`px-2.5 py-1.5 whitespace-nowrap transition-colors ${
-                    activeModule === "inversionista" ? "bg-primary text-white" : "text-text-main hover:bg-secondary/20"
-                  }`}
-                >
-                  💎 Inversionista
-                </button>
-              </div>
-            )}
-
             <ThemeToggleButton />
 
             {isAuthenticated && onLogout && (

@@ -49,9 +49,11 @@ const EstadoBlockchainPanel = () => {
         </span>
       </div>
 
-      <p className="text-text-main mb-4 text-sm">
-        El oráculo valida HMAC-SHA256, evita replay y ancla una raíz Merkle por lote.
-        Sin credenciales Web3 en Sepolia, la cola queda pendiente y se muestra como simulación.
+      <p className="text-text-main mb-2 text-sm leading-relaxed">
+        Comprueba que cada lectura provenga del sensor real de la finca, evita registros repetidos y sella lotes de mediciones de forma inalterable. Sin credenciales públicas aún activas, opera en modo simulación local.
+      </p>
+      <p className="text-text-main/65 mb-4 text-[11px]">
+        Detalle técnico: El oráculo valida HMAC-SHA256, evita replay y ancla una raíz Merkle por lote. Sin credenciales Web3 en Sepolia, la cola queda pendiente y se muestra como simulación.
       </p>
 
       <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
