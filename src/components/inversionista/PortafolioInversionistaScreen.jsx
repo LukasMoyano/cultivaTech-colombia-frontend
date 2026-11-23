@@ -356,9 +356,9 @@ const PortafolioInversionistaScreen = ({
 
             <div className="space-y-4 text-xs">
               <div className="bg-background border border-border rounded-lg p-4 space-y-2">
-                <div className="flex justify-between font-bold">
-                  <span>LLENADO DE TU RETRIBUCIÓN ({proyeccion.ciclos} {proyeccion.ciclos === 1 ? "ciclo" : "ciclos"})</span>
-                  <span className="text-accent">{avanceRetribucionPct}%</span>
+                <div className="flex items-center justify-between gap-2 font-bold">
+                  <span>LLENADO DE RETRIBUCIÓN ({proyeccion.ciclos} {proyeccion.ciclos === 1 ? "ciclo" : "ciclos"})</span>
+                  <span className="text-accent shrink-0 whitespace-nowrap">{avanceRetribucionPct}%</span>
                 </div>
                 <div className="w-full h-3 bg-border rounded-full overflow-hidden">
                   <div
