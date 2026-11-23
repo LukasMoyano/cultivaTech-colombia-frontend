@@ -13,46 +13,34 @@ import React from 'react';
  * @param {string} props.borderColor - Clase CSS de Tailwind para el color del borde superior (ej. "border-primary").
  * @returns {JSX.Element} Una tarjeta estilizada que representa un paso en el proceso.
  */
-const StepCard = ({ icon, title, subtitle, borderColor }) => (
-  // Contenedor de tarjeta: texto centrado, relleno temático, borde superior y fondo.
-  // El color del borde es dinámico basado en las props.
-  <div className={`text-center p-6 border-t-4 ${borderColor} bg-background-card`}>
-    {/* Ícono: texto grande. */}
-    <div className="text-5xl mb-4">{icon}</div>
-    {/* Título: usa fuente de encabezado, texto grande y color de énfasis. */}
-    <h3 className="font-heading text-xl text-text-accent">{title}</h3>
-    {/* Subtítulo: texto más pequeño, color de texto principal ligeramente atenuado. */}
-    <p className="text-sm text-text-main/80">{subtitle}</p>
+const StepCard = ({ icon, title, subtitle, borderColor, className = "" }) => (
+  <div className={`text-center p-4 xl:p-5 border border-border border-t-4 ${borderColor} bg-background flex flex-col justify-start ${className}`}>
+    <div className="text-4xl mb-3" aria-hidden="true">{icon}</div>
+    <h3 className="font-heading text-base xl:text-lg text-text-accent break-words">{title}</h3>
+    <p className="text-xs sm:text-sm text-text-main/80 mt-1">{subtitle}</p>
   </div>
 );
 
-/**
- * @file HowItWorksSlide.jsx
- * @description Representa la cuarta diapositiva de la página de inicio, explicando el proceso simple y efectivo
- *              de CultivaTech ColombIA en cuatro pasos.
- *              Utiliza el componente `StepCard` para mostrar consistentemente cada paso.
- *              El diseño usa una cuadrícula con un espacio de 1px para crear separadores visuales temáticos, y todo el estilo
- *              está integrado con el sistema de temas de la aplicación.
- *
- * @returns {JSX.Element} El JSX para la diapositiva "Cómo Funciona".
- */
 const HowItWorksSlide = () => {
   return (
-    // Contenedor principal para el contenido de la diapositiva. Usa space-y para espaciado vertical.
-    <div className="space-y-8">
-      {/* Cuadrícula para los cuatro pasos. El `gap-px bg-border` crea divisores delgados temáticos entre tarjetas. */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-border">
-        {/* Componentes StepCard individuales para cada paso, con colores de borde dinámicos. */}
-        <StepCard icon="📡" title="1. SENSORES" subtitle="Recolectan datos 24/7" borderColor="border-primary" />
-        <StepCard icon="🧠" title="2. IA ANALIZA" subtitle="Procesa y predice" borderColor="border-secondary" />
-        <StepCard icon="⚠️" title="3. ALERTAS" subtitle="Notifica problemas" borderColor="border-primary" />
-        <StepCard icon="🎯" title="4. ACCIÓN" subtitle="Tomas decisiones" borderColor="border-secondary" />
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+        <StepCard icon="📡" title="1. SENSORES" subtitle="Miden gases/CO₂ est. 24/7" borderColor="border-t-primary" />
+        <StepCard icon="🧠" title="2. ALERTAS" subtitle="Detecta umbrales a tiempo" borderColor="border-t-secondary" />
+        <StepCard icon="⛓️" title="3. REGISTRO" subtitle="Huella Merkle (simulación / Sepolia)" borderColor="border-t-primary" />
+        <StepCard icon="🤝" title="4. ALIANZA" subtitle="Capital sin gota a gota" borderColor="border-t-secondary" />
+        <StepCard
+          icon="💸"
+          title="5. COSECHA"
+          subtitle="Liquidación tras venta real (sujeta a cosecha y recaudo)"
+          borderColor="border-t-primary"
+          className="sm:col-span-2 lg:col-span-1"
+        />
       </div>
-      {/* Texto de resumen del resultado. */}
-      <div className="text-center pt-4">
-        {/* Usa color de texto temático y color de énfasis para énfasis. */}
-        <p className="text-lg text-text-main">
-          <strong className="text-accent font-heading">RESULTADO:</strong> Cultivos más saludables, mayor productividad y decisiones informadas.
+
+      <div className="text-center pt-2">
+        <p className="text-sm sm:text-lg text-text-main">
+          <strong className="text-text-accent font-heading">RESULTADO:</strong> Jóvenes innovando en su tierra, cosechas sanas e inversión 100 % visible.
         </p>
       </div>
     </div>

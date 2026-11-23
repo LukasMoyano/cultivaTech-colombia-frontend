@@ -11,7 +11,7 @@ import apiClient from "../api";
  * @param {function} props.onLoginSuccess - Callback que se ejecuta cuando el inicio de sesión es exitoso. Pasa los datos del usuario al componente padre.
  * @param {function} props.setCurrentPage - Función para cambiar la página/vista en el componente App.
  */
-const IngresoRegistro = ({ onLoginSuccess, setCurrentPage }) => {
+const IngresoRegistro = ({ onLoginSuccess }) => {
   // Estado para controlar si se muestra el formulario de registro (true) o el de inicio de sesión (false).
   const [isRegister, setIsRegister] = useState(false);
   // Estado para almacenar todos los datos del formulario.
@@ -26,6 +26,8 @@ const IngresoRegistro = ({ onLoginSuccess, setCurrentPage }) => {
   });
   // Estado para mostrar mensajes de éxito o error al usuario.
   const [message, setMessage] = useState("");
+  // Consentimiento expreso Ley 1581 de 2012 (nunca premarcado).
+  const [aceptoLey1581, setAceptoLey1581] = useState(false);
 
   /**
    * Maneja los cambios en cualquier campo del formulario.
@@ -54,6 +56,14 @@ const IngresoRegistro = ({ onLoginSuccess, setCurrentPage }) => {
       return;
     }
 
+    // Consentimiento expreso obligatorio para tratamiento de datos (Ley 1581 de 2012)
+    if (isRegister && !aceptoLey1581) {
+      setMessage(
+        "Debes autorizar el tratamiento de datos personales (Ley 1581 de 2012) para registrarte."
+      );
+      return;
+    }
+
     try {
       if (isRegister) {
         // Lógica de REGISTRO: construye el payload y lo envía al endpoint /api/register.
@@ -65,8 +75,9 @@ const IngresoRegistro = ({ onLoginSuccess, setCurrentPage }) => {
           telefono: `${formData.codigoArea}${formData.numeroTelefono}`,
         };
 
-        const response = await apiClient.post("/api/register", registerPayload);
+        await apiClient.post("/api/register", registerPayload);
         setMessage("¡Registro exitoso! Ahora puedes iniciar sesión.");
+        setAceptoLey1581(false);
         setIsRegister(false); // Cambiar a la vista de login
       } else {
         // Lógica de LOGIN: construye el payload y lo envía al endpoint /api/login.
@@ -239,20 +250,49 @@ const IngresoRegistro = ({ onLoginSuccess, setCurrentPage }) => {
           </div>
         )}
 
+        {/* Autorización expresa Ley 1581 de 2012 (solo registro, nunca premarcada) */}
+        {isRegister && (
+          <div className="mb-6 p-3 border border-border bg-background rounded">
+            <label
+              htmlFor="aceptoLey1581"
+              className="flex items-start gap-2.5 text-xs text-text-main cursor-pointer leading-relaxed"
+            >
+              <input
+                type="checkbox"
+                id="aceptoLey1581"
+                checked={aceptoLey1581}
+                onChange={(e) => setAceptoLey1581(e.target.checked)}
+                required={isRegister}
+                className="mt-0.5 h-4 w-4 accent-[var(--color-primary-btn)] cursor-pointer shrink-0"
+              />
+              <span>
+                Autorizo de forma previa, expresa e informada el tratamiento de mis datos
+                personales (documento, teléfono y correo) fuera de cadena (off-chain), conforme a la{" "}
+                <strong className="text-text-accent">Ley 1581 de 2012</strong>. Ningún dato
+                personal se publica en Blockchain.
+              </span>
+            </label>
+          </div>
+        )}
+
         {/* Botones de acción */}
         <div className="flex items-center justify-between">
           {/* Botón principal para enviar el formulario */}
           <button
             type="submit"
-            className="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
+            className="bg-[var(--color-primary-btn)] hover:opacity-90 text-white font-bold py-2.5 px-4 rounded min-h-[44px] focus:outline-none focus:shadow-outline transition-opacity cursor-pointer"
           >
             {isRegister ? "Registrarse" : "Entrar"}
           </button>
           {/* Botón para alternar entre la vista de login y registro */}
           <button
             type="button"
-            onClick={() => setIsRegister(!isRegister)}
-            className="inline-block align-baseline font-bold text-sm text-primary hover:text-secondary transition-colors"
+            onClick={() => {
+              setIsRegister(!isRegister);
+              setAceptoLey1581(false);
+              setMessage("");
+            }}
+            className="inline-block align-baseline font-bold text-sm text-[var(--color-primary-readable)] hover:underline min-h-[44px] px-2 cursor-pointer"
           >
             {isRegister
               ? "¿Ya tienes cuenta? Inicia Sesión"

@@ -11,38 +11,46 @@ import React from 'react';
  */
 const WelcomeSlide = () => {
   return (
-    // Contenedor principal para el contenido de la diapositiva. Usa space-y para espaciado vertical.
-    <div className="space-y-8 text-center">
-      {/* Bloque de texto de introducción */}
+    <div className="space-y-6 text-center">
       <div>
-        {/* Iconos decorativos */}
-        <div className="text-6xl mb-4">🌿🤖</div>
-        {/* Párrafo descriptivo principal. Usa color de texto temático y color de énfasis para etiquetas strong. */}
-        <p className="text-lg text-text-main leading-relaxed max-w-3xl mx-auto">
-          Una plataforma revolucionaria que combina <strong className="text-accent">sensores inteligentes</strong>, 
-          <strong className="text-accent"> inteligencia artificial</strong> y <strong className="text-accent">diseño intuitivo</strong> para 
-          transformar la agricultura colombiana.
+        <div className="text-5xl sm:text-6xl mb-3" aria-hidden="true">🌿🤖⛓️</div>
+        <p className="text-sm sm:text-lg text-text-main leading-relaxed max-w-3xl mx-auto">
+          Unimos <strong className="text-text-accent">sensores en campo</strong>,{" "}
+          <strong className="text-text-accent">alertas inteligentes</strong> y{" "}
+          <strong className="text-[var(--color-primary-readable)]">registro digital seguro (Blockchain)</strong>{" "}
+          para cuidar la cosecha, atraer a los jóvenes al campo y conectar al{" "}
+          <strong className="text-text-accent">agricultor</strong> con{" "}
+          <strong className="text-[var(--color-primary-readable)]">inversionistas</strong> en tiempo real.
         </p>
       </div>
-      {/* Cuadrícula para los pilares "Arte, Ciencia, Tecnología" */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
-        {/* Tarjeta para el pilar "Arte". Usa colores de fondo, borde y texto temáticos. */}
-        <div className="p-6 bg-background border border-border">
-          <div className="text-4xl mb-3 text-primary">🎨</div> {/* Icono con color primario del tema */}
-          <h3 className="font-heading text-xl text-text-accent">ARTE</h3> {/* Título con fuente de encabezado y color de énfasis */}
-          <p className="text-sm text-text-main/80">Interfaces intuitivas y visuales</p> {/* Descripción con color de texto principal */}
+
+      {/* Cuadrícula responsiva para los pilares incluyendo Blockchain */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-3">
+        <div className="p-4 sm:p-5 bg-background border border-border space-y-1">
+          <div className="text-3xl sm:text-4xl mb-2" aria-hidden="true">🎨</div>
+          <h3 className="font-heading text-lg text-text-accent">ARTE</h3>
+          <p className="text-xs sm:text-sm text-text-main/80">Fácil de usar y sin palabras enredadas</p>
         </div>
-        {/* Tarjeta para el pilar "Ciencia" */}
-        <div className="p-6 bg-background border border-border">
-          <div className="text-4xl mb-3 text-primary">🔬</div>
-          <h3 className="font-heading text-xl text-text-accent">CIENCIA</h3>
-          <p className="text-sm text-text-main/80">Análisis de datos precisos</p>
+        <div className="p-4 sm:p-5 bg-background border border-border space-y-1">
+          <div className="text-3xl sm:text-4xl mb-2" aria-hidden="true">🔬</div>
+          <h3 className="font-heading text-lg text-text-accent">CIENCIA</h3>
+          <p className="text-xs sm:text-sm text-text-main/80">
+            Aire en vivo (MQ-4 / CO₂ est.) y clima extensible
+          </p>
         </div>
-        {/* Tarjeta para el pilar "Tecnología" */}
-        <div className="p-6 bg-background border border-border">
-          <div className="text-4xl mb-3 text-primary">💻</div>
-          <h3 className="font-heading text-xl text-text-accent">TECNOLOGÍA</h3>
-          <p className="text-sm text-text-main/80">Hardware de código abierto</p>
+        <div className="p-4 sm:p-5 bg-background border border-border space-y-1">
+          <div className="text-3xl sm:text-4xl mb-2" aria-hidden="true">💻</div>
+          <h3 className="font-heading text-lg text-text-accent">TECNOLOGÍA</h3>
+          <p className="text-xs sm:text-sm text-text-main/80">
+            Nodo ESP32 en campo y alertas por umbral a tiempo
+          </p>
+        </div>
+        <div className="p-4 sm:p-5 bg-background border-2 border-primary space-y-1">
+          <div className="text-3xl sm:text-4xl mb-2" aria-hidden="true">⛓️</div>
+          <h3 className="font-heading text-lg text-[var(--color-primary-readable)]">BLOCKCHAIN</h3>
+          <p className="text-xs sm:text-sm text-text-main/80">
+            Huella Merkle auditable (simulación local / Sepolia)
+          </p>
         </div>
       </div>
     </div>

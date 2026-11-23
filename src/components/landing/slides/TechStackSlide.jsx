@@ -12,53 +12,61 @@ import React from 'react';
  * @returns {JSX.Element} Una tarjeta estilizada que muestra información de tecnología.
  */
 const TechInfoCard = ({ icon, title, subtitle }) => (
-  // Contenedor de tarjeta: diseño flexible, relleno temático, borde y fondo.
   <div className="flex items-center gap-4 p-4 bg-background border border-border">
-    {/* Ícono: texto grande, color de énfasis temático. */}
-    <span className="text-3xl text-accent">{icon}</span>
-    {/* Contenido de texto: título y subtítulo. */}
+    <span className="text-3xl shrink-0" aria-hidden="true">{icon}</span>
     <div>
-      {/* Título: usa fuente sans, peso seminegrita y color de texto principal. */}
       <p className="font-sans font-semibold text-text-main">{title}</p>
-      {/* Subtítulo: texto más pequeño, color de texto principal ligeramente atenuado. */}
-      <p className="text-xs text-text-main/70">{subtitle}</p>
+      <p className="text-xs text-text-main/75">{subtitle}</p>
     </div>
   </div>
 );
 
-/**
- * @file TechStackSlide.jsx
- * @description Representa la tercera diapositiva de la página de inicio, mostrando las tecnologías y características
- *              de CultivaTech ColombIA, divididas en categorías de Hardware y Software.
- *              Utiliza el componente `TechInfoCard` para mostrar consistentemente cada elemento de tecnología.
- *              El estilo se aplica usando el sistema de temas de la aplicación.
- *
- * @returns {JSX.Element} El JSX para la diapositiva de pila tecnológica.
- */
 const TechStackSlide = () => {
   return (
-    // Contenedor principal para el contenido de la diapositiva, usando una cuadrícula para un diseño de dos columnas en pantallas medianas y superiores.
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {/* Sección para tecnologías de Hardware */}
-      <div className="space-y-4">
-        {/* Título de sección: usa fuente de encabezado, texto grande y color de énfasis. */}
-        <h3 className="font-heading text-2xl text-text-accent">🔧 HARDWARE</h3>
-        {/* Contenedor para tarjetas de información de hardware. */}
-        <div className="space-y-4">
-          {/* Componentes TechInfoCard individuales para características de hardware. */}
-          <TechInfoCard icon="📡" title="Sensores ESP32" subtitle="Temperatura, humedad, pH" />
-          <TechInfoCard icon="🤖" title="Robots Autónomos" subtitle="Monitoreo y análisis" />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="space-y-3">
+        <h3 className="font-heading text-lg sm:text-xl text-text-accent">
+          <span aria-hidden="true">🔧</span> CAMPO Y HARDWARE
+        </h3>
+        <div className="space-y-3">
+          <TechInfoCard
+            icon="📡"
+            title="Sensores Conectados"
+            subtitle="Gases/CH₄ e índice CO₂ est. en vivo (clima/suelo en ruta)"
+          />
+          <TechInfoCard
+            icon="🤖"
+            title="Nodos y Robótica"
+            subtitle="Nodo ESP32 activo · mapa robot en fase prototipo"
+          />
+          <TechInfoCard
+            icon="🌱"
+            title="Piloto + Escalado"
+            subtitle="Lote #01 Hongos activo; apicultura y acuaponía en piloto"
+          />
         </div>
       </div>
-      {/* Sección para tecnologías de Software */}
-      <div className="space-y-4">
-        {/* Título de sección: usa fuente de encabezado, texto grande y color de énfasis. */}
-        <h3 className="font-heading text-2xl text-text-accent">💻 SOFTWARE</h3>
-        {/* Contenedor para tarjetas de información de software. */}
-        <div className="space-y-4">
-          {/* Componentes TechInfoCard individuales para características de software. */}
-          <TechInfoCard icon="🧠" title="IA Predictiva" subtitle="Detección de anomalías" />
-          <TechInfoCard icon="📱" title="App Multiplataforma" subtitle="Web y móvil" />
+
+      <div className="space-y-3">
+        <h3 className="font-heading text-lg sm:text-xl text-text-accent">
+          <span aria-hidden="true">⛓️</span> IA, PRIVACIDAD Y REGISTRO SEGURO
+        </h3>
+        <div className="space-y-3">
+          <TechInfoCard
+            icon="🧠"
+            title="Alertas por Umbral e IA"
+            subtitle="Umbrales en vivo + asistente técnico en evolución"
+          />
+          <TechInfoCard
+            icon="⛓️"
+            title="Sello Merkle (Blockchain)"
+            subtitle="Agrupa 5 lecturas · simulación local lista para Sepolia"
+          />
+          <TechInfoCard
+            icon="🔒"
+            title="Privacidad y Pesos (COP)"
+            subtitle="Autorización Ley 1581 · KYC/contratos en arquitectura comercial"
+          />
         </div>
       </div>
     </div>

@@ -12,32 +12,52 @@ import React from 'react';
  */
 const ProblemSolutionSlide = () => {
   return (
-    // Contenedor principal para el contenido de la diapositiva, usando una cuadrícula para un diseño de dos columnas en pantallas medianas y superiores.
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Sección para "Problemas Actuales" */}
-      {/* Usa el color primario del tema para el borde y el texto, con un tinte de fondo claro. */}
-      <div className="bg-primary/10 p-6 border-l-4 border-primary">
-        {/* Título para la sección de problemas. Usa fuente de encabezado y color primario del tema. */}
-        <h3 className="font-heading text-xl text-primary mb-4">❌ PROBLEMAS ACTUALES</h3>
-        {/* Lista de problemas. Usa el color de texto principal. */}
-        <ul className="space-y-2 text-sm text-text-main">
-          <li>• Falta de monitoreo en tiempo real</li>
-          <li>• Pérdidas económicas por decisiones tardías</li>
-          <li>• Herramientas costosas e inaccesibles</li>
-          <li>• Información fragmentada y poco clara</li>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+      <div className="bg-primary/10 p-5 sm:p-6 border-l-4 border-primary space-y-4">
+        <h3 className="font-heading text-lg sm:text-xl text-[var(--color-primary-readable)]">
+          <span aria-hidden="true">❌</span> HOY EN EL CAMPO
+        </h3>
+        <ul className="space-y-3 text-xs sm:text-sm text-text-main">
+          <li className="flex items-start gap-2.5">
+            <span aria-hidden="true">💸</span>
+            <span>Créditos bancarios caros (24 %–36 % al año) y gota a gota que arriesgan la finca</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span aria-hidden="true">🥀</span>
+            <span>Pérdidas de cosecha por falta de vigilancia ambiental en vivo</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span aria-hidden="true">🏙️</span>
+            <span>Jóvenes migrando a ciudades sobrepobladas y pérdida de saberes ancestrales</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span aria-hidden="true">🙈</span>
+            <span>Inversionistas a ciegas sin ver en tiempo real qué pasa con su plata</span>
+          </li>
         </ul>
       </div>
-      {/* Sección para "Nuestra Solución" */}
-      {/* Usa el color secundario del tema para el borde y el texto, con un tinte de fondo claro. */}
-      <div className="bg-secondary/10 p-6 border-l-4 border-secondary">
-        {/* Título para la sección de soluciones. Usa fuente de encabezado y color secundario del tema. */}
-        <h3 className="font-heading text-xl text-secondary mb-4">✅ NUESTRA SOLUCIÓN</h3>
-        {/* Lista de soluciones. Usa el color de texto principal. */}
-        <ul className="space-y-2 text-sm text-text-main">
-          <li>• Monitoreo 24/7 con sensores IoT</li>
-          <li>• Alertas inteligentes y preventivas</li>
-          <li>• Tecnología accesible y escalable</li>
-          <li>• Dashboard unificado e intuitivo</li>
+
+      <div className="bg-accent/10 p-5 sm:p-6 border-l-4 border-accent space-y-4">
+        <h3 className="font-heading text-lg sm:text-xl text-text-accent">
+          <span aria-hidden="true">✅</span> CON CULTIVATECH
+        </h3>
+        <ul className="space-y-3 text-xs sm:text-sm text-text-main">
+          <li className="flex items-start gap-2.5">
+            <span aria-hidden="true">🛡️</span>
+            <span>Respaldo productivo por cosecha, cero hipotecas ni deudas impagables</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span aria-hidden="true">📡</span>
+            <span>Sensores 24/7 (aire/gases MQ-4, CO₂ est. y clima expansible) + alertas por umbral</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span aria-hidden="true">👩‍💻</span>
+            <span>Jóvenes operando tecnología e IA junto al saber de sus mayores en la vereda</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span aria-hidden="true">⛓️</span>
+            <span>Oráculo Merkle por lote (simulación local lista para Sepolia) y Ley 1581</span>
+          </li>
         </ul>
       </div>
     </div>
