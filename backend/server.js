@@ -115,6 +115,16 @@ const isAdmin = (req, res, next) => {
 
 const USERS_FILE_PATH = './data/usuarios.json';
 
+const readJsonArraySafe = async (filePath) => {
+    if (!(await fs.pathExists(filePath))) return [];
+    const parsed = await fs.readJson(filePath);
+    return Array.isArray(parsed) ? parsed : [];
+};
+
+const writeJsonArraySafe = async (filePath, data) => {
+    await fs.outputJson(filePath, data, { spaces: 2 });
+};
+
 // Register a new user
 app.post('/api/register', authRegisterLimiter, async (req, res) => {
     try {
@@ -123,7 +133,7 @@ app.post('/api/register', authRegisterLimiter, async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required.' });
         }
 
-        const users = await fs.readJson(USERS_FILE_PATH);
+        const users = await readJsonArraySafe(USERS_FILE_PATH);
 
         const userExists = users.some(user => user.email === email);
         if (userExists) {
@@ -144,10 +154,10 @@ app.post('/api/register', authRegisterLimiter, async (req, res) => {
         };
 
         users.push(newUser);
-        await fs.writeJson(USERS_FILE_PATH, users, { spaces: 2 });
+        await writeJsonArraySafe(USERS_FILE_PATH, users);
 
         // --- Add Default Cultivos for the new user ---
-        const cultivos = await fs.readJson(CULTIVOS_FILE_PATH);
+        const cultivos = await readJsonArraySafe(CULTIVOS_FILE_PATH);
         const newUserId = newUser.id;
         const cultivoIdBase = cultivos.length > 0 ? Math.max(...cultivos.map(c => c.id)) + 1 : 1;
 
@@ -197,7 +207,7 @@ app.post('/api/register', authRegisterLimiter, async (req, res) => {
         ];
 
         cultivos.push(...defaultCultivos);
-        await fs.writeJson(CULTIVOS_FILE_PATH, cultivos, { spaces: 2 });
+        await writeJsonArraySafe(CULTIVOS_FILE_PATH, cultivos);
         // --- End of Default Cultivos ---
 
         // No devolver el hash de la contraseña
@@ -220,7 +230,7 @@ app.post('/api/login', authLoginLimiter, async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required.' });
         }
 
-        const users = await fs.readJson(USERS_FILE_PATH);
+        const users = await readJsonArraySafe(USERS_FILE_PATH);
         const user = users.find(u => u.email === email);
 
         if (!user) {
@@ -261,7 +271,7 @@ app.post('/api/login', authLoginLimiter, async (req, res) => {
 
 app.get('/api/admin/users', [authenticateToken, isAdmin], async (req, res) => {
     try {
-        const users = await fs.readJson(USERS_FILE_PATH);
+        const users = await readJsonArraySafe(USERS_FILE_PATH);
         // Excluir passwordHash de la respuesta administrativa
         const safeUsers = users.map(({ passwordHash, ...safeUser }) => safeUser);
         res.json(safeUsers);
@@ -279,7 +289,7 @@ app.post('/api/admin/reset-password', [authenticateToken, isAdmin], async (req, 
             return res.status(400).json({ error: 'User ID and new password are required.' });
         }
 
-        const users = await fs.readJson(USERS_FILE_PATH);
+        const users = await readJsonArraySafe(USERS_FILE_PATH);
         
         const userIndex = users.findIndex(u => u.id === userId);
         if (userIndex === -1) {
@@ -291,7 +301,7 @@ app.post('/api/admin/reset-password', [authenticateToken, isAdmin], async (req, 
 
         users[userIndex].passwordHash = passwordHash;
 
-        await fs.writeJson(USERS_FILE_PATH, users, { spaces: 2 });
+        await writeJsonArraySafe(USERS_FILE_PATH, users);
 
         res.json({ message: `Password for user ${userId} has been reset successfully.` });
 
@@ -357,7 +367,7 @@ const CULTIVOS_FILE_PATH = './data/cultivos.json';
 // GET all cultivos for the logged-in user
 app.get('/api/cultivos', authenticateToken, async (req, res) => {
     try {
-        const cultivos = await fs.readJson(CULTIVOS_FILE_PATH);
+        const cultivos = await readJsonArraySafe(CULTIVOS_FILE_PATH);
         const userCultivos = cultivos.filter(c => c.userId === req.user.id);
         res.json(userCultivos);
     } catch (error) {
@@ -387,7 +397,7 @@ app.post('/api/cultivos', authenticateToken, async (req, res) => {
             return res.status(400).json({ error: 'El nombre del cultivo es obligatorio.' });
         }
 
-        const cultivos = await fs.readJson(CULTIVOS_FILE_PATH);
+        const cultivos = await readJsonArraySafe(CULTIVOS_FILE_PATH);
         const newCultivo = {
             id: cultivos.length > 0 ? Math.max(...cultivos.map(c => c.id)) + 1 : 1,
             userId: req.user.id, // Associate with logged-in user
@@ -405,7 +415,7 @@ app.post('/api/cultivos', authenticateToken, async (req, res) => {
         };
 
         cultivos.push(newCultivo);
-        await fs.writeJson(CULTIVOS_FILE_PATH, cultivos, { spaces: 2 });
+        await writeJsonArraySafe(CULTIVOS_FILE_PATH, cultivos);
 
         res.status(201).json(newCultivo);
     } catch (error) {

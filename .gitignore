@@ -22,14 +22,30 @@ dist/
 stitch_agrotech_management_hub.zip
 node_modules/.vite/
 
-# Documentos internos
+# Documentos internos, resúmenes y material ajeno al código de producción
 DOCs_DontUpLoad/
+*BITACORA*.md
+*HANDOFF*.md
+*RESUMEN*.md
+conductor/
+servicios_cultivatech.sh
+stitch_agrotech_management_hub/
+.vscode/
+*.backup.*
+*.bak
 accesorapidopanel_fix_documentation.md
 brown_color_solutions.md
 contrast_improvements_documentation.md
 cultivolist_improvements_documentation.md
 solution_proposals.md
 src/assets/CultivaTechColombia_PresentacionToInteresting_2024.pdf
+
+# Secretos backend y datos privados de usuarios/cultivos locales (nunca subir a Git)
+backend/.env*
+!backend/.env.example
+backend/data/usuarios.json
+backend/data/cultivos.json
+backend/data/*.tmp
 
 # Blockchain: versionar contrato/scripts, nunca llaves ni artefactos locales
 blockchain/.wallet.json
